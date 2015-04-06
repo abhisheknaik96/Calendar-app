@@ -18,6 +18,10 @@
 	-fx-font-size: 36px;
 	-fx-text-fill: salmon;
 }
+#EnterDateLabel {
+	-fx-font-size: 16px;
+	-fx-text-fill: blue;
+}
 #DatepickerArrow {
 	-fx-fill: gray;
 	-fx-stroke: gray;
@@ -42,11 +46,11 @@
 	-fx-text-fill: royalblue;
 }
 #DatepickerDayCell .datepicker-today-cell {
-    -fx-background-color: lightsteelblue;
+    -fx-background-color: orange;
    	-fx-border-radius: 3;
    	-fx-border-style: segments(2,2);
-   	-fx-border-color: royalblue;
-    -fx-text-fill: royalblue;
+   	-fx-border-color: orange;
+    -fx-text-fill: orange;
 	-fx-font-size: 12px;
 }
 .datepicker-weekday-row {

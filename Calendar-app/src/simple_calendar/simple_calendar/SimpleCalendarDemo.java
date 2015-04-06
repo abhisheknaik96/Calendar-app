@@ -22,8 +22,11 @@ import java.util.Date;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -47,25 +50,39 @@ public class SimpleCalendarDemo extends Application {
         Label label = new Label("Calendar App");
         label.setId("DemoLabel");
         label.setTextAlignment(TextAlignment.CENTER);
+        
+        Label enterDate = new Label("Enter the date");
+        enterDate.setId("EnterDateLabel");
+        enterDate.setAlignment(Pos.TOP_LEFT);
 
         HBox dateBox = new HBox(15);
-        dateBox.setAlignment(Pos.CENTER);
+        dateBox.setAlignment(Pos.BASELINE_CENTER);
         final TextField dateField = new TextField("Select date");
         dateField.setEditable(false);
         dateField.setDisable(true);
-        SimpleCalendar simpleCalender = new SimpleCalendar();
-        simpleCalender.dateProperty().addListener(new ChangeListener<Date>() {
+        DatePicker simpleCal = new DatePicker();
+        simpleCal.setAlignment(Pos.CENTER_LEFT);
+        simpleCal.dateProperty().addListener(new ChangeListener<Date>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Date> ov,
 					Date oldDate, Date newDate) {
 				dateField.setText((new SimpleDateFormat("dd/MM/yyyy")).format(newDate));
-				
 			}
 		});
-        dateBox.getChildren().addAll(dateField, simpleCalender);
         
-        vbox.getChildren().addAll(label, dateBox);
+        Button b = new Button();
+        b.setText("Event Details");
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Stage stage = new Stage();
+                //Fill stage with content
+                stage.show();
+            }
+        });
+        dateBox.getChildren().addAll(simpleCal, dateField, b );
+        
+        vbox.getChildren().addAll(label, enterDate, dateBox);
         
         root.getChildren().add(vbox);
         
