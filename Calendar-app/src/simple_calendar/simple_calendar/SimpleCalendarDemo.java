@@ -86,7 +86,7 @@ public class SimpleCalendarDemo extends Application
 		});
 
 		Button b = new Button();
-		b.setText("Event Details");
+		b.setText("Add New Event");
 		b.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -121,7 +121,6 @@ public class SimpleCalendarDemo extends Application
 		Parent root;
 		stage.setTitle("Add New Event");
 		
-//		Stage stage = new Stage();
 		try 
 		{
 			root = FXMLLoader.load(getClass().getResource("EventWindow.fxml"));
@@ -132,21 +131,6 @@ public class SimpleCalendarDemo extends Application
 			e.printStackTrace();
 			return;
 		}
-		
-//		DatePicker simpleCal = new DatePicker();
-//		simpleCal.setAlignment(Pos.CENTER_LEFT);
-//		simpleCal.dateProperty().addListener(new ChangeListener<Date>()
-//		{
-//			@Override
-//			public void changed(ObservableValue<? extends Date> ov,
-//					Date oldDate, Date newDate)
-//			{
-////				dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
-////						.format(newDate));
-//			}
-//		});
-//		
-//		root.add(simpleCal);
 		
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
