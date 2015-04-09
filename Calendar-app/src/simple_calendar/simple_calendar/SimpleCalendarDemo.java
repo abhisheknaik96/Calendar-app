@@ -16,12 +16,12 @@
  */
 package simple_calendar.simple_calendar;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.ResourceBundle;
 
+import simple_calendar.simple_calendar.AlarmsSet;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,12 +37,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class SimpleCalendarDemo extends Application
 {
+	public static TimeThread timeThread = new TimeThread();
 
+//	static public AlarmsSet alarmClock = new AlarmsSet();
+	
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -92,10 +97,17 @@ public class SimpleCalendarDemo extends Application
 			@Override
 			public void handle(ActionEvent e)
 			{
+				
+//				Media sound = new Media(new File("StayTheNight.mp3").toURI().toString());
+//				MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//			    mediaPlayer.play();
+//			    
 				Stage stage = new Stage();
 				// Fill stage with content
 				try
 				{
+					//alarmClock.start();
+					timeThread.start();
 					showEventDetailsWindow(stage);
 					stage.show();
 				} 
@@ -106,12 +118,10 @@ public class SimpleCalendarDemo extends Application
 				}
 			}
 		});
+		
 		dateBox.getChildren().addAll(simpleCal, dateField, b);
-
 		vbox.getChildren().addAll(label, enterDate, dateBox);
-
 		root.getChildren().add(vbox);
-
 		stage.show();
 
 	}
@@ -141,6 +151,9 @@ public class SimpleCalendarDemo extends Application
 	public static void main(String[] args)
 	{
 		launch(args);
+	    //timeThread.close();		// The thread shouldn't be stopped,
+									// as it'll keep comparing times, and ringing alarms 
+									// whenever the specific time has passed.
 	}
 
 }

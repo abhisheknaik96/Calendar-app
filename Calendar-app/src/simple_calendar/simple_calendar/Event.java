@@ -20,6 +20,7 @@ public class Event
 	String details;
 	LocalTime timeOfEvent;
 	LocalDate dateOfEvent;
+	Alarm alarm;
 	
 	// String thingsToCarry;
 
@@ -29,5 +30,15 @@ public class Event
 		details = eventDetails;
 		timeOfEvent = LocalTime.of(hr, min, 0);
 		dateOfEvent = LocalDate.of(y, m, d);
+	}
+	
+	public void setAlarm(Alarm a)
+	{
+		alarm = a;
+	}
+	
+	public Alarm getAlarm()
+	{
+		return this.alarm;
 	}
 }

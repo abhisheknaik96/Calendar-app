@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.time.*;
 
+import simple_calendar.simple_calendar.Alarm;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,7 +45,7 @@ public class EventWindow implements javafx.fxml.Initializable
 	
 	// The main list of events   						--> Make this a Priority Queue
 														// And make a weighted priority 
-	public List<Event> eventList = new ArrayList<Event>();
+	static public List<Event> eventList = new ArrayList<Event>();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -74,8 +75,6 @@ public class EventWindow implements javafx.fxml.Initializable
 		timeHourField.setItems(hrList);
 		timeMinField.getItems().clear();
 		timeMinField.setItems(minList);
-		
-		
 		
 		eventAdd.setOnAction(new EventHandler<ActionEvent>()
 		{
@@ -115,8 +114,15 @@ public class EventWindow implements javafx.fxml.Initializable
 					
 					Event newEvent = new Event(eventName, eventName, d, m, y, 
 										 Integer.parseInt(timeHr), Integer.parseInt(timeMin));
-					eventList.add(newEvent);
-					System.out.println("No. of events added: " + eventList.size());
+
+					String time = timeHr + ':' + timeMin + ':' + "00";
+					
+					Alarm a = new Alarm( date, time);
+				    //SimpleCalendarDemo.alarmClock.addAlarm( a );
+					newEvent.setAlarm(a);
+					
+				    eventList.add(newEvent);
+				    System.out.println("No. of events added: " + eventList.size());
 					
 					// Closes Event window after 1 sec of clicking 'Add Event'
 					   new Timer().schedule(new TimerTask() 	
