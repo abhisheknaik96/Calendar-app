@@ -16,12 +16,10 @@
  */
 package simple_calendar.simple_calendar;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import simple_calendar.simple_calendar.AlarmsSet;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,21 +31,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class SimpleCalendarDemo extends Application
 {
-	public static TimeThread timeThread = new TimeThread();
 
-//	static public AlarmsSet alarmClock = new AlarmsSet();
-	
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -97,18 +92,11 @@ public class SimpleCalendarDemo extends Application
 			@Override
 			public void handle(ActionEvent e)
 			{
-				
-//				Media sound = new Media(new File("StayTheNight.mp3").toURI().toString());
-//				MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//			    mediaPlayer.play();
-//			    
 				Stage stage = new Stage();
 				// Fill stage with content
 				try
 				{
-					//alarmClock.start();
-					timeThread.start();
-					showEventDetailsWindow(stage);
+					addEventDetailsWindow(stage);
 					stage.show();
 				} 
 				catch (Exception e1)
@@ -118,15 +106,80 @@ public class SimpleCalendarDemo extends Application
 				}
 			}
 		});
+		Button showAllEvents = new Button();
+		showAllEvents.setText("Show All Events");
+		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				
+				Stage stage = new Stage();
+				try
+				{
+					showEventDetailsWindow(stage);
+					stage.show();
+				} 
+				catch (Exception e1)
+				{
+					System.out.println("Couldn't load EventPage");
+					e1.printStackTrace();
+				}
+			}
+
+			
+		});
 		
-		dateBox.getChildren().addAll(simpleCal, dateField, b);
-		vbox.getChildren().addAll(label, enterDate, dateBox);
+
+		
+		dateBox.getChildren().addAll(simpleCal, b);
+		vbox.getChildren().addAll(label, enterDate, dateBox, showAllEvents);
 		root.getChildren().add(vbox);
 		stage.show();
 
 	}
+	
+	public void showEventDetailsWindow(Stage stage) {
+		stage.setTitle("All Events");
+		
+		ScrollPane root = new ScrollPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 400, 400);
+		stage.setScene(scene);
+		root.setHbarPolicy(ScrollBarPolicy.NEVER);
+		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		
+		scene.getStylesheets().addAll(
+				SimpleCalendarDemo.class.getResource(
+						"style/simple_calendar.css").toExternalForm());
+		
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_LEFT);
+		
+		Label today = new Label("    Today:");
+		today.setId("TodayLabel");
+		today.setAlignment(Pos.TOP_LEFT);
+		
+		vbox.getChildren().add(today);
+		int w = 0;
+		for(Event event : EventWindow.eventList){
+			w++;
+			Label name = new Label("  " + w + ". " + event.name);
+			name.setId("EventName");
+			Label time = new Label("       " + event.timeOfEvent.toString() 
+					+ "  " + event.dateOfEvent.toString());
+			time.setId("EventTime");
+			Label details = new Label ("        " + event.details);
+			details.setId("EventDetails");
+			vbox.getChildren().addAll(name,time,details);
+		};
+		root.setVmax(440);
+        root.setPrefSize(115, 150);
+        root.setContent(vbox);
+	}
+	
 
-	public void showEventDetailsWindow(Stage stage) throws Exception
+	public void addEventDetailsWindow(Stage stage) throws Exception
 	{
 		Parent root;
 		stage.setTitle("Add New Event");
@@ -145,15 +198,11 @@ public class SimpleCalendarDemo extends Application
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.sizeToScene();
-//		stage.show();
 	}
 	
 	public static void main(String[] args)
 	{
 		launch(args);
-	    //timeThread.close();		// The thread shouldn't be stopped,
-									// as it'll keep comparing times, and ringing alarms 
-									// whenever the specific time has passed.
 	}
 
 }

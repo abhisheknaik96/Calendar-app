@@ -65,7 +65,7 @@ public class EventWindow implements javafx.fxml.Initializable
 		
 		for(int i=0;i<10;i++)
 			mins.add('0'+String.valueOf(i));
-		for(int i=0;i<60;i++)
+		for(int i=10;i<60;i++)
 			mins.add(String.valueOf(i));
 		
 		ObservableList hrList = FXCollections.observableList(hrs);
