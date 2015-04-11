@@ -49,6 +49,7 @@ public class SimpleCalendarDemo extends Application
 {
 
 	static public List<Event> eventList = new ArrayList<Event>();
+	static public List<Task> taskList = new ArrayList<Task>();
 	
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
@@ -103,7 +104,7 @@ public class SimpleCalendarDemo extends Application
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
-		Scene scene = new Scene(root, 600, 400);
+		Scene scene = new Scene(root, 600, 450);
 		stage.setScene(scene);
 
 		scene.getStylesheets().addAll(
@@ -140,10 +141,6 @@ public class SimpleCalendarDemo extends Application
 		});
 
 		
-		// For testing purposes, adding 2 default events to the EventList
-//		addDefaultEvents();
-
-		
 		Button b = new Button();
 		b.setText("Add New Event");
 		b.setOnAction(new EventHandler<ActionEvent>()
@@ -163,6 +160,30 @@ public class SimpleCalendarDemo extends Application
 					e1.printStackTrace();
 				}
 			}
+		});
+		
+		
+		Button addTask = new Button();
+		addTask.setText("Add New Task");
+		addTask.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				// Fill stage with content
+				try
+				{
+					addTaskDetailsWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load EventPage");
+					e1.printStackTrace();
+				}
+			}
+
+			
 		});
 		
 		
@@ -189,13 +210,33 @@ public class SimpleCalendarDemo extends Application
 		});
 
 		dateBox.getChildren().addAll(simpleCal);
-		vbox.getChildren().addAll(label, enterDate, dateBox, b, showAllEvents);
+		vbox.getChildren().addAll(label, enterDate, dateBox, b, showAllEvents, addTask);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
 
 	}
 
+	public void addTaskDetailsWindow(Stage stage) {
+		Parent root;
+		stage.setTitle("Add New Event");
+
+		try
+		{
+			root = FXMLLoader.load(getClass().getResource("TaskWindow.fxml"));
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+	
+	
 	public void showEventDetailsWindow(Stage stage)
 	{
 		stage.setTitle("All Events");
