@@ -18,7 +18,9 @@ package simple_calendar.simple_calendar;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -43,19 +45,22 @@ import javafx.stage.Stage;
 public class SimpleCalendarDemo extends Application
 {
 
+	static public List<Event> eventList = new ArrayList<Event>();
+	
 	@Override
 	public void start(Stage stage) throws Exception
 	{
+		
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
 		Scene scene = new Scene(root, 600, 400);
 		stage.setScene(scene);
-		
+
 		scene.getStylesheets().addAll(
 				SimpleCalendarDemo.class.getResource(
 						"style/simple_calendar.css").toExternalForm());
-		
+
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
 		Label label = new Label("Calendar App");
@@ -71,7 +76,7 @@ public class SimpleCalendarDemo extends Application
 		final TextField dateField = new TextField("Selected date");
 		dateField.setEditable(false);
 		dateField.setDisable(true);
-		
+
 		DatePickerNew simpleCal = new DatePickerNew();
 		simpleCal.setAlignment(Pos.CENTER_LEFT);
 		simpleCal.dateProperty().addListener(new ChangeListener<Date>()
@@ -85,6 +90,11 @@ public class SimpleCalendarDemo extends Application
 			}
 		});
 
+		
+		// For testing purposes, adding 2 default events to the EventList
+//		addDefaultEvents();
+
+		
 		Button b = new Button();
 		b.setText("Add New Event");
 		b.setOnAction(new EventHandler<ActionEvent>()
@@ -98,14 +108,14 @@ public class SimpleCalendarDemo extends Application
 				{
 					addEventDetailsWindow(stage);
 					stage.show();
-				} 
-				catch (Exception e1)
+				} catch (Exception e1)
 				{
 					System.out.println("Couldn't load EventPage");
 					e1.printStackTrace();
 				}
 			}
 		});
+		
 		Button showAllEvents = new Button();
 		showAllEvents.setText("Show All Events");
 		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
@@ -113,93 +123,98 @@ public class SimpleCalendarDemo extends Application
 			@Override
 			public void handle(ActionEvent e)
 			{
-				
+
 				Stage stage = new Stage();
 				try
 				{
 					showEventDetailsWindow(stage);
 					stage.show();
-				} 
-				catch (Exception e1)
+				} catch (Exception e1)
 				{
 					System.out.println("Couldn't load EventPage");
 					e1.printStackTrace();
 				}
 			}
 
-			
 		});
-		
 
-		
-		dateBox.getChildren().addAll(simpleCal, b);
-		vbox.getChildren().addAll(label, enterDate, dateBox, showAllEvents);
+		dateBox.getChildren().addAll(simpleCal);
+		vbox.getChildren().addAll(label, enterDate, dateBox, b, showAllEvents);
 		root.getChildren().add(vbox);
 		stage.show();
 
 	}
-	
-	public void showEventDetailsWindow(Stage stage) {
+
+	public void showEventDetailsWindow(Stage stage)
+	{
 		stage.setTitle("All Events");
-		
+
 		ScrollPane root = new ScrollPane();
 		root.setId("root");
 		Scene scene = new Scene(root, 400, 400);
 		stage.setScene(scene);
 		root.setHbarPolicy(ScrollBarPolicy.NEVER);
 		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		
+
 		scene.getStylesheets().addAll(
 				SimpleCalendarDemo.class.getResource(
 						"style/simple_calendar.css").toExternalForm());
-		
+
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_LEFT);
-		
+
 		Label today = new Label("    Today:");
 		today.setId("TodayLabel");
 		today.setAlignment(Pos.TOP_LEFT);
-		
+
 		vbox.getChildren().add(today);
 		int w = 0;
-		for(Event event : EventWindow.eventList){
+		for (Event event : eventList)
+		{
 			w++;
 			Label name = new Label("  " + w + ". " + event.name);
 			name.setId("EventName");
-			Label time = new Label("       " + event.timeOfEvent.toString() 
+			Label time = new Label("       " + event.timeOfEvent.toString()
 					+ "  " + event.dateOfEvent.toString());
 			time.setId("EventTime");
-			Label details = new Label ("        " + event.details);
+			Label details = new Label("        " + event.details);
 			details.setId("EventDetails");
-			vbox.getChildren().addAll(name,time,details);
-		};
+			vbox.getChildren().addAll(name, time, details);
+		}
+		;
 		root.setVmax(440);
-        root.setPrefSize(115, 150);
-        root.setContent(vbox);
+		root.setPrefSize(115, 150);
+		root.setContent(vbox);
+	}
+
+	
+	public static void addDefaultEvents()
+	{
+		eventList.add(new Event("Stagecoach", "CLT", 11, 4, 2015, 18, 00));
+		eventList.add(new Event("Final", "BBall Court", 13, 4, 2015, 18, 00));
 	}
 	
-
+	
 	public void addEventDetailsWindow(Stage stage) throws Exception
 	{
 		Parent root;
 		stage.setTitle("Add New Event");
-		
-		try 
+
+		try
 		{
 			root = FXMLLoader.load(getClass().getResource("EventWindow.fxml"));
-		} 
-		catch (IOException e) 
+		} catch (IOException e)
 		{
 			System.out.println("naa ho paaya");
 			e.printStackTrace();
 			return;
 		}
-		
+
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
-	
+
 	public static void main(String[] args)
 	{
 		launch(args);

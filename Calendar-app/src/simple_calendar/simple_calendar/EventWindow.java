@@ -45,7 +45,7 @@ public class EventWindow implements javafx.fxml.Initializable
 	
 	// The main list of events   						--> Make this a Priority Queue
 														// And make a weighted priority 
-	static public List<Event> eventList = new ArrayList<Event>();
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -121,8 +121,8 @@ public class EventWindow implements javafx.fxml.Initializable
 				    //SimpleCalendarDemo.alarmClock.addAlarm( a );
 					newEvent.setAlarm(a);
 					
-				    eventList.add(newEvent);
-				    System.out.println("No. of events added: " + eventList.size());
+				    SimpleCalendarDemo.eventList.add(newEvent);
+				    System.out.println("No. of events added: " + SimpleCalendarDemo.eventList.size());
 					
 					// Closes Event window after 1 sec of clicking 'Add Event'
 					   new Timer().schedule(new TimerTask() 	

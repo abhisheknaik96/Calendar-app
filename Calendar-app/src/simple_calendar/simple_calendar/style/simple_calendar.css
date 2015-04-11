@@ -15,25 +15,25 @@
      
 */  
 #TodayLabel {
-	-fx-font-size: 26px;
+	-fx-font-size: 26.0px;
 	-fx-text-fill: salmon;
 }
 #EventName {
-	-fx-font-size: 16px;
+	-fx-font-size: 16.0px;
 	-fx-text-fill: red;
 }
 #EventTime{
-	-fx-font-size: 13px;
+	-fx-font-size: 13.0px;
 }
 #EventDetails{
-	-fx-font-size: 10px;
+	-fx-font-size: 12.0px;
 }
 #DemoLabel {
-	-fx-font-size: 36px;
+	-fx-font-size: 36.0px;
 	-fx-text-fill: salmon;
 }
 #EnterDateLabel {
-	-fx-font-size: 16px;
+	-fx-font-size: 16.0px;
 	-fx-text-fill: blue;
 }
 #DatepickerArrow {
@@ -50,46 +50,46 @@
 }
 #DatepickerDayCell {
 	-fx-background-color: transparent;
-	-fx-border-radius: 4;
-	-fx-spacing: 0;
+	-fx-border-radius: 4.0;
+	-fx-spacing: 0.0;
 }
 #DatepickerDayCell:hover {
 	-fx-background-color: azure;
 	-fx-border-color: royalblue;
-	-fx-border-radius: 3;
+	-fx-border-radius: 3.0;
 	-fx-text-fill: royalblue;
 }
 #DatepickerDayCell .datepicker-today-cell {
     -fx-background-color: orange;
-   	-fx-border-radius: 3;
-   	-fx-border-style: segments(2,2);
+   	-fx-border-radius: 3.0;
+   	-fx-border-style: segments(2.0,2.0);
    	-fx-border-color: orange;
     -fx-text-fill: orange;
-	-fx-font-size: 12px;
+	-fx-font-size: 12.0px;
 }
 .datepicker-weekday-row {
     -fx-background-color: linear-gradient(to bottom, gray, lightgray, lightgray, lightgray, gray);
     -fx-text-fill: black;
-	-fx-font-size: 12px;
+	-fx-font-size: 12.0px;
 }
 .datepicker-monthyear-row {
 	-fx-background-color: linear-gradient(to bottom, beige, lightsalmon, beige); 
 	-fx-text-fill: black;
-	-fx-font-size: 12px;
+	-fx-font-size: 12.0px;
 }
 .datepicker-othermonth-cell {
-   	-fx-border-radius: 4;
+   	-fx-border-radius: 4.0;
     -fx-text-fill: gray;
-	-fx-font-size: 12px;
+	-fx-font-size: 12.0px;
 }
 #DatepickerTodayButton {
-	-fx-font-size: 12px;
+	-fx-font-size: 12.0px;
 }
 #DatepickerTodayButtonBox {
-	-fx-padding: 5;
+	-fx-padding: 5.0;
 }
 #CalenderButton {
-    -fx-font-size: 14px;
+    -fx-font-size: 14.0px;
 	-fx-background-image: url("calender_icon.png");
 	-fx-background-color: null;
 	-fx-background-repeat: no-repeat;

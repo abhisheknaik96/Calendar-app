@@ -17,9 +17,14 @@
 package simple_calendar.simple_calendar;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.w3c.dom.events.EventException;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -284,23 +289,52 @@ public class DatePickerNew extends StackPane
 			cell.getStyleClass().removeAll(cellStyleList);
 			cell.getStyleClass().add(DATEPICKER_OTHERMONTH);
 		}
+		
+		
+		// Button stylings for important days									 //00b2f2
+		String todayHighlight = "-fx-background-color: linear-gradient(to bottom, #fffff2, #ffffd4);"
+		                + " -fx-border-width: 3; -fx-border-color: red; -fx-background-radius: 15.0;"
+		                + " -fx-border-radius: 12.0";
+																				 //05edf2
+		String eventHighlight = "-fx-background-color: linear-gradient(to bottom, #fffff2, #ffffd4);"
+                + " -fx-border-width: 3; -fx-border-color: blue; -fx-background-radius: 15.0;"
+                + " -fx-border-radius: 12.0";
+		
+		// Adding 2 default events, for debugging purposes
+		SimpleCalendarDemo.addDefaultEvents();
+		
+		List<Event> tempEventList = SimpleCalendarDemo.eventList;
+//		System.out.println(tempEventList.size());
 
 		// Set the cells for the days of month to be presented
 		int day = 1;
 		for (int i = firstDayOfMonth; i < daysInMonth + firstDayOfMonth; i++)
 		{
 			DayCell cell = dayCells[i];
-			cell.setDate(day++, month, year);
+			cell.setDate(day, month, year);
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, month);
 			calendar.set(Calendar.DAY_OF_MONTH, cell.getDay());
 			cell.getStyleClass().removeAll(cellStyleList);
 			if (isToday(calendar))
+			{
 				cell.getStyleClass().add(DATEPICKER_TODAY);
+				cell.setStyle(todayHighlight);
+			}
 			else
+			{
 				cell.getStyleClass().add(DATEPICKER_MONTH);
+				
+				for(int j=0;j<tempEventList.size();j++)
+				{
+					LocalDate temp = tempEventList.get(j).getDate();
+//					System.out.println(temp + "|" + day + "/" + (month+1) + "/" + year);
+					if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+						cell.setStyle(eventHighlight);
+				}
+			}
+			day++;
 		}
-
 		// Set the cells for the days of next month
 		day = 1;
 		for (int i = firstDayOfMonth + daysInMonth; i < COLUMN_NUMBER
@@ -334,6 +368,7 @@ public class DatePickerNew extends StackPane
 						.get(Calendar.DAY_OF_MONTH);
 
 	}
+	
 
 	/**
 	 * @param dayNumber

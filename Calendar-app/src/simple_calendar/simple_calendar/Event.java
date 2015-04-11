@@ -31,4 +31,9 @@ public class Event
 	{
 		return this.alarm;
 	}
+	
+	public LocalDate getDate()
+	{
+		return dateOfEvent;
+	}
 }
