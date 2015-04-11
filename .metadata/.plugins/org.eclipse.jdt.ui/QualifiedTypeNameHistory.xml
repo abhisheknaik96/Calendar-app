@@ -19,4 +19,7 @@
 <fullyQualifiedTypeName name="simple_calendar.simple_calendar.EventWindow"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ScrollPane"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ScrollPane.ScrollBarPolicy"/>
+<fullyQualifiedTypeName name="simple_calendar.simple_calendar.SimpleCalendarDemo"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
 </qualifiedTypeNameHistroy>

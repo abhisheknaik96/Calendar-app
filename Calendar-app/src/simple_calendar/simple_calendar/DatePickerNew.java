@@ -253,7 +253,7 @@ public class DatePickerNew extends StackPane
 	 * and then the cells for the days of present month are set, and finally the
 	 * cells for the next month are set.
 	 */
-	private void setDayCells()
+	public void setDayCells()
 	{
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, year);
@@ -301,7 +301,7 @@ public class DatePickerNew extends StackPane
                 + " -fx-border-radius: 12.0";
 		
 		// Adding 2 default events, for debugging purposes
-		SimpleCalendarDemo.addDefaultEvents();
+//		SimpleCalendarDemo.addDefaultEvents();
 		
 		List<Event> tempEventList = SimpleCalendarDemo.eventList;
 //		System.out.println(tempEventList.size());

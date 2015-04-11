@@ -122,6 +122,7 @@ public class EventWindow implements javafx.fxml.Initializable
 					newEvent.setAlarm(a);
 					
 				    SimpleCalendarDemo.eventList.add(newEvent);
+				    SimpleCalendarDemo.update();
 				    System.out.println("No. of events added: " + SimpleCalendarDemo.eventList.size());
 					
 					// Closes Event window after 1 sec of clicking 'Add Event'

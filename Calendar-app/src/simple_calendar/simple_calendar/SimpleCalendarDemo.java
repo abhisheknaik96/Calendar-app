@@ -18,7 +18,10 @@ package simple_calendar.simple_calendar;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +50,52 @@ public class SimpleCalendarDemo extends Application
 
 	static public List<Event> eventList = new ArrayList<Event>();
 	
+	static private Stage thisStage;
+	static private DatePickerNew simpleCal;
+	
+	public void setStage (Stage stage){
+		thisStage = stage;
+	}
+
+	public void showStage(){
+		thisStage.setTitle("Titel in der MainController.java geändert");
+		thisStage.show();
+	}
+	
+	static public void update(){
+		deletePriviousEvents();
+		sortEvents();
+		SimpleCalendarDemo.simpleCal.setDayCells();
+	}
+	
+	private static void deletePriviousEvents() {
+		LocalDate d = LocalDate.now();
+		List<Event> list = new ArrayList<Event>();
+		for(Event e : eventList){
+			if(!e.dateOfEvent.isBefore(d)){
+				list.add(e);
+			}
+		}
+		eventList = list;
+	}
+
+	private static void sortEvents() {
+		Collections.sort(eventList, new Comparator<Event>() {
+			public int compare(Event c1, Event c2) {
+				if(c1.dateOfEvent.isBefore(c2.dateOfEvent))
+					return -1;
+				else if(c1.dateOfEvent.isAfter(c2.dateOfEvent))
+					return 1;
+				else{
+					if(c1.timeOfEvent.isBefore(c2.timeOfEvent))
+						return -1;
+					else
+						return 1;
+				}
+			}
+		});
+	}
+
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -77,7 +126,7 @@ public class SimpleCalendarDemo extends Application
 		dateField.setEditable(false);
 		dateField.setDisable(true);
 
-		DatePickerNew simpleCal = new DatePickerNew();
+		simpleCal = new DatePickerNew();
 		simpleCal.setAlignment(Pos.CENTER_LEFT);
 		simpleCal.dateProperty().addListener(new ChangeListener<Date>()
 		{
@@ -116,6 +165,7 @@ public class SimpleCalendarDemo extends Application
 			}
 		});
 		
+		
 		Button showAllEvents = new Button();
 		showAllEvents.setText("Show All Events");
 		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
@@ -141,7 +191,8 @@ public class SimpleCalendarDemo extends Application
 		dateBox.getChildren().addAll(simpleCal);
 		vbox.getChildren().addAll(label, enterDate, dateBox, b, showAllEvents);
 		root.getChildren().add(vbox);
-		stage.show();
+		thisStage = stage;
+		thisStage.show();
 
 	}
 
@@ -169,19 +220,41 @@ public class SimpleCalendarDemo extends Application
 
 		vbox.getChildren().add(today);
 		int w = 0;
+		LocalDate d = LocalDate.now();
 		for (Event event : eventList)
 		{
-			w++;
-			Label name = new Label("  " + w + ". " + event.name);
-			name.setId("EventName");
-			Label time = new Label("       " + event.timeOfEvent.toString()
-					+ "  " + event.dateOfEvent.toString());
-			time.setId("EventTime");
-			Label details = new Label("        " + event.details);
-			details.setId("EventDetails");
-			vbox.getChildren().addAll(name, time, details);
+			if(!event.dateOfEvent.isBefore(d)  && !event.dateOfEvent.isAfter(d)){
+				w++;
+				Label name = new Label("  " + w + ". " + event.name);
+				name.setId("EventName");
+				Label time = new Label("       " + event.timeOfEvent.toString()
+						+ "  " + event.dateOfEvent.toString());
+				time.setId("EventTime");
+				Label details = new Label("        " + event.details);
+				details.setId("EventDetails");
+				vbox.getChildren().addAll(name, time, details);
+			}
 		}
-		;
+		w=0;
+		Label upcoming = new Label("    Upcoming:");
+		upcoming.setId("TodayLabel");
+		upcoming.setAlignment(Pos.TOP_LEFT);
+		vbox.getChildren().add(upcoming);
+		
+		for (Event event : eventList)
+		{
+			if(event.dateOfEvent.isAfter(d)){
+				w++;
+				Label name = new Label("  " + w + ". " + event.name);
+				name.setId("EventName");
+				Label time = new Label("       " + event.timeOfEvent.toString()
+						+ "  " + event.dateOfEvent.toString());
+				time.setId("EventTime");
+				Label details = new Label("        " + event.details);
+				details.setId("EventDetails");
+				vbox.getChildren().addAll(name, time, details);
+			}
+		}
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
