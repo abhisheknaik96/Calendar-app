@@ -176,15 +176,13 @@ public class TaskWindow implements javafx.fxml.Initializable
 					String time = timeHr + ':' + timeMin + ':' + "00";
 					
 					newTask.printTask();
-				    SimpleCalendarDemo.taskList.add(newTask);
-				    SimpleCalendarDemo.update();
-				    System.out.println("No. of tasks added: " + SimpleCalendarDemo.eventList.size());
+				    MainWindow.taskList.add(newTask);
+				    MainWindow.update();
+				    System.out.println("No. of tasks added: " + MainWindow.taskList.size());
 				}
 			}
 		});
 		
-		
 	}
-
 }
 

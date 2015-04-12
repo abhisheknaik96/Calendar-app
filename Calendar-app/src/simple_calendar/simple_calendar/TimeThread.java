@@ -56,7 +56,7 @@ public class TimeThread extends Thread
 				//for (Iterator i = alarms.iterator(); i.hasNext();)
 				//for (Iterator i = EventWindow.eventList.iterator(); i.hasNext();)
 				
-				List<Event> eList = SimpleCalendarDemo.eventList;
+				List<Event> eList = MainWindow.eventList;
 				for(int i=0;i<eList.size();i++)
 				{
 					// System.out.println("In here");

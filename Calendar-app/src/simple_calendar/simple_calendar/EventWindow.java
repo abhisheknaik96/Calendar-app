@@ -21,19 +21,22 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class EventWindow implements javafx.fxml.Initializable
 {
 	@FXML
-	private Label eventLabel;
+	private Label eventNameLabel;
+	@FXML
+	private TextField eventName;
+	@FXML
+	private Label eventDetailsLabel;
 	@FXML
 	private TextArea eventDetails;
 	@FXML
 	private DatePicker eventDate;
 	@FXML
 	private Label timeLabel;
-//	@FXML
-//	private TextField timeField;
 	@FXML
 	private ComboBox<String> timeHourField;
 	@FXML
@@ -85,7 +88,8 @@ public class EventWindow implements javafx.fxml.Initializable
 			   addedLabel.setText("Event Added! :)");
 			    addedLabel.setVisible(true);
 				//Event e;
-				String eventName = eventDetails.getText();
+				String eventNameString = eventName.getText();
+				String eventDetailsString = eventDetails.getText();
 				System.out.println(eventName);
 				String date = null;
 				try
@@ -112,18 +116,18 @@ public class EventWindow implements javafx.fxml.Initializable
 					int m = eventDate.getValue().getMonthValue();
 					int y = eventDate.getValue().getYear();
 					
-					Event newEvent = new Event(eventName, eventName, d, m, y, 
+					Event newEvent = new Event(eventNameString, eventDetailsString, d, m, y, 
 										 Integer.parseInt(timeHr), Integer.parseInt(timeMin));
 
 					String time = timeHr + ':' + timeMin + ':' + "00";
 					
-					Alarm a = new Alarm( date, time);
+					Alarm a = new Alarm(date, time);
 				    //SimpleCalendarDemo.alarmClock.addAlarm( a );
 					newEvent.setAlarm(a);
 					
-				    SimpleCalendarDemo.eventList.add(newEvent);
-				    SimpleCalendarDemo.update();
-				    System.out.println("No. of events added: " + SimpleCalendarDemo.eventList.size());
+				    MainWindow.eventList.add(newEvent);
+				    MainWindow.update();
+				    System.out.println("No. of events added: " + MainWindow.eventList.size());
 					
 					// Closes Event window after 1 sec of clicking 'Add Event'
 					   new Timer().schedule(new TimerTask() 	

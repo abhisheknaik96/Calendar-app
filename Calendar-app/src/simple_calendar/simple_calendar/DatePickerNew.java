@@ -33,6 +33,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -159,6 +160,7 @@ public class DatePickerNew extends StackPane
 		// The matrix constitutes of DayCell class which extends Label class and
 		// holds date information.
 		dayCells = new DayCell[COLUMN_NUMBER * ROW_NUMBER];
+		
 		int index = 0;
 		for (int i = 0; i < ROW_NUMBER; i++)
 		{
@@ -303,7 +305,7 @@ public class DatePickerNew extends StackPane
 		// Adding 2 default events, for debugging purposes
 //		SimpleCalendarDemo.addDefaultEvents();
 		
-		List<Event> tempEventList = SimpleCalendarDemo.eventList;
+		List<Event> tempEventList = MainWindow.eventList;
 //		System.out.println(tempEventList.size());
 
 		// Set the cells for the days of month to be presented
@@ -312,6 +314,7 @@ public class DatePickerNew extends StackPane
 		{
 			DayCell cell = dayCells[i];
 			cell.setDate(day, month, year);
+			
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, month);
 			calendar.set(Calendar.DAY_OF_MONTH, cell.getDay());
@@ -322,15 +325,17 @@ public class DatePickerNew extends StackPane
 				cell.setStyle(todayHighlight);
 			}
 			else
-			{
 				cell.getStyleClass().add(DATEPICKER_MONTH);
-				
-				for(int j=0;j<tempEventList.size();j++)
+
+			for(int j=0;j<tempEventList.size();j++)
+			{
+				LocalDate temp = tempEventList.get(j).getDate();
+				if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
 				{
-					LocalDate temp = tempEventList.get(j).getDate();
-//					System.out.println(temp + "|" + day + "/" + (month+1) + "/" + year);
-					if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
-						cell.setStyle(eventHighlight);
+					cell.setStyle(eventHighlight);
+					
+					// To show event when mouse hovers over the highlighted event date
+					cell.setTooltip( setTip(j) );
 				}
 			}
 			day++;
@@ -348,12 +353,40 @@ public class DatePickerNew extends StackPane
 				y++;
 			}
 			DayCell cell = dayCells[i];
-			cell.setDate(day++, m, y);
+			cell.setDate(day, m, y);
+			
+			for(int j=0;j<tempEventList.size();j++)
+			{
+				LocalDate temp = tempEventList.get(j).getDate();
+				if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+				{
+					cell.setStyle(eventHighlight);
+					cell.setTooltip( setTip(j) );
+				}
+			}
+			
 			cell.getStyleClass().removeAll(cellStyleList);
 			cell.getStyleClass().add(DATEPICKER_OTHERMONTH);
+			day++;
 		}
 	}
 
+	private Tooltip setTip(int idx)
+	{
+		Event tmp = MainWindow.eventList.get(idx);
+		Tooltip popUp = new Tooltip();
+		int min = tmp.getTime().getMinute();
+		String timeOfEvent;
+		if(min<10)
+			timeOfEvent = String.valueOf(tmp.getTime().getHour()) + 
+						  String.valueOf(min)  + '0';
+		else
+			timeOfEvent = String.valueOf(tmp.getTime().getHour()) + 
+						  String.valueOf(min);
+		popUp.setText(tmp.getEventName() + '\n' + timeOfEvent);
+		return popUp;
+	}
+	
 	/**
 	 * @param calendar
 	 *            is to be compared
