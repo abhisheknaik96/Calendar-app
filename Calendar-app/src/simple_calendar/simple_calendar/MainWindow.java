@@ -324,9 +324,11 @@ public class MainWindow extends Application
 		stage.sizeToScene();
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		addDefaultEvents();
+		Event.integrateMoodleCalendar();
+		
 		launch(args);
 	}
 

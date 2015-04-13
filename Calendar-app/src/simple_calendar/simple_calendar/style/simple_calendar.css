@@ -22,6 +22,13 @@
 	-fx-font-size: 26.0px;
 	-fx-text-fill: blue;
 }
+
+#CalendarShowEventsHover{
+-fx-font-size: 13.0px;
+-fx-background-color : black;
+-fx-text-fill: lightblue;
+} 
+
 #EventName {
 	-fx-font-size: 16.0px;
 	-fx-text-fill: red;

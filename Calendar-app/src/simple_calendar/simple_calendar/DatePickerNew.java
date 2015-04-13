@@ -276,22 +276,8 @@ public class DatePickerNew extends StackPane
 		int daysInPreviousMonth = calendar
 				.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-		// Set the cells for the days of previous month
-		for (int i = 0; i < firstDayOfMonth; i++)
-		{
-			int m = month - 1;
-			int y = year;
-			if (m < 0)
-			{
-				m = Calendar.DECEMBER;
-				y--;
-			}
-			DayCell cell = dayCells[i];
-			cell.setDate(daysInPreviousMonth - (firstDayOfMonth) + i + 1, m, y);
-			cell.getStyleClass().removeAll(cellStyleList);
-			cell.getStyleClass().add(DATEPICKER_OTHERMONTH);
-		}
 		
+		List<Event> tempEventList = MainWindow.eventList;
 		
 		// Button stylings for important days									 //00b2f2
 		String todayHighlight = "-fx-background-color: linear-gradient(to bottom, #fffff2, #ffffd4);"
@@ -302,12 +288,40 @@ public class DatePickerNew extends StackPane
                 + " -fx-border-width: 3; -fx-border-color: blue; -fx-background-radius: 15.0;"
                 + " -fx-border-radius: 12.0";
 		
-		// Adding 2 default events, for debugging purposes
-//		SimpleCalendarDemo.addDefaultEvents();
+		// Set the cells for the days of previous month
+		for (int i = 0; i < firstDayOfMonth; i++)
+		{
+			int m = month - 1;
+			int y = year;
+			int day = daysInPreviousMonth - (firstDayOfMonth) + i + 1;
+			if (m < 0)
+			{
+				m = Calendar.DECEMBER;
+				y--;
+			}
+			DayCell cell = dayCells[i];
+			
+			Tooltip popUp = new Tooltip();
+			popUp.setId("CalendarShowEventsHover");
+			
+			cell.setDate(day, m, y);
+			cell.setStyle(null);
+			
+			for(int j=0;j<tempEventList.size();j++)
+			{
+				LocalDate temp = tempEventList.get(j).getDate();
+				if(temp.getYear()==year && temp.getMonthValue()==m+1 && temp.getDayOfMonth()==day)
+				{
+					cell.setStyle(eventHighlight);
+					cell.setTooltip( setTip(j, popUp) );
+				}
+			}
+			
+			cell.getStyleClass().removeAll(cellStyleList);
+			cell.getStyleClass().add(DATEPICKER_OTHERMONTH);
+		}
 		
-		List<Event> tempEventList = MainWindow.eventList;
-//		System.out.println(tempEventList.size());
-
+		
 		// Set the cells for the days of month to be presented
 		int day = 1;
 		for (int i = firstDayOfMonth; i < daysInMonth + firstDayOfMonth; i++)
@@ -315,27 +329,44 @@ public class DatePickerNew extends StackPane
 			DayCell cell = dayCells[i];
 			cell.setDate(day, month, year);
 			
+			cell.setStyle(null);
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, month);
 			calendar.set(Calendar.DAY_OF_MONTH, cell.getDay());
+			
+			Tooltip popUp = new Tooltip();
+			popUp.setId("CalendarShowEventsHover");
+			
 			cell.getStyleClass().removeAll(cellStyleList);
 			if (isToday(calendar))
 			{
 				cell.getStyleClass().add(DATEPICKER_TODAY);
 				cell.setStyle(todayHighlight);
+			
+				for(int j=0;j<tempEventList.size();j++)
+				{
+					LocalDate temp = tempEventList.get(j).getDate();
+					if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+					{
+						// To show event when mouse hovers over the highlighted event date
+						cell.setTooltip( setTip(j, popUp) );
+					}
+				}
 			}
 			else
+			{
 				cell.getStyleClass().add(DATEPICKER_MONTH);
 
-			for(int j=0;j<tempEventList.size();j++)
-			{
-				LocalDate temp = tempEventList.get(j).getDate();
-				if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+				for(int j=0;j<tempEventList.size();j++)
 				{
-					cell.setStyle(eventHighlight);
-					
-					// To show event when mouse hovers over the highlighted event date
-					cell.setTooltip( setTip(j) );
+					LocalDate temp = tempEventList.get(j).getDate();
+					if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+					{
+						cell.setStyle(eventHighlight);
+						
+						// To show event when mouse hovers over the highlighted event date
+						cell.setTooltip( setTip(j, popUp) );
+					}
 				}
 			}
 			day++;
@@ -354,14 +385,18 @@ public class DatePickerNew extends StackPane
 			}
 			DayCell cell = dayCells[i];
 			cell.setDate(day, m, y);
+			cell.setStyle(null);
+			
+			Tooltip popUp = new Tooltip();
+			popUp.setId("CalendarShowEventsHover");
 			
 			for(int j=0;j<tempEventList.size();j++)
 			{
 				LocalDate temp = tempEventList.get(j).getDate();
-				if(temp.getYear()==year && temp.getMonthValue()==month+1 && temp.getDayOfMonth()==day)
+				if(temp.getYear()==year && temp.getMonthValue()==m+1 && temp.getDayOfMonth()==day)
 				{
 					cell.setStyle(eventHighlight);
-					cell.setTooltip( setTip(j) );
+					cell.setTooltip( setTip(j, popUp) );
 				}
 			}
 			
@@ -371,22 +406,25 @@ public class DatePickerNew extends StackPane
 		}
 	}
 
-	private Tooltip setTip(int idx)
+	private Tooltip setTip(int idx, Tooltip popUp)
 	{
 		Event tmp = MainWindow.eventList.get(idx);
-		Tooltip popUp = new Tooltip();
+
+		int hr = tmp.getTime().getHour();
 		int min = tmp.getTime().getMinute();
-		String timeOfEvent;
-		if(min<10)
-			timeOfEvent = String.valueOf(tmp.getTime().getHour()) + 
-						  String.valueOf(min)  + '0';
-		else
-			timeOfEvent = String.valueOf(tmp.getTime().getHour()) + 
-						  String.valueOf(min);
-		popUp.setText(tmp.getEventName() + '\n' + timeOfEvent);
+		
+		String timeOfEvent = addZero(hr) + addZero(min);
+		popUp.setText(popUp.getText() + timeOfEvent + " : " + tmp.getEventName() + "\n");
 		return popUp;
 	}
 	
+	private String addZero(int t)
+	{
+		if(t<10)
+			return '0' + String.valueOf(t);
+		else
+			return String.valueOf(t);
+	}
 	/**
 	 * @param calendar
 	 *            is to be compared
