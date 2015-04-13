@@ -3,590 +3,75 @@ METHOD:PUBLISH
 PRODID:-//John Papaioannou/NONSGML Bennu 0.1//EN
 VERSION:2.0
 BEGIN:VEVENT
-UID:1947@www.cse.iitm.ac.in/moodle
-SUMMARY:AVL Tree
-DESCRIPTION: <font face="arial\, helvetica\, sans-serif"><span style="line-
-	 height: 16px\;">Write a program to implement an AVL Tree. Your implementati
-	 on should support the following operations:</span></font><p style="text-ali
-	 gn: justify\; margin-bottom: 0cm\;"></p><ol>  <li><span style="line-height:
-	  16px\; font-family: arial\, helvetica\, sans-serif\;">Insertion of an elem
-	 ent</span></li>  <li><span style="line-height: 16px\; font-family: arial\, 
-	 helvetica\, sans-serif\;">Deletion of an element</span></li>  <li><span sty
-	 le="line-height: 16px\; font-family: arial\, helvetica\, sans-serif\;">Prin
-	 ting all the elements in sorted order</span></li></ol><p></p><p style="text
-	 -align: justify\; margin-bottom: 0cm\;"><font face="arial\, helvetica\, san
-	 s-serif"><span style="line-height: 16px\;">Now use the Binary Search Tree i
-	 mplementation you created in Lab 0 and compare the performance of the AVL t
-	 ree with the Binary Search Tree- every time you perform an operation on the
-	  AVL tree perform the same operation on the Binary Search Tree and report t
-	 he heights of the 2 different types of trees.</span></font></p><p style="te
-	 xt-align: justify\; margin-bottom: 0cm\;"><font face="arial\, helvetica\, s
-	 ans-serif"><span style="line-height: 16px\;">You will be given input as a s
-	 tream of token numbers\; the stream will be terminated with an input of -1.
-	  For every token number\, check if the token already exists in the collecti
-	 on\; if it does not\, then add it\, else remove it. After each token number
-	 \, print the 2 trees in BFS order (while printing each level should be sepa
-	 rated by #). Also\, print the height of the binary search tree and height o
-	 f the AVL Tree.</span></font></p><p style="text-align: justify\; margin-bot
-	 tom: 0cm\;"><font face="arial\, helvetica\, sans-serif"><span style="line-h
-	 eight: 16px\;">On termination\, print inorder traversal of both trees.</spa
-	 n></font></p>\n
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150328T164957Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150402T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1948@www.cse.iitm.ac.in/moodle
-SUMMARY:Max Flow 
-DESCRIPTION: <font face="arial\,helvetica\,sans-serif"> </font><font face="
-	 arial\,helvetica\,sans-serif"> </font><h1 style="text-align: justify\;"><fo
-	 nt size="2"><u>Ford-Fulkerson method:</u></font></h1><font size="2"><div st
-	 yle="text-align: justify\;">You are given a directed graph representing a n
-	 etwork of warehouses. Each edge in the network represents the capacity of t
-	 he transport network connecting the two warehouses. Our task is to maximize
-	  the transportation of goods from source node to the given destination node
-	 .<br /></div> </font><p style="text-align: justify\; margin-bottom: 0cm\; l
-	 ine-height: 100%\;"><font size="2"><span style="line-height: 100%\;"><u><b>
-	 Input format:<br /></b></u></span></font></p><font size="2"> </font><p styl
-	 e="text-align: justify\; margin-bottom: 0cm\;"><font size="2">n <span class
-	 ="Apple-tab-span" style="white-space: pre\;"> </span>(number of nodes)<br /
-	 >m <span class="Apple-tab-span" style="white-space: pre\;"> </span>(number 
-	 of edges)<br />x<sub>1</sub> y<sub>1</sub><sub> </sub>w<sub>1</sub><span cl
-	 ass="Apple-tab-span" style="white-space: pre\;"> </span>(Source\, destinati
-	 on\, edge weight)<br /><font style="line-height: 16px\;">x<sub>2</sub> y<su
-	 b>2</sub> w<sub>2<br /></sub></font><font style="line-height: 16px\;"><sub>
-	 .<br /></sub></font><font style="line-height: 16px\;"><sub>.<br /></sub></f
-	 ont><font style="line-height: 16px\;"><sub>.<br /></sub></font><font style=
-	 "line-height: 16px\;">x<sub>m</sub> y<sub>m </sub>w<sub>m</sub></font></fon
-	 t></p><font size="2"><br /><u><b>Output :<br /></b></u></font><p style="tex
-	 t-align: justify\; margin-bottom: 0cm\; line-height: 100%\;"><font size="2"
-	 ><u><b></b></u>The maximum amount of goods that can be transported for node
-	  &quot\;0&quot\; to node &quot\;n-1&quot\;</font></p><font face="arial\,hel
-	 vetica\,sans-serif"> </font>\n
-CLASS:PUBLIC
-LAST-MODIFIED:20150411T230514Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150402T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1955@www.cse.iitm.ac.in/moodle
-SUMMARY:Project Proposal
-DESCRIPTION:Use this link to put up the project proposal.<div>Create a pdf 
-	 which contains the details of the project you want to be working on.</div><
-	 div>Give details of what exactly needs to be achieved and what tools will n
-	 eed to be used.</div><div>If details like timeline of the project and proba
-	 ble work division can be added to the doc\, it would be better.</div>
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150402T094440Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150403T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1970@www.cse.iitm.ac.in/moodle
-SUMMARY:Assignment 4
-DESCRIPTION: The project directory must be named XXXXXXXX (your eight digit
-	  roll number).<br />The project directory must contain &quot\;.s&quot\; fil
-	 e \, test.ld\, inp.gdb and gdbkama and Report(which has been informed in th
-	 e group).<br />Tar the XXXXXXXX directory along with the contents and then 
-	 gzip it to <b>XXXXXXXX.P4.tar.gz</b>. Submit the XXXXXXXX.P4.tar.gz file on
-	  the course moodle page. <br />Any one of your team mates can submit assign
-	 ment. 
-CLASS:PUBLIC
-LAST-MODIFIED:20150406T042242Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150403T215500Z
-CATEGORIES:EVEN15 CS2610 
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1949@www.cse.iitm.ac.in/moodle
-SUMMARY:Lab 8: Late Submission Link
-DESCRIPTION: Use this link for submitting the assignment beyond the deadline 
-CLASS:PUBLIC
-LAST-MODIFIED:20150323T084928Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150405T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1957@www.cse.iitm.ac.in/moodle
-SUMMARY:Tic-Tac-Toe
-DESCRIPTION:<h1 style="font-size: 1.2em\; font-family: verdana\, arial\, he
-	 lvetica\, sans-serif\;">Tic Tac Toe</h1><p style="font-family: verdana\, ar
-	 ial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;">Tic Tac Toe
-	  is an extremely simple game. We will assume that you know the rules of the
-	  game\, but just in case\, you can read about it <a href="http://en.wikiped
-	 ia.org/wiki/Tic_tac_toe" style="color: rgb(174\, 17\, 7)\; text-decoration:
-	  none\;">on Wikipedia</a>. Make a GUI to let two players play Tic-Tac-Toe. 
-	 Your game must support atleast the following functionality:</p><ul style="f
-	 ont-family: verdana\, arial\, helvetica\, sans-serif\; font-size: 12.800000
-	 1907349px\;"><li>The user should be able to create a new game.</li><li>You 
-	 should display when the game has ended\, either in as a win (e.g. Player X 
-	 wins!)\, or a draw (e.g. It's a draw!)</li><li>[Extra credit] Implement an 
-	 AI player with two strategies\, random (chooses a square at random) and opt
-	 imal (chooses the best possible move). You should also implement a menu fea
-	 ture that allows the user to select whether to play with an AI (then random
-	 /optimal) or to play with another human.</li></ul><p style="font-family: ve
-	 rdana\, arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;">I
-	 t is very important that you attempt the assignment in as unique a way as p
-	 ossible. Be creative.</p><h2 style="font-size: 1em\; font-family: verdana\,
-	  arial\, helvetica\, sans-serif\;">Submission Details</h2><p style="font-fa
-	 mily: verdana\, arial\, helvetica\, sans-serif\; font-size: 12.800000190734
-	 9px\;">When submitting\, please put a screenshot of your program in your ec
-	 lipse project folder before exporting the project. Remember to choose the s
-	 creenshot while exporting!</p><h2 style="font-size: 1em\; font-family: verd
-	 ana\, arial\, helvetica\, sans-serif\;">Ideas</h2><p style="font-family: ve
-	 rdana\, arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;">S
-	 ome ideas to get you started (you are by no means restricted or obligated t
-	 o implement these):</p><ul style="font-family: verdana\, arial\, helvetica\
-	 , sans-serif\; font-size: 12.8000001907349px\;"><li>Let the user select an 
-	 NxN board (in NxN tic-tac-toe\, a player must place N Xs or Os in a row to 
-	 win).</li><li>Use images instead of Xs and Os</li><li>Keep track of score a
-	 cross games (Player 1 wins vs. Player 2 wins).</li></ul><p style="font-fami
-	 ly: verdana\, arial\, helvetica\, sans-serif\; font-size: 12.8000001907349p
-	 x\;">Check out the <a href="http://en.wikipedia.org/wiki/Tic_tac_toe#Variat
-	 ions" style="color: rgb(174\, 17\, 7)\; text-decoration: none\;">Variations
-	  section on Wikipedia</a> for some more ideas.</p>\n
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150330T081428Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150405T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-BEGIN:VEVENT
-UID:1958@www.cse.iitm.ac.in/moodle
-SUMMARY:Knight's Tour
-DESCRIPTION:<h1 style="font-size: 1.2em\; font-family: verdana\, arial\, he
-	 lvetica\, sans-serif\;">Knight's Tour</h1><p style="font-family: verdana\, 
-	 arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;">Is it pos
-	 sible to visit every possible square on a chess-board exactly once using a 
-	 single knight (also known as a horse)?</p><p style="font-family: verdana\, 
-	 arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;"></p><cent
-	 er style="font-family: verdana\, arial\, helvetica\, sans-serif\; font-size
-	 : 12.8000001907349px\;"><img src="http://www.cse.iitm.ac.in/moodle/file.php
-	 /358/Knights-Tour-Animation.gif" /></center><p style="font-family: verdana\
-	 , arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;"></p><p 
-	 style="font-family: verdana\, arial\, helvetica\, sans-serif\; font-size: 1
-	 2.8000001907349px\;">This is the famous Knight's Tour problem. In this assi
-	 gnment\, you will have to computationally search for a solution to the prob
-	 lem. We have written a simple UI to help you visualise what your algorithm 
-	 is doing. This will require you to inherit a particular class\, and use a c
-	 ouple of functions.</p><p style="font-family: verdana\, arial\, helvetica\,
-	  sans-serif\; font-size: 12.8000001907349px\;"></p><center style="font-fami
-	 ly: verdana\, arial\, helvetica\, sans-serif\; font-size: 12.8000001907349p
-	 x\;"><img src="http://www.cse.iitm.ac.in/moodle/file.php/358/knights-tour-g
-	 ui.png" /></center><p style="font-family: verdana\, arial\, helvetica\, san
-	 s-serif\; font-size: 12.8000001907349px\;"></p><h2 style="font-size: 1em\; 
-	 font-family: verdana\, arial\, helvetica\, sans-serif\;">Interfacing</h2><u
-	 l style="font-family: verdana\, arial\, helvetica\, sans-serif\; font-size:
-	  12.8000001907349px\;"><li><p>You will need to inherit the &quot\;ChessBoar
-	 d&quot\; class and implement a single abstract function\, <code>List<move> 
-	 tour(Move start)</move></code></p></li><li><p>In order to draw the UI\, you
-	 r main function must call the &quot\;initialise&quot\; routine\, as follows
-	 :</p><pre><font size="4"><code style="font-size: 1.2em\;">public class MyTo
-	 ur extends ChessBoard { public static void main(String[] args) { // Initial
-	 ise must be called to setup the gui initialise(new MyTour())\; } @Override 
-	 List&lt\;Move&gt\; tour(Move m) { // Solve } } </code></font></pre></li><li
-	 ><p>When writing your algorithm\, when you move the knight to a new square\
-	 , call the <code>makeMove(Move)</code> function. If you need to &quot\;back
-	 track&quot\; or return the knight to the previous position\, call the <code
-	 >undoMove()</code> function.</p></li><li><p>We have provided a function <co
-	 de>Move[] reachableMoves()</code> that retrieves the valid positions a knig
-	 ht could move to from the current position (all L-like moves that are withi
-	 n the board).</p></li></ul><h2 style="font-size: 1em\; font-family: verdana
-	 \, arial\, helvetica\, sans-serif\;">Templates</h2><p style="font-family: v
-	 erdana\, arial\, helvetica\, sans-serif\; font-size: 12.8000001907349px\;">
-	 You can download the GUI template <a href="http://www.cse.iitm.ac.in/moodle
-	 /file.php/358/KnightsTour.tar.gz" style="color: rgb(174\, 17\, 7)\; text-de
-	 coration: none\;">here</a>. You will have to create your own Java class fol
-	 lowing the information provided above.</p><h2 style="font-size: 1em\; font-
-	 family: verdana\, arial\, helvetica\, sans-serif\;">FAQ</h2><ol style="font
-	 -family: verdana\, arial\, helvetica\, sans-serif\; font-size: 12.800000190
-	 7349px\;"><li>It takes forever to run! Is this normal?<br /><ul><li>The sta
-	 ndard brute-force approach <em>will not work</em>\; you will see tens of th
-	 ousands of steps before you discover a valid knight's tour. The key lies in
-	  exploring the <em>right</em> positions first. Code a brute-force solution 
-	 first and observe where the solution gets stuck. Experiment with different 
-	 exploration strategies and see how they help. Many solutions are in the 200
-	 -1\,000 range with the right <em>heuristic</em>.</li></ul></li><li><p>Hmm..
-	 . How can I use the standard sorting routines provided by Java?</p><ul><li>
-	 <p>In order to sort the elements of an array\, you can use the <code>Arrays
-	 .sort(T[]\, Comparator&lt\;? super T&gt\;)</code> function. To implement a 
-	 comparator\, you will have to create a private class like this:</p><pre><fo
-	 nt size="4"><code style="font-size: 1.2em\;">public class MyTour extends Ch
-	 essBoard { ... private class MoveComparator implements Comparator<move> { p
-	 ublic MoveComparator() { } @Override public int compare(Move o1\, Move o2) 
-	 { // Pretty useless of a comparison return (o1.row - o2.row) + (o1.col - o2
-	 .col)\; } } ... } </move></code></font></pre></li></ul></li><li><p>The stop
-	  button does not work!</p><ul><li>Unfortunately\, without considerably comp
-	 licating your program it is hard to ensure that your code has stopped. If y
-	 ou can write your code to return null as soon as possible when the &quot\;i
-	 sRunning()&quot\; function returns true\, then all will be well. Otherwise\
-	 , manage <img alt="wink" width="15" height="15" src="http://www.cse.iitm.ac
-	 .in/moodle/pix/s/wink.gif" />.</li></ul></li></ol>\n
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150330T111859Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150405T182500Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-BEGIN:VEVENT
-UID:1810@www.cse.iitm.ac.in/moodle
-SUMMARY:Term Exam II
-DESCRIPTION:
-
-CLASS:PUBLIC
-LAST-MODIFIED:20150112T175634Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150406T083000Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-BEGIN:VEVENT
-UID:1971@www.cse.iitm.ac.in/moodle
-SUMMARY:Question 4
-DESCRIPTION: <font size="2"><b>Martian Mining (</b><b>Bonus Question - 30 p
-	 ts</b><b>):</b></font><div><b><font size="2"><br /></font></b></div><div>  
-	 <p style="box-sizing: border-box\; margin: 0px 0px 10px\;"><font size="2">T
-	 he Mars Odyssey program revealed that the surface of Mars is very rich in y
-	 eyenum and bloggium. These minerals are important ingredients for certain r
-	 evolutionary new medicines\, but they are extremely rare on Earth. The aim 
-	 is to mine these minerals on Mars and bring them back to Earth.</font></p> 
-	  <p style="box-sizing: border-box\; margin: 0px 0px 10px\;"><font size="2">
-	 The Mars Odyssey orbiter identified a rectangular area on the surface of Ma
-	 rs that is rich in minerals. The area is divided into cells that form a mat
-	 rix of n rows and m columns\, where the rows go from east to west and the c
-	 olumns go from north to south. The orbiter determined the amount of yeyenum
-	  and bloggium in each cell. The astronauts will build a yeyenum refinement 
-	 factory west of the rectangular area and a bloggium factory to the north. Y
-	 our task is to design the conveyor belt system that will allow them to mine
-	  the largest amount of minerals.</font></p>  <p style="box-sizing: border-b
-	 ox\; margin: 0px 0px 10px\;"><font size="2">There are two types of conveyor
-	  belts: the first moves minerals from east to west\, the second moves miner
-	 als from south to north. In each cell you can build either type of conveyor
-	  belt\, but you cannot build both of them in the same cell. If two conveyor
-	  belts of the same type are next to each other\, then they can be connected
-	 . For example\, the bloggium mined at a cell can be transported to the blog
-	 gium refinement factory via a series of south-north conveyor belts.</font><
-	 /p>  <p style="box-sizing: border-box\; margin: 0px 0px 10px\;"><font size=
-	 "2">The minerals are very unstable\, thus they have to be brought to the fa
-	 ctories on a straight path without any turns. This means that if there is a
-	  south-north conveyor belt in a cell\, but the cell north of it contains an
-	  east-west conveyor belt\, then any mineral transported on the south-north 
-	 conveyor belt will be lost. The minerals mined in a particular cell have to
-	  be put on a conveyor belt immediately\, in the same cell (thus they cannot
-	  start the transportation in an adjacent cell). Furthermore\, any bloggium 
-	 transported to the yeyenum refinement factory will be lost\, and vice versa
-	 .</font></p>  <p style="box-sizing: border-box\; margin: 0px 0px 10px\;"><f
-	 ont size="2"><img src="http://www.spoj.pl/content/john_jones:martian.jpg" /
-	 ></font></p>  <p style="box-sizing: border-box\; margin: 0px 0px 10px\;"><f
-	 ont size="2"><br /></font></p>  <p style="box-sizing: border-box\; margin: 
-	 0px 0px 10px\;"><font size="2">Your program has to design a conveyor belt s
-	 ystem that maximizes the total amount of minerals mined\,i.e.\, the sum of 
-	 the amount of yeyenum transported to the yeyenum refinery and the amount of
-	  bloggium transported to the bloggium refinery.</font></p><hr />  <h3 style
-	 ="box-sizing: border-box\;"><font size="2">Input Format</font></h3>  <p sty
-	 le="box-sizing: border-box\; margin: 0px 0px 10px\;"><font size="2">The inp
-	 ut contains several blocks of test cases. Each case begins with a line cont
-	 aining two integers: the number 1 &lt\;= n &lt\;= 500 of rows\, and the num
-	 ber 1 &lt\;= m &lt\;= 500 of columns. The next n lines describe the amount 
-	 of yeyenum that can be found in the cells. Each of these n lines contains m
-	  integers. The first line corresponds to the northernmost row\; the first i
-	 nteger of each line corresponds to the westernmost cell of the row. The int
-	 egers are between 0 and 1000. The next n lines describe in a similar fashio
-	 n the amount of bloggium found in the cells.</font></p>  <p style="box-sizi
-	 ng: border-box\; margin: 0px 0px 10px\;"><font size="2">The input is termin
-	 ated by a block with n = m = 0.</font></p>  <h3 style="box-sizing: border-b
-	 ox\;"><font size="2">Output Format</font></h3>  <p style="box-sizing: borde
-	 r-box\; margin: 0px 0px 10px\;"><font size="2">For each test case\, you hav
-	 e to output a single integer on a separate line: the maximum amount of mine
-	 rals that can be mined.</font></p><hr />  <p style="box-sizing: border-box\
-	 ; margin: 0px 0px 10px\;"><b><font size="2">Example:</font></b></p>  <p sty
-	 le="box-sizing: border-box\; margin: 0px 0px 10px\;"><b><font size="2"><u>I
-	 nput</u></font></b></p>  <p style="box-sizing: border-box\; margin: 0px 0px
-	  10px\;"><font size="2">4 4<br /></font><font size="2">0 0 10 9<br /></font
-	 ><font size="2">1 3 10 0<br /></font><font size="2">4 2 1 3<br /></font><fo
-	 nt size="2">1 1 20 0<br /></font><font size="2">10 0 0 0<br /></font><font 
-	 size="2">1 1 1 30<br /></font><font size="2">0 0 5 5<br /></font><font size
-	 ="2">5 10 10 10<br /></font><font size="2">0 0</font></p>  <p style="box-si
-	 zing: border-box\; margin: 0px 0px 10px\;"><b><font size="2"><u>Output</u><
-	 /font></b></p>  <p style="box-sizing: border-box\; margin: 0px 0px 10px\;">
-	 <span style="font-size: small\;">98</span></p>  <p style="box-sizing: borde
-	 r-box\; margin: 0px 0px 10px\;"><a href="http://www.cse.iitm.ac.in/moodle/f
-	 ile.php/358/yourRollNumberInCap_Q4.tar.gz"><font size="2">Template with tes
-	 t cases<br /></font></a></p>  <p style="color: rgb(34\, 34\, 34)\;"><b><fon
-	 t size="2">Note: Compile and run your program on the command line using the
-	  provided test cases\, once the algorithm has been written. How to do that 
-	 is given in the template.<br /></font></b></p></div>\n
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150406T111336Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150406T114000Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-BEGIN:VEVENT
-UID:1966@www.cse.iitm.ac.in/moodle
-SUMMARY:Question 1
-DESCRIPTION:<p style="font-size: 12.96px\; line-height: 19.44px\;"><b><u>Lo
-	 ngest Bitonic Subsequence (40 pts)</u></b></p><p style="font-size: 12.96px\
-	 ; line-height: 19.44px\;">Given an array arr[0 … n-1] containing n positive
-	  integers\, a <a href="http://en.wikipedia.org/wiki/Subsequence" target="_b
-	 lank" style="text-decoration: none\;"><font color="#3300ff">subsequence</fo
-	 nt></a> of arr[] is called Bitonic if it is first increasing\, then decreas
-	 ing. Write a function that takes an array as argument and returns the lengt
-	 h of the longest bitonic subsequence.<br />A sequence\, sorted in increasin
-	 g order is considered Bitonic with the decreasing part as empty. Similarly\
-	 , decreasing order sequence is considered Bitonic with the increasing part 
-	 as empty.</p><p style="font-size: 12.96px\; line-height: 19.44px\;"><b styl
-	 e="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">Expected Complexity: </b
-	 ><span style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">O(N^2) where 
-	 N is the length of the array.</span></p><div class="gmail_extra" style="col
-	 or: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><b>Input Format</b></div><div 
-	 class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">
-	 The first line of the input contains a number T which is the number of test
-	  cases. T test cases follow. Each test case has 2 lines. The first line of 
-	 each test case is N - the length of the input array. The second line of eac
-	 h test case contains the N space-separated numbers which are the elements i
-	 n the array.</div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\
-	 ; font-size: 12.8px\;"><br /></div><div class="gmail_extra" style="color: r
-	 gb(34\, 34\, 34)\; font-size: 12.8px\;"><b>Output Format</b></div><div clas
-	 s="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">Prin
-	 t the length of the longest bitonic subsequence for each test case on a new
-	  line.</div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font
-	 -size: 12.8px\;"><br /></div><div class="gmail_extra" style="color: rgb(34\
-	 , 34\, 34)\; font-size: 12.8px\;"><b>Sample Input</b></div><div class="gmai
-	 l_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">3</div><div
-	  class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"
-	 >8</div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-siz
-	 e: 12.8px\;">1 11 2 10 4 5 2 1</div><div class="gmail_extra" style="color: 
-	 rgb(34\, 34\, 34)\; font-size: 12.8px\;">6</div><div class="gmail_extra" st
-	 yle="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;">12 11 40 5 3 1</div><d
-	 iv class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\
-	 ;">6</div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-s
-	 ize: 12.8px\;">80 60 30 40 20 10</div><div class="gmail_extra" style="color
-	 : rgb(34\, 34\, 34)\; font-size: 12.8px\;"><br /></div><div class="gmail_ex
-	 tra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><b>Sample Outpu
-	 t</b></div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-
-	 size: 12.8px\;">6</div><div class="gmail_extra" style="color: rgb(34\, 34\,
-	  34)\; font-size: 12.8px\;">5</div><div class="gmail_extra" style="color: r
-	 gb(34\, 34\, 34)\; font-size: 12.8px\;">5</div><div class="gmail_extra" sty
-	 le="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><br /></div><div class=
-	 "gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><b>Exp
-	 lanation:</b></div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)
-	 \; font-size: 12.8px\;"><span style="font-size: 12.8px\;">Test-case 1: For 
-	 arr = {1\, 11\, 2\, 10\, 4\, 5\, 2\, 1} - The longest bitonic subsequence w
-	 ould be {1\, 11\, 10\, 5\, 2\, 1} or </span><span style="font-size: 12.8px\
-	 ;">{1\, 11\, 10\, 4</span><span style="font-size: 12.8px\;">\, 2\, 1}</span
-	 ><span style="font-size: 12.8px\;"> whose length is <b>6</b>.</span></div><
-	 div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px
-	 \;"><span style="font-size: 12.8px\;">Test-case 2: For arr = {12\, 11\, 40\
-	 , 5\, 3\, 1} - The answer would be {12\, 40\, 5\, 3\, 1} or {11\, 40\, 5\, 
-	 3\, 1} whose length is <b>5</b>.</span></div><div class="gmail_extra" style
-	 ="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><span style="font-size: 1
-	 2.8px\;">Test-case 3: For arr = {</span><span style="font-size: 12.8px\;">8
-	 0\, 60\, 30\, 40\, 20\, 10</span><span style="font-size: 12.8px\;">} - The 
-	 answer would be {80\, 60\, 40\, 20\, 10} or {80\, 60\, 30\, 20\, 10} whose 
-	 length is </span><b style="font-size: 12.8px\;">5</b><span style="font-size
-	 : 12.8px\;">.</span></div><div class="gmail_extra" style="color: rgb(34\, 3
-	 4\, 34)\; font-size: 12.8px\;"><span style="font-size: 12.8px\;"><br /></sp
-	 an></div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-si
-	 ze: 12.8px\;"><span style="font-size: 12.8px\;"><br /></span></div><div cla
-	 ss="gmail_extra" style="color: rgb(34\, 34\, 34)\; font-size: 12.8px\;"><sp
-	 an style="font-size: 12.8px\;"><a href="http://www.cse.iitm.ac.in/moodle/fi
-	 le.php/358/yourRollNumberInCap_Q1.tar.gz">Template with test cases</a><br /
-	 ></span></div><div class="gmail_extra" style="color: rgb(34\, 34\, 34)\;"><
-	 font size="2"><br /></font></div><div class="gmail_extra" style="color: rgb
-	 (34\, 34\, 34)\;">  <p><b><font size="2">Note: Compile and run your program
-	  on the command line using the provided test cases\, once the algorithm has
-	  been written. How to do that is given in the template.<br /></font></b></p
-	 ></div>\n
-	 
-CLASS:PUBLIC
-LAST-MODIFIED:20150406T111141Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150406T121000Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-BEGIN:VEVENT
-UID:1967@www.cse.iitm.ac.in/moodle
-SUMMARY:Question 2
-DESCRIPTION:<p style="white-space: pre-wrap\; color: rgb(34\, 34\, 34)\;"><
-	 b><font size="2"><u>Is there a permutation? (30 pts):<br /></u></font></b><
-	 span style="font-size: small\;">You are given two arrays - </span><span sty
-	 le="font-size: small\;">A</span><span style="font-size: small\;"> and </spa
-	 n><span style="font-size: small\;">B</span><span style="font-size: small\;"
-	 >\, each containing </span><span style="font-size: small\;">N</span><span s
-	 tyle="font-size: small\;"> integers. </span><b style="font-size: small\;">I
-	 s there a permutation A'\, B' possible for A and B respectively\, such that
-	 \, A'<sub>i</sub>+B'<sub>i</sub> ≥ K for all i\, </b><span style="font-size
-	 : small\;">where </span><span style="font-size: small\;">A'<sub>i</sub></sp
-	 an><span style="font-size: small\;"> denotes the </span><span style="font-s
-	 ize: small\;">i<sup>th</sup></span><span style="font-size: small\;"> elemen
-	 t in the array </span><span style="font-size: small\;">A'</span><span style
-	 ="font-size: small\;"> and </span><span style="font-size: small\;">B'<sub>i
-	 </sub></span><span style="font-size: small\;"> denotes </span><span style="
-	 font-size: small\;">i<sup>th</sup></span><span style="font-size: small\;"> 
-	 element in the array </span><span style="font-size: small\;">B'</span><span
-	  style="font-size: small\;">.<br /></span><b><font size="2">Note: The time 
-	 complexity of the solution must be O(N*logN)</font></b></p><hr /><p style="
-	 white-space: pre-wrap\; color: rgb(34\, 34\, 34)\;"><b style="font-size: sm
-	 all\;"><u>Input Format</u> <br /></b><span style="font-size: small\;">The f
-	 irst line contains an integer\, </span><em style="font-size: small\;">T</em
-	 ><span style="font-size: small\;">\, the number of test-cases. </span><em s
-	 tyle="font-size: small\;">T</em><span style="font-size: small\;"> test case
-	 s follow. Each test case has the following format - </span><span style="fon
-	 t-size: small\;">The first line contains two integers\, </span><em style="f
-	 ont-size: small\;">N</em><span style="font-size: small\;"> and </span><em s
-	 tyle="font-size: small\;">K</em><span style="font-size: small\;">. The seco
-	 nd line contains </span><em style="font-size: small\;">N</em><span style="f
-	 ont-size: small\;"> space separated integers\, denoting array </span><em st
-	 yle="font-size: small\;">A</em><span style="font-size: small\;">. The third
-	  line describes array </span><em style="font-size: small\;">B</em><span sty
-	 le="font-size: small\;"> in a same format.</span></p><p style="white-space:
-	  pre-wrap\; color: rgb(34\, 34\, 34)\;"><font size="2"><strong><u>Output Fo
-	 rmat</u><br /></strong></font><font size="2">For each test case\, if such a
-	 n arrangement exists\, output &quot\;YES&quot\;\, otherwise &quot\;NO&quot\
-	 ; (without quotes).<br /></font></p><hr /><p style="white-space: pre-wrap\;
-	  color: rgb(34\, 34\, 34)\;"><font size="2"><strong>Sample Input<br /></str
-	 ong></font><font size="2">2<br /></font><font size="2">3 10<br /></font><fo
-	 nt size="2">2 1 3<br /></font><font size="2">7 8 9<br /></font><font size="
-	 2">4 5<br /></font><font size="2">1 2 2 1<br /></font><font size="2">3 3 3 
-	 4</font></p><p style="white-space: pre-wrap\; color: rgb(34\, 34\, 34)\;"><
-	 font size="2"><strong>Sample Output<br /></strong></font><font size="2">YES
-	 <br /></font><font size="2">NO</font></p><p style="white-space: pre-wrap\; 
-	 color: rgb(34\, 34\, 34)\;"><strong><font size="2">Explanation<br /></font>
-	 </strong><font size="2">The first input has 3 elements in Array <em>A</em> 
-	 and Array <em>B</em>\, we see that the one of the arrangements\, 3 2 1 and 
-	 7 8 9 has each pair of elements (3+7\, 2 + 8 and 9 + 1) summing upto 10 and
-	  hence the answer is &quot\;YES&quot\;.<br /></font><font size="2">The seco
-	 nd input has array B with three 3s. So\, we need at least three numbers in 
-	 A that are greater than 1. As this is not the case\, the answer is &quot\;N
-	 O&quot\;. <br /></font><b><font size="2"><br /></font></b></p><p style="whi
-	 te-space: pre-wrap\; color: rgb(34\, 34\, 34)\;"><b><font size="2"><u>Sampl
-	 e Input<br /></u></font></b><font size="2">3<br /></font><font size="2">25 
-	 36<br /></font><font size="2">23 19 30 22 2 21 1 32 13 5 31 16 28 34 14 9 1
-	  25 1 14 5 31 22 10 26<br /></font><font size="2">19 29 25 8 6 10 15 1 28 1
-	 1 3 1 2 21 6 18 17 4 1 35 28 27 1 15 17<br /></font><font size="2">39 30<br
-	  /></font><font size="2">6 22 2 13 30 28 4 14 12 12 17 12 12 25 26 21 21 24
-	  4 10 9 12 18 2 6 2 8 28 4 1 22 15 30 8 2 1 4 16 24<br /></font><font size=
-	 "2">8 12 15 26 8 15 14 25 33 13 23 28 29 8 12 31 13 33 0 6 27 14 8 34 26 27
-	  23 28 22 25 13 22 34 30 35 25 28 28 27<br /></font><font size="2">11 25<br
-	  /></font><font size="2">8 21 5 12 11 2 11 6 14 14 2<br /></font><font size
-	 ="2">20 13 5 18 21 21 9 1 10 2 4</font><strong style="font-size: small\;"><
-	 br /></strong></p><p style="white-space: pre-wrap\; color: rgb(34\, 34\, 34
-	 )\;"><b style="font-size: small\;"><u>Sample Output<br /></u></b><span styl
-	 e="font-size: small\;">NO<br /></span><font size="2">YES<br /></font><font 
-	 size="2">NO</font></p><p style="white-space: pre-wrap\; color: rgb(34\, 34\
-	 , 34)\;"><a href="http://www.cse.iitm.ac.in/moodle/file.php/358/yourRollNum
-	 berInCap_Q2.tar.gz"><font size="2">Template with test cases</font></a></p><
-	 p style="white-space: pre-wrap\;"><b style="color: rgb(34\, 34\, 34)\;"><fo
-	 nt size="2">Note: Compile and run your program on the command line using th
-	 e provided test cases\, once the algorithm has been written. How to do that
-	  is given in the template.<br /></font></b></p>\n
-CLASS:PUBLIC
-LAST-MODIFIED:20150406T111155Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150406T121000Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
-UID:1968@www.cse.iitm.ac.in/moodle
-SUMMARY:Question 3
-DESCRIPTION:<p style="font-size: small\;"><b style="line-height: 16px\;">So
-	 rting in Servers (30 pts):<br /></b><span style="line-height: 16px\;">There
-	  are k servers in a data center. Each server has a sorted list of integers.
-	  There are n/k integers in each server\, where n is the total number of int
-	 egers. There is one central server C which can communicate with all k serve
-	 rs but does not have a list of its own. The k servers cannot communicate am
-	 ongst themselves but can communicate with the central server C. The task of
-	  the central server C is to create a sorted list of n integers from the k s
-	 orted lists of k servers. Write a program to perform this task.</span></p><
-	 p style="font-size: small\;"><b style="line-height: 16px\;">NOTE</b><span s
-	 tyle="line-height: 16px\;">: There are total k+1 servers (k slave servers a
-	 nd 1 central server).</span></p><p style="font-size: small\;"><span style="
-	 line-height: 16px\;"><b>Expected time and space complexity</b>: O(n log k).
-	  Any higher complexity will not be given any points. At the central server\
-	 , the maximum memory that can be used is O(k).</span></p><p style="font-siz
-	 e: small\;"><b style="line-height: 16px\;">Input format:<br /></b><span sty
-	 le="line-height: 16px\;">Line 1 : &lt\;Number of slave servers&gt\; &lt\;Nu
-	 mber of integers in a single server&gt\;<br /></span><span style="line-heig
-	 ht: 16px\;">Line 2 : List of n/k integers in 1st slave server<br /></span><
-	 span style="line-height: 16px\;">Line 3 : List of n/k integers in 2nd slave
-	  server<br /></span><span style="line-height: 16px\;">.<br /></span><span s
-	 tyle="line-height: 16px\;">.<br /></span><span style="line-height: 16px\;">
-	 .<br /></span><span style="line-height: 16px\;">Line k+1 : List of n/k inte
-	 gers in kth slave server </span></p><p style="font-size: small\;"><span sty
-	 le="line-height: 16px\;"><b>Output format:<br /></b></span><span style="lin
-	 e-height: 16px\;">Line 1: Sorted list of n integers<br /></span><span style
-	 ="line-height: 16px\;"><br /></span></p><p style="font-size: small\;"><span
-	  style="line-height: 16px\;"><b><u>Example:</u></b> <br /></span><b style="
-	 line-height: 16px\;">Input:<br /></b><span style="line-height: 16px\;">4 6<
-	 br /></span><span style="line-height: 16px\;">41 62 64 76 83 83<br /></span
-	 ><span style="line-height: 16px\;">11 18 45 59 83 93<br /></span><span styl
-	 e="line-height: 16px\;">57 57 78 82 91 98<br /></span><span style="line-hei
-	 ght: 16px\;">10 32 48 66 70 89<br /></span><span style="line-height: 16px\;
-	 "><b><br />Output:<br /></b></span><span style="line-height: 16px\;">10 11 
-	 18 32 41 45 48 57 57 59 62 64 66 70 76 78 82 83 83 83 89 91 93 9<font face=
-	 "Trebuchet MS\, Verdana\, Arial\, Helvetica\, sans-serif">8</font></span></
-	 p><p style="font-size: small\;"><a href="http://www.cse.iitm.ac.in/moodle/f
-	 ile.php/358/yourRollNumberInCap_Q3.tar.gz"><span>Template with test Cases</
-	 span></a></p><p style="font-size: small\;"><b style="color: rgb(34\, 34\, 3
-	 4)\;">Note: Compile and run your program on the command line using the prov
-	 ided test cases\, once the algorithm has been written. How to do that is gi
-	 ven in the template.<br /></b></p>\n
-CLASS:PUBLIC
-LAST-MODIFIED:20150406T100607Z
-DTSTAMP:20150413T191739Z
-DTSTART:20150406T121000Z
-CATEGORIES:EVEN-15-CS2810
-END:VEVENT
-
-BEGIN:VEVENT
 UID:1969@www.cse.iitm.ac.in/moodle
 SUMMARY:Lab 9: Late Submission Link
 DESCRIPTION:Use this link for submitting the assignment after the given dea
 	 dline. 
+	 
 CLASS:PUBLIC
 LAST-MODIFIED:20150404T121019Z
-DTSTAMP:20150413T191739Z
+DTSTAMP:20150413T231956Z
 DTSTART:20150412T182500Z
 CATEGORIES:EVEN-15-CS2810
 END:VEVENT
-
 BEGIN:VEVENT
 UID:1808@www.cse.iitm.ac.in/moodle
 SUMMARY:Programming Assignment 3 Deadline
 DESCRIPTION:
 CLASS:PUBLIC
 LAST-MODIFIED:20150112T125023Z
-DTSTAMP:20150413T191739Z
+DTSTAMP:20150413T231956Z
 DTSTART:20150415T182500Z
 CATEGORIES:EVEN 15 CS2400
 END:VEVENT
-
 BEGIN:VEVENT
 UID:1802@www.cse.iitm.ac.in/moodle
 SUMMARY:Short Exam 4
 DESCRIPTION:
 CLASS:PUBLIC
 LAST-MODIFIED:20150112T124612Z
-DTSTAMP:20150413T191739Z
+DTSTAMP:20150413T231956Z
 DTSTART:20150424T073000Z
 DTEND:20150424T082000Z
 CATEGORIES:EVEN 15 CS2400
 END:VEVENT
-
+BEGIN:VEVENT
+UID:1984@www.cse.iitm.ac.in/moodle
+SUMMARY:Project upload link
+DESCRIPTION: Please use this link to upload your project. 
+CLASS:PUBLIC
+LAST-MODIFIED:20150413T211233Z
+DTSTAMP:20150413T231956Z
+DTSTART:20150426T182500Z
+CATEGORIES:EVEN-15-CS2810
+END:VEVENT
+BEGIN:VEVENT
+UID:1954@www.cse.iitm.ac.in/moodle
+SUMMARY:Bonus Problem Set 1
+DESCRIPTION: Please upload your solutions for Bonus PS-1 here. Read instruc
+	 tions regarding uploading in PS-1. Any kind of plagiarism will have serious
+	  consequences.<br />
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150328T161122Z
+DTSTAMP:20150413T231956Z
+DTSTART:20150510T160500Z
+CATEGORIES:EVEN15 CS2200 
+END:VEVENT
+BEGIN:VEVENT
+UID:1911@www.cse.iitm.ac.in/moodle
+SUMMARY:Bonus Problem Set 2
+DESCRIPTION: Please upload your solutions for Bonus PS-2 here. Solutions mu
+	 st be typset in Latex and a compiled .pdf file should be uploaded along wit
+	 h the .tex source file. <br />Plagiarism of any kind is not acceptable. If 
+	 found\, all roll numbers involved in plagiarism will not be eligible for gr
+	 ades obtained from bonus problem sets and as a penalty 2 marks will be dedu
+	 cted from your final grades. <br /> 
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150328T160745Z
+DTSTAMP:20150413T231956Z
+DTSTART:20150510T182500Z
+CATEGORIES:EVEN15 CS2200 
+END:VEVENT
 END:VCALENDAR

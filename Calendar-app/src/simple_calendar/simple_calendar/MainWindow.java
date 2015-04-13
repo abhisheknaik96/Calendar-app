@@ -327,6 +327,7 @@ public class MainWindow extends Application
 	public static void main(String[] args) throws IOException
 	{
 		addDefaultEvents();
+		//Runtime.getRuntime().exec("python ../../get_ical.py");
 		Event.integrateMoodleCalendar();
 		
 		launch(args);

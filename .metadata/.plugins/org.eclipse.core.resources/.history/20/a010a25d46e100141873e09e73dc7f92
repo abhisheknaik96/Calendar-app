@@ -1,0 +1,107 @@
+/**   
+*  This file is part of SimpleCalender.
+    
+*  SimpleCalender is free software: you can redistribute it and/or modify   
+*  it under the terms of the GNU General Public License as published by   
+*  the Free Software Foundation, either version 3 of the License, or   
+*  (at your option) any later version.
+     
+*  SimpleCalender is distributed in the hope that it will be useful,   
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of   
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the   
+*  GNU General Public License for more details.
+
+*  <http://www.gnu.org/licenses/>.
+     
+*/ 
+#CalendarShowEventsHover{
+	-fx-font-size: 10.0px;
+	-fx-background-color : black;
+	-fx-text-fill: lightblue;
+} 
+#TodayLabel {
+	-fx-font-size: 26.0px;
+	-fx-text-fill: blue;
+}
+#UpcomingLabel {
+	-fx-font-size: 26.0px;
+	-fx-text-fill: blue;
+}
+#EventName {
+	-fx-font-size: 16.0px;
+	-fx-text-fill: red;
+}
+#EventTime{
+	-fx-font-size: 13.0px;
+}
+#EventDetails{
+	-fx-font-size: 12.0px;
+}
+#DemoLabel {
+	-fx-font-size: 36.0px;
+	-fx-text-fill: salmon;
+}
+#NameLabel {
+	-fx-font-size: 36.0px;
+	-fx-text-fill: blue;
+}
+#DatepickerArrow {
+	-fx-fill: gray;
+	-fx-stroke: gray;
+}
+#DatepickerArrow:hover {
+	-fx-fill: black;
+	-fx-stroke: black;
+}
+#DatePicker {
+	-fx-background-color: linear-gradient(to bottom, white, wheat);
+    -fx-border-color: black;
+}
+#DatepickerDayCell {
+	-fx-background-color: transparent;
+	-fx-border-radius: 4.0;
+	-fx-spacing: 0.0;
+}
+#DatepickerDayCell:hover {
+	-fx-background-color: azure;
+	-fx-border-color: royalblue;
+	-fx-border-radius: 3.0;
+	-fx-text-fill: royalblue;
+}
+#DatepickerDayCell .datepicker-today-cell {
+    -fx-background-color: orange;
+   	-fx-border-radius: 3.0;
+   	-fx-border-style: segments(2.0,2.0);
+   	-fx-border-color: orange;
+    -fx-text-fill: orange;
+	-fx-font-size: 12.0px;
+}
+.datepicker-weekday-row {
+    -fx-background-color: linear-gradient(to bottom, gray, lightgray, lightgray, lightgray, gray);
+    -fx-text-fill: black;
+	-fx-font-size: 12.0px;
+}
+.datepicker-monthyear-row {
+	-fx-background-color: linear-gradient(to bottom, beige, lightsalmon, beige); 
+	-fx-text-fill: black;
+	-fx-font-size: 12.0px;
+}
+.datepicker-othermonth-cell {
+   	-fx-border-radius: 4.0;
+    -fx-text-fill: gray;
+	-fx-font-size: 12.0px;
+}
+#DatepickerTodayButton {
+	-fx-font-size: 12.0px;
+}
+#DatepickerTodayButtonBox {
+	-fx-padding: 5.0;
+}
+#CalenderButton {
+    -fx-font-size: 14.0px;
+	-fx-background-image: url("calender_icon.png");
+	-fx-background-color: null;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+}
+
