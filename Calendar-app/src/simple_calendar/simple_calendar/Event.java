@@ -71,11 +71,11 @@ public class Event
 		});
 	}
 
-	public static void integrateMoodleCalendar() throws IOException
+	public static void integrateMoodleCalendar(String outFileName) throws IOException
 	{
 		BufferedReader in = null;
 		String line;
-		String fileName = "icalexport.ics";
+//		String fileName = "icalexport.ics";
 		String eventName = null;
 		int d,m,y;
 		int hr, min;
@@ -83,7 +83,7 @@ public class Event
 		
 		try
 		{
-			in = new BufferedReader(new FileReader(fileName));
+			in = new BufferedReader(new FileReader(outFileName));
 
 			while ((line= in.readLine()) != null)
 			{
@@ -112,6 +112,7 @@ public class Event
 			if (in != null)
 				in.close();
 		}
+		MainWindow.update();
 	}
 
 }

@@ -69,7 +69,7 @@ public class MainWindow extends Application
 
 	static public void update()
 	{
-		deleteOldEvents();
+//		deleteOldEvents();
 		Event.sortEventsByDate();
 		MainWindow.simpleCal.setDayCells();
 	}
@@ -172,6 +172,27 @@ public class MainWindow extends Application
 			}
 
 		});
+		
+		Button login = new Button();
+		login.setText("Login to Sync");
+		login.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				// Fill stage with content
+				try
+				{
+					showLoginWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load LoginWindow");
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		HBox buttonHolder = new HBox(10);
 		buttonHolder.setAlignment(Pos.BASELINE_CENTER);
@@ -184,7 +205,6 @@ public class MainWindow extends Application
 			@Override
 			public void handle(ActionEvent e)
 			{
-
 				Stage stage = new Stage();
 				try
 				{
@@ -200,7 +220,7 @@ public class MainWindow extends Application
 		});
 
 		dateBox.getChildren().addAll(simpleCal);
-		vbox.getChildren().addAll(label, enterDate, dateBox, buttonHolder, showAllEvents);
+		vbox.getChildren().addAll(label, enterDate, dateBox, login, buttonHolder, showAllEvents);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
@@ -323,12 +343,32 @@ public class MainWindow extends Application
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
+	
+	public void showLoginWindow(Stage stage) throws Exception
+	{
+		Parent root;
+		stage.setTitle("Login to sync Moodle Calendar");
+
+		try
+		{
+			root = FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
 
 	public static void main(String[] args) throws IOException
 	{
 		addDefaultEvents();
 		//Runtime.getRuntime().exec("python ../../get_ical.py");
-		Event.integrateMoodleCalendar();
+		//Event.integrateMoodleCalendar();
 		
 		launch(args);
 	}
