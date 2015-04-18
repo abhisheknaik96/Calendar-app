@@ -15,6 +15,8 @@ public class Task
 	float timeExpected;
 	float gain;
 	Alarm alarm;
+	float weight;
+	float timeSpent;
 
 	public Task(String taskName, int d, int m, int y, int hr, int min,
 			float g, float t, int p)

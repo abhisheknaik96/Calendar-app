@@ -50,7 +50,8 @@ public class MainWindow extends Application
 {
 	static public List<Event> eventList = new ArrayList<Event>();
 	static public List<Task> taskList = new ArrayList<Task>();
-
+	static public List<Day> days = new ArrayList<Day>();
+	
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
 	
