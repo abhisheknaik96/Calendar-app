@@ -56,6 +56,19 @@ public class MainWindow extends Application
 	
 	public static LocalTime classesEnd;
 
+	private static TimeThread timeThread = new TimeThread();
+
+	public void addAlarm(Alarm alarm)
+	{
+		timeThread.addAlarm(alarm);
+		timeThread.start();
+	}
+
+	public static void start()
+	{
+		timeThread.start();
+	}
+	
 	public void setStage(Stage stage)
 	{
 		thisStage = stage;
@@ -370,6 +383,7 @@ public class MainWindow extends Application
 		//Runtime.getRuntime().exec("python ../../get_ical.py");
 		//Event.integrateMoodleCalendar();
 		
+		start();
 		launch(args);
 	}
 

@@ -61,10 +61,13 @@ public class TimeThread extends Thread
 				{
 					// System.out.println("In here");
 					Alarm alarm = eList.get(i).getAlarm();
-					if (!alarm.isFired() && alarm.checkAlarm(now))
+					if(alarm!=null)
 					{
-						MediaPlayer mediaPlayer = new MediaPlayer(sound);
-						mediaPlayer.play();
+						if (!alarm.isFired() && alarm.checkAlarm(now))
+						{
+							MediaPlayer mediaPlayer = new MediaPlayer(sound);
+							mediaPlayer.play();
+						}
 					}
 				}
 

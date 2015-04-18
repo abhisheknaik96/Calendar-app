@@ -11,6 +11,7 @@ public class Alarm
 	private boolean fired = false;
 	private String command;
 
+	
 	// public Alarm( String date, String time, String command )
 	public Alarm(String date, String time)
 	{
