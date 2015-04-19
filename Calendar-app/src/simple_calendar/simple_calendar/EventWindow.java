@@ -155,14 +155,5 @@ public class EventWindow implements javafx.fxml.Initializable
 }
 
 
-//timeHourField.getSelectionModel().selectedItemProperty().addListener(new  
-//ChangeListener<String>() 
-//{
-//public void changed(ObservableValue<? extends String> observable,String  
-//oldValue,String newValue) 
-//{
-//    System.out.println("Value is::"+newValue);
-//}   
-//});
 
 

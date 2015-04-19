@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -46,56 +47,47 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class MainWindow extends Application
-{
+public class MainWindow extends Application {
 	static public List<Event> eventList = new ArrayList<Event>();
 	static public List<Task> taskList = new ArrayList<Task>();
 	static public List<Day> days = new ArrayList<Day>();
-	
+
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
-	
+
 	public static LocalTime classesEnd;
 
 	private static TimeThread timeThread = new TimeThread();
 
-	public void addAlarm(Alarm alarm)
-	{
+	public void addAlarm(Alarm alarm) {
 		timeThread.addAlarm(alarm);
 		timeThread.start();
 	}
 
-	public static void start()
-	{
+	public static void start() {
 		timeThread.start();
 	}
-	
-	public void setStage(Stage stage)
-	{
+
+	public void setStage(Stage stage) {
 		thisStage = stage;
 	}
 
-	public void showStage()
-	{
+	public void showStage() {
 		thisStage.setTitle("Main Window");
 		thisStage.show();
 	}
 
-	static public void update()
-	{
-//		deleteOldEvents();
+	static public void update() {
+		// deleteOldEvents();
 		Event.sortEventsByDate();
 		MainWindow.simpleCal.setDayCells();
 	}
 
-	private static void deleteOldEvents()
-	{
+	private static void deleteOldEvents() {
 		LocalDate d = LocalDate.now();
 		List<Event> list = new ArrayList<Event>();
-		for (Event e : eventList)
-		{
-			if (!e.dateOfEvent.isBefore(d))
-			{
+		for (Event e : eventList) {
+			if (!e.dateOfEvent.isBefore(d)) {
 				list.add(e);
 			}
 		}
@@ -103,8 +95,7 @@ public class MainWindow extends Application
 	}
 
 	@Override
-	public void start(Stage stage) throws Exception
-	{
+	public void start(Stage stage) throws Exception {
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
@@ -112,8 +103,8 @@ public class MainWindow extends Application
 		stage.setScene(scene);
 
 		scene.getStylesheets().addAll(
-				MainWindow.class.getResource(
-						"style/simple_calendar.css").toExternalForm());
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
@@ -127,38 +118,32 @@ public class MainWindow extends Application
 
 		HBox dateBox = new HBox(15);
 		dateBox.setAlignment(Pos.BASELINE_CENTER);
-//		final TextField dateField = new TextField("Selected date");
-//		dateField.setEditable(false);
-//		dateField.setDisable(true);
+		// final TextField dateField = new TextField("Selected date");
+		// dateField.setEditable(false);
+		// dateField.setDisable(true);
 
 		simpleCal = new DatePickerNew();
 		simpleCal.setAlignment(Pos.CENTER_LEFT);
-		simpleCal.dateProperty().addListener(new ChangeListener<Date>()
-		{
+		simpleCal.dateProperty().addListener(new ChangeListener<Date>() {
 			@Override
 			public void changed(ObservableValue<? extends Date> ov,
-					Date oldDate, Date newDate)
-			{
-//				dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
-//						.format(newDate));
+					Date oldDate, Date newDate) {
+				// dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
+				// .format(newDate));
 			}
 		});
 
 		Button addEvent = new Button();
 		addEvent.setText("Add New Event");
-		addEvent.setOnAction(new EventHandler<ActionEvent>()
-		{
+		addEvent.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent e)
-			{
+			public void handle(ActionEvent e) {
 				Stage stage = new Stage();
 				// Fill stage with content
-				try
-				{
+				try {
 					addEventDetailsWindow(stage);
 					stage.show();
-				} catch (Exception e1)
-				{
+				} catch (Exception e1) {
 					System.out.println("Couldn't load EventPage");
 					e1.printStackTrace();
 				}
@@ -167,41 +152,33 @@ public class MainWindow extends Application
 
 		Button addTask = new Button();
 		addTask.setText("Add New Task");
-		addTask.setOnAction(new EventHandler<ActionEvent>()
-		{
+		addTask.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent e)
-			{
+			public void handle(ActionEvent e) {
 				Stage stage = new Stage();
 				// Fill stage with content
-				try
-				{
+				try {
 					addTaskDetailsWindow(stage);
 					stage.show();
-				} catch (Exception e1)
-				{
+				} catch (Exception e1) {
 					System.out.println("Couldn't load TaskPage");
 					e1.printStackTrace();
 				}
 			}
 
 		});
-		
+
 		Button login = new Button();
 		login.setText("Login to Sync");
-		login.setOnAction(new EventHandler<ActionEvent>()
-		{
+		login.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent e)
-			{
+			public void handle(ActionEvent e) {
 				Stage stage = new Stage();
 				// Fill stage with content
-				try
-				{
+				try {
 					showLoginWindow(stage);
 					stage.show();
-				} catch (Exception e1)
-				{
+				} catch (Exception e1) {
 					System.out.println("Couldn't load LoginWindow");
 					e1.printStackTrace();
 				}
@@ -211,46 +188,49 @@ public class MainWindow extends Application
 		HBox buttonHolder = new HBox(10);
 		buttonHolder.setAlignment(Pos.BASELINE_CENTER);
 		buttonHolder.getChildren().addAll(addEvent, addTask);
-		
+
 		Button showAllEvents = new Button();
 		showAllEvents.setText("Show All Events");
-		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
-		{
+		showAllEvents.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent e)
-			{
+			public void handle(ActionEvent e) {
 				Stage stage = new Stage();
-				try
-				{
+				try {
 					showEventDetailsWindow(stage);
 					stage.show();
-				} catch (Exception e1)
-				{
+				} catch (Exception e1) {
 					System.out.println("Couldn't load AllEventsPage");
 					e1.printStackTrace();
 				}
 			}
 
 		});
+		Button scheduleTasks = new Button();
+		scheduleTasks.setText("Get Schedule");
+		scheduleTasks.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				schedule();
+			}
+
+		});
 
 		dateBox.getChildren().addAll(simpleCal);
-		vbox.getChildren().addAll(label, enterDate, dateBox, login, buttonHolder, showAllEvents);
+		vbox.getChildren().addAll(label, enterDate, dateBox, login,
+				buttonHolder, showAllEvents,scheduleTasks);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
 
 	}
 
-	public void addTaskDetailsWindow(Stage stage)
-	{
+	public void addTaskDetailsWindow(Stage stage) {
 		Parent root;
 		stage.setTitle("Add New Event");
 
-		try
-		{
+		try {
 			root = FXMLLoader.load(getClass().getResource("TaskWindow.fxml"));
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("naa ho paaya");
 			e.printStackTrace();
 			return;
@@ -261,8 +241,7 @@ public class MainWindow extends Application
 		stage.sizeToScene();
 	}
 
-	public void showEventDetailsWindow(Stage stage)
-	{
+	public void showEventDetailsWindow(Stage stage) {
 		stage.setTitle("All Events");
 
 		ScrollPane root = new ScrollPane();
@@ -273,8 +252,8 @@ public class MainWindow extends Application
 		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 
 		scene.getStylesheets().addAll(
-				MainWindow.class.getResource(
-						"style/simple_calendar.css").toExternalForm());
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_LEFT);
@@ -286,10 +265,8 @@ public class MainWindow extends Application
 		vbox.getChildren().add(today);
 		int w = 0;
 		LocalDate d = LocalDate.now();
-		for (Event event : eventList)
-		{
-			if (!event.dateOfEvent.isBefore(d) && !event.dateOfEvent.isAfter(d))
-			{
+		for (Event event : eventList) {
+			if (!event.dateOfEvent.isBefore(d) && !event.dateOfEvent.isAfter(d)) {
 				w++;
 				Label name = new Label("  " + w + ". " + event.name);
 				name.setId("EventName");
@@ -299,26 +276,22 @@ public class MainWindow extends Application
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
 				Button edit = new Button("Edit");
-				edit.setOnAction(new EventHandler<ActionEvent>()
-					{
+				edit.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
-					public void handle(ActionEvent e)
-					{
+					public void handle(ActionEvent e) {
 						Stage stage = new Stage();
 						// Fill stage with content
-						try
-						{
-							editEventDetailsWindow(stage,event);
+						try {
+							editEventDetailsWindow(stage, event);
 							stage.show();
-						} catch (Exception e1)
-						{
+						} catch (Exception e1) {
 							System.out.println("Couldn't load TaskPage");
 							e1.printStackTrace();
 						}
 					}
-		
+
 				});
-				vbox.getChildren().addAll(name, time, details,edit);
+				vbox.getChildren().addAll(name, time, details, edit);
 			}
 		}
 		w = 0;
@@ -327,10 +300,8 @@ public class MainWindow extends Application
 		upcoming.setAlignment(Pos.TOP_LEFT);
 		vbox.getChildren().add(upcoming);
 
-		for (Event event : eventList)
-		{
-			if (event.dateOfEvent.isAfter(d))
-			{
+		for (Event event : eventList) {
+			if (event.dateOfEvent.isAfter(d)) {
 				w++;
 				Label name = new Label("  " + w + ". " + event.name);
 				name.setId("EventName");
@@ -340,79 +311,79 @@ public class MainWindow extends Application
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
 				Button edit = new Button("Edit");
-				edit.setOnAction(new EventHandler<ActionEvent>()
-					{
+				edit.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
-					public void handle(ActionEvent e)
-					{
+					public void handle(ActionEvent e) {
 						Stage stage = new Stage();
 						// Fill stage with content
-						try
-						{
-							editEventDetailsWindow(stage,event);
+						try {
+							editEventDetailsWindow(stage, event);
 							stage.show();
-						} catch (Exception e1)
-						{
+						} catch (Exception e1) {
 							System.out.println("Couldn't load TaskPage");
 							e1.printStackTrace();
 						}
 					}
-		
+
 				});
-				vbox.getChildren().addAll(name, time, details,edit);
+				vbox.getChildren().addAll(name, time, details, edit);
 			}
 		}
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
 	}
-	
+
 	public void editEventDetailsWindow(Stage stage, Event event) {
 		Parent root;
 		stage.setTitle("Add New Event");
 
-		try
-		{
+		try {
 			// EventWindow ctrl = new EventWindow();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("EventWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"EventWindow.fxml"));
 			root = loader.load();
-			for(int i=0;i<eventList.size();i++){
-				if(event.name.compareTo(eventList.get(i).name)==0)
+			for (int i = 0; i < eventList.size(); i++) {
+				if (event.name.compareTo(eventList.get(i).name) == 0)
 					eventList.remove(i);
 			}
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("naa ho paaya");
 			e.printStackTrace();
 			return;
 		}
-		
+
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
 
-	public static void addDefaultEvents()
-	{
+	public static void addDefaultEvents() {
 		classesEnd = LocalTime.of(12, 00);
-		
+
 		eventList.add(new Event("Stagecoach", "CLT", 11, 4, 2015, 18, 00));
 		eventList.add(new Event("Final", "BBall Court", 13, 4, 2015, 18, 00));
-		eventList.add(new Event("Maths Tut", "Read and complete", 14, 4, 2015, 14, 00));
-		eventList.add(new Event("LMC Tut", "Read and complete", 14, 4, 2015, 14, 00));
-		eventList.add(new Event("POC Tut", "Read and complete", 14, 4, 2015, 14, 00));
+		eventList.add(new Event("Maths Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+		eventList.add(new Event("LMC Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+		eventList.add(new Event("POC Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+		
+		
+		taskList.add(new Task("Project", 25, 4, 2015, 6, 0, 25, 10, 5));
+		taskList.add(new Task("POC assign", 25, 4, 2015, 6, 0, 5, 3, 3));
+		taskList.add(new Task("Maths", 29, 4, 2015, 6, 0, 50, 4, 5));
+		taskList.add(new Task("POC endsem", 30, 4, 2015, 6, 0, 50, 4, 4));
 	}
 
-	public void addEventDetailsWindow(Stage stage) throws Exception
-	{
+	public void addEventDetailsWindow(Stage stage) throws Exception {
 		Parent root;
 		stage.setTitle("Add New Event");
 
-		try
-		{
+		try {
 			root = FXMLLoader.load(getClass().getResource("EventWindow.fxml"));
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("naa ho paaya");
 			e.printStackTrace();
 			return;
@@ -422,17 +393,14 @@ public class MainWindow extends Application
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
-	
-	public void showLoginWindow(Stage stage) throws Exception
-	{
+
+	public void showLoginWindow(Stage stage) throws Exception {
 		Parent root;
 		stage.setTitle("Login to sync Moodle Calendar");
 
-		try
-		{
+		try {
 			root = FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("naa ho paaya");
 			e.printStackTrace();
 			return;
@@ -443,13 +411,59 @@ public class MainWindow extends Application
 		stage.sizeToScene();
 	}
 
-	public static void main(String[] args) throws IOException
+	public static void schedule() 
 	{
-		addDefaultEvents();
-		//Runtime.getRuntime().exec("python ../../get_ical.py");
-		//Event.integrateMoodleCalendar();
+		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>() 
+		{
+			public int compare(Task t1, Task t2) 
+			{
+				if (t1.weight > t2.weight)
+					return 1;
+				else
+					return 0;
+			}
+		});
+		for (Task t : taskList) 
+		{
+			t.calcWeight();
+			q.add(t);
+		}
+
+		List<Day> week = new ArrayList<Day>();
 		
-		start();
+		Day d1 = new Day(LocalDate.now());
+		
+		for(int j=0;j<7;j++){
+			d1.tasksOnTheDay = new ArrayList<Task>();
+			for(int i=0;i<d1.noOfHours;i++)
+			{
+				if(q.size()>0)
+				{
+					Task temp = q.poll();
+					if(temp.timeSpent < temp.timeExpected){
+						System.out.println(temp.name);
+						d1.tasksOnTheDay.add( temp );
+						temp.timeSpent+=1;				// Each task is given 1 hr
+						temp.calcWeight();
+						q.add(temp);
+					}
+				}
+				else
+					break;
+			}
+			week.add(d1);
+			d1 = new Day(LocalDate.now().plusDays(j+1));
+			System.out.println();
+		}
+		days = week;
+	}
+
+	public static void main(String[] args) throws IOException {
+		addDefaultEvents();
+		// Runtime.getRuntime().exec("python ../../get_ical.py");
+		// Event.integrateMoodleCalendar();
+
+		start();		// starts the thread
 		launch(args);
 	}
 

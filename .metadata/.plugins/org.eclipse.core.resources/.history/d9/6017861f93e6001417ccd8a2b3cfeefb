@@ -1,0 +1,461 @@
+/**   
+ *  This file is part of SimpleCalendar.
+    
+ *  SimpleCalendar is free software: you can redistribute it and/or modify   
+ *  it under the terms of the GNU General Public License as published by   
+ *  the Free Software Foundation, either version 3 of the License, or   
+ *  (at your option) any later version.
+     
+ *  SimpleCalendar is distributed in the hope that it will be useful,   
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of   
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the   
+ *  GNU General Public License for more details.
+
+ *  <http://www.gnu.org/licenses/>.
+     
+ */
+package simple_calendar.simple_calendar;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+
+public class MainWindow extends Application
+{
+	static public List<Event> eventList = new ArrayList<Event>();
+	static public List<Task> taskList = new ArrayList<Task>();
+	static public List<Day> days = new ArrayList<Day>();
+	
+	static private Stage thisStage;
+	static private DatePickerNew simpleCal;
+	
+	public static LocalTime classesEnd;
+
+	private static TimeThread timeThread = new TimeThread();
+
+	public void addAlarm(Alarm alarm)
+	{
+		timeThread.addAlarm(alarm);
+		timeThread.start();
+	}
+
+	public static void start()
+	{
+		timeThread.start();
+	}
+	
+	public void setStage(Stage stage)
+	{
+		thisStage = stage;
+	}
+
+	public void showStage()
+	{
+		thisStage.setTitle("Main Window");
+		thisStage.show();
+	}
+
+	static public void update()
+	{
+//		deleteOldEvents();
+		Event.sortEventsByDate();
+		MainWindow.simpleCal.setDayCells();
+	}
+
+	private static void deleteOldEvents()
+	{
+		LocalDate d = LocalDate.now();
+		List<Event> list = new ArrayList<Event>();
+		for (Event e : eventList)
+		{
+			if (!e.dateOfEvent.isBefore(d))
+			{
+				list.add(e);
+			}
+		}
+		eventList = list;
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception
+	{
+		stage.setTitle("Make new Event");
+		StackPane root = new StackPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 600, 450);
+		stage.setScene(scene);
+
+		scene.getStylesheets().addAll(
+				MainWindow.class.getResource(
+						"style/simple_calendar.css").toExternalForm());
+
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_CENTER);
+		Label label = new Label("Calendar App");
+		label.setId("NameLabel");
+		label.setTextAlignment(TextAlignment.CENTER);
+
+		Label enterDate = new Label("Enter the date");
+		enterDate.setId("EnterDateLabel");
+		enterDate.setAlignment(Pos.TOP_LEFT);
+
+		HBox dateBox = new HBox(15);
+		dateBox.setAlignment(Pos.BASELINE_CENTER);
+//		final TextField dateField = new TextField("Selected date");
+//		dateField.setEditable(false);
+//		dateField.setDisable(true);
+
+		simpleCal = new DatePickerNew();
+		simpleCal.setAlignment(Pos.CENTER_LEFT);
+		simpleCal.dateProperty().addListener(new ChangeListener<Date>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Date> ov,
+					Date oldDate, Date newDate)
+			{
+//				dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
+//						.format(newDate));
+			}
+		});
+
+		Button addEvent = new Button();
+		addEvent.setText("Add New Event");
+		addEvent.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				// Fill stage with content
+				try
+				{
+					addEventDetailsWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load EventPage");
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		Button addTask = new Button();
+		addTask.setText("Add New Task");
+		addTask.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				// Fill stage with content
+				try
+				{
+					addTaskDetailsWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load TaskPage");
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		
+		Button login = new Button();
+		login.setText("Login to Sync");
+		login.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				// Fill stage with content
+				try
+				{
+					showLoginWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load LoginWindow");
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		HBox buttonHolder = new HBox(10);
+		buttonHolder.setAlignment(Pos.BASELINE_CENTER);
+		buttonHolder.getChildren().addAll(addEvent, addTask);
+		
+		Button showAllEvents = new Button();
+		showAllEvents.setText("Show All Events");
+		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				try
+				{
+					showEventDetailsWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load AllEventsPage");
+					e1.printStackTrace();
+				}
+			}
+
+		});
+
+		dateBox.getChildren().addAll(simpleCal);
+		vbox.getChildren().addAll(label, enterDate, dateBox, login, buttonHolder, showAllEvents);
+		root.getChildren().add(vbox);
+		thisStage = stage;
+		thisStage.show();
+
+	}
+
+	public void addTaskDetailsWindow(Stage stage)
+	{
+		Parent root;
+		stage.setTitle("Add New Event");
+
+		try
+		{
+			root = FXMLLoader.load(getClass().getResource("TaskWindow.fxml"));
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+
+	public void showEventDetailsWindow(Stage stage)
+	{
+		stage.setTitle("All Events");
+
+		ScrollPane root = new ScrollPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 400, 400);
+		stage.setScene(scene);
+		root.setHbarPolicy(ScrollBarPolicy.NEVER);
+		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+
+		scene.getStylesheets().addAll(
+				MainWindow.class.getResource(
+						"style/simple_calendar.css").toExternalForm());
+
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_LEFT);
+
+		Label today = new Label("    Today:");
+		today.setId("TodayLabel");
+		today.setAlignment(Pos.TOP_LEFT);
+
+		vbox.getChildren().add(today);
+		int w = 0;
+		LocalDate d = LocalDate.now();
+		for (Event event : eventList)
+		{
+			if (!event.dateOfEvent.isBefore(d) && !event.dateOfEvent.isAfter(d))
+			{
+				w++;
+				Label name = new Label("  " + w + ". " + event.name);
+				name.setId("EventName");
+				Label time = new Label("       " + event.timeOfEvent.toString()
+						+ "  " + event.dateOfEvent.toString());
+				time.setId("EventTime");
+				Label details = new Label("        " + event.details);
+				details.setId("EventDetails");
+				Button edit = new Button("Edit");
+				edit.setOnAction(new EventHandler<ActionEvent>()
+					{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						Stage stage = new Stage();
+						// Fill stage with content
+						try
+						{
+							editEventDetailsWindow(stage,event);
+							stage.show();
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't load TaskPage");
+							e1.printStackTrace();
+						}
+					}
+		
+				});
+				vbox.getChildren().addAll(name, time, details,edit);
+			}
+		}
+		w = 0;
+		Label upcoming = new Label("    Upcoming:");
+		upcoming.setId("UpcomingLabel");
+		upcoming.setAlignment(Pos.TOP_LEFT);
+		vbox.getChildren().add(upcoming);
+
+		for (Event event : eventList)
+		{
+			if (event.dateOfEvent.isAfter(d))
+			{
+				w++;
+				Label name = new Label("  " + w + ". " + event.name);
+				name.setId("EventName");
+				Label time = new Label("       " + event.timeOfEvent.toString()
+						+ "  " + event.dateOfEvent.toString());
+				time.setId("EventTime");
+				Label details = new Label("        " + event.details);
+				details.setId("EventDetails");
+				Button edit = new Button("Edit");
+				edit.setOnAction(new EventHandler<ActionEvent>()
+					{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						Stage stage = new Stage();
+						// Fill stage with content
+						try
+						{
+							editEventDetailsWindow(stage,event);
+							stage.show();
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't load TaskPage");
+							e1.printStackTrace();
+						}
+					}
+		
+				});
+				vbox.getChildren().addAll(name, time, details,edit);
+			}
+		}
+		root.setVmax(440);
+		root.setPrefSize(115, 150);
+		root.setContent(vbox);
+	}
+	
+	public void editEventDetailsWindow(Stage stage, Event event) {
+		Parent root;
+		stage.setTitle("Add New Event");
+
+		try
+		{
+			// EventWindow ctrl = new EventWindow();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("EventWindow.fxml"));
+			root = loader.load();
+			for(int i=0;i<eventList.size();i++){
+				if(event.name.compareTo(eventList.get(i).name)==0)
+					eventList.remove(i);
+			}
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+		
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+
+	public static void addDefaultEvents()
+	{
+		classesEnd = LocalTime.of(12, 00);
+		
+		eventList.add(new Event("Stagecoach", "CLT", 11, 4, 2015, 18, 00));
+		eventList.add(new Event("Final", "BBall Court", 13, 4, 2015, 18, 00));
+		eventList.add(new Event("Maths Tut", "Read and complete", 14, 4, 2015, 14, 00));
+		eventList.add(new Event("LMC Tut", "Read and complete", 14, 4, 2015, 14, 00));
+		eventList.add(new Event("POC Tut", "Read and complete", 14, 4, 2015, 14, 00));
+	}
+
+	public void addEventDetailsWindow(Stage stage) throws Exception
+	{
+		Parent root;
+		stage.setTitle("Add New Event");
+
+		try
+		{
+			root = FXMLLoader.load(getClass().getResource("EventWindow.fxml"));
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+	
+	public void showLoginWindow(Stage stage) throws Exception
+	{
+		Parent root;
+		stage.setTitle("Login to sync Moodle Calendar");
+
+		try
+		{
+			root = FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+	
+	public static void schedule(){
+		
+	}
+	
+	
+	public static void main(String[] args) throws IOException
+	{
+		addDefaultEvents();
+		//Runtime.getRuntime().exec("python ../../get_ical.py");
+		//Event.integrateMoodleCalendar();
+		
+		start();
+		launch(args);
+	}
+
+}

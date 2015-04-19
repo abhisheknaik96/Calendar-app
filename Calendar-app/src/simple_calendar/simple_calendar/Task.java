@@ -2,6 +2,7 @@ package simple_calendar.simple_calendar;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -54,6 +55,11 @@ public class Task
 		return dateOfDeadline;
 	}
 	
+	public void calcWeight()
+	{
+		 weight =  gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference();
+	}
+	
 	static void sortTasksByDate()
 	{
 		Collections.sort(MainWindow.taskList, new Comparator<Task>()
@@ -99,5 +105,11 @@ public class Task
 		sortTasksByExpectedTime();
 		
 		// Now times have to alloted after the 'classesEnd' time.
+	}
+
+	public int dateDifference() 
+	{
+		Period p = Period.between(LocalDate.now(), dateOfDeadline);
+		return p.getDays() + p.getMonths()*30 + p.getYears()*365;
 	}
 }
