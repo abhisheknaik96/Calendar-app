@@ -29,10 +29,13 @@ public class LoginWindow implements javafx.fxml.Initializable
 	private PasswordField passwordField;
 	@FXML
 	private Button loginButton;
+	@FXML
+	private Label wrongPassword;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		wrongPassword.setVisible(false);
 		loginButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -40,37 +43,42 @@ public class LoginWindow implements javafx.fxml.Initializable
 			{
 				String username = usernameField.getText();
 				String password = passwordField.getText();
-
+				int ans=0;
 				try
 				{
-					getMoodleCalendar(username, password);
+					ans = getMoodleCalendar(username, password);
 				} 
 				catch (IOException e)
 				{
 					System.out.println("Couldn't open Python Script to export iCalendar from Moodle");
 					e.printStackTrace();
 				}
-
-				new Timer().schedule(new TimerTask()
-				{
-					public void run()
+				if(ans==1){
+					new Timer().schedule(new TimerTask()
 					{
-						Platform.runLater(new Runnable()
+						public void run()
 						{
-							public void run()
+							Platform.runLater(new Runnable()
 							{
-								(((Node) event.getSource())).getScene()
-										.getWindow().hide();
-							}
-						});
-					}
-				}, 1 * 1000); // After 1*1000 ms
+								public void run()
+								{
+									(((Node) event.getSource())).getScene()
+											.getWindow().hide();
+								}
+							});
+						}
+					}, 1 * 1000); // After 1*1000 ms
+				}
+				else{
+					System.out.println("Wrong username or password");
+					wrongPassword.setVisible(true);
+				}
 			}
 		});
 
 	}
 
-	public static void getMoodleCalendar(String username, String password)
+	public static int getMoodleCalendar(String username, String password)
 			throws IOException
 	{
 		String getCalFileName = "get_ical.py";
@@ -80,12 +88,19 @@ public class LoginWindow implements javafx.fxml.Initializable
 		ProcessBuilder pb = new ProcessBuilder("/usr/bin/python", pwd + '/' + 
 				getCalFileName, username, password, outFileName);
 		Process p = pb.start();
-		
 		BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		int ret = new Integer(in.readLine()).intValue();
-		if(ret==1)
-			Event.integrateMoodleCalendar(outFileName);
+		String s = in.readLine();
+		if(s!=null){
+			int ret = new Integer(s).intValue();
+			if(ret==1){
+				Event.integrateMoodleCalendar(outFileName);
+				return 1;
+			}else{
+				System.out.println("Script ran into an error...");
+				return 0;
+			}
+		}
 		else
-			System.out.println("Script ran into an error...");
+			return 0;
 	}
 }

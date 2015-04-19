@@ -298,7 +298,27 @@ public class MainWindow extends Application
 				time.setId("EventTime");
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
-				vbox.getChildren().addAll(name, time, details);
+				Button edit = new Button("Edit");
+				edit.setOnAction(new EventHandler<ActionEvent>()
+					{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						Stage stage = new Stage();
+						// Fill stage with content
+						try
+						{
+							editEventDetailsWindow(stage,event);
+							stage.show();
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't load TaskPage");
+							e1.printStackTrace();
+						}
+					}
+		
+				});
+				vbox.getChildren().addAll(name, time, details,edit);
 			}
 		}
 		w = 0;
@@ -319,12 +339,57 @@ public class MainWindow extends Application
 				time.setId("EventTime");
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
-				vbox.getChildren().addAll(name, time, details);
+				Button edit = new Button("Edit");
+				edit.setOnAction(new EventHandler<ActionEvent>()
+					{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						Stage stage = new Stage();
+						// Fill stage with content
+						try
+						{
+							editEventDetailsWindow(stage,event);
+							stage.show();
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't load TaskPage");
+							e1.printStackTrace();
+						}
+					}
+		
+				});
+				vbox.getChildren().addAll(name, time, details,edit);
 			}
 		}
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
+	}
+	
+	public void editEventDetailsWindow(Stage stage, Event event) {
+		Parent root;
+		stage.setTitle("Add New Event");
+
+		try
+		{
+			// EventWindow ctrl = new EventWindow();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("EventWindow.fxml"));
+			root = loader.load();
+			for(int i=0;i<eventList.size();i++){
+				if(event.name.compareTo(eventList.get(i).name)==0)
+					eventList.remove(i);
+			}
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+		
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
 	}
 
 	public static void addDefaultEvents()

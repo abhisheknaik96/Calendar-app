@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="206.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="simple_calendar.simple_calendar.LoginWindow">
+   <children>
+      <TextField fx:id="usernameField" layoutX="52.0" layoutY="50.0" promptText="Moodle Username" />
+      <PasswordField fx:id="passwordField" layoutX="52.0" layoutY="81.0" promptText="Password" />
+      <Label fx:id="loginLabel" layoutX="38.0" layoutY="21.0" text="Please enter your Login details" />
+      <Label fx:id="errorLabel" layoutX="52.0" layoutY="121.0" text="Incorrect username or password" />
+      <Button fx:id="loginButton" layoutX="107.0" layoutY="160.0" mnemonicParsing="false" text="Login" />
+   </children>
+</AnchorPane>
