@@ -1,5 +1,6 @@
 package simple_calendar.simple_calendar;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +130,16 @@ public class EventWindow implements javafx.fxml.Initializable
 				    MainWindow.update();
 				    System.out.println("No. of events added: " + MainWindow.eventList.size());
 					
+				    try
+					{
+						EventPersist.persist(MainWindow.eventList);
+					} 
+				    catch (IOException e)
+					{
+				    	System.out.println("Couldn't serialize to file");
+				    	e.printStackTrace();
+					}
+				    
 					// Closes Event window after 1 sec of clicking 'Add Event'
 					   new Timer().schedule(new TimerTask() 	
 						{

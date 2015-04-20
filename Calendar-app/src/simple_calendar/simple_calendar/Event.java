@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.*;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Event
+public class Event implements Serializable
 {
+	private static final long serialVersionUID = -8465116787318420577L;
 	String name;
 	String details;
 	LocalTime timeOfEvent;

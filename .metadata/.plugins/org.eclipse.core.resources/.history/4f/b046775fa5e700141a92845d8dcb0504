@@ -10,7 +10,6 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of   
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the   
  *  GNU General Public License for more details.
-
  *  <http://www.gnu.org/licenses/>.
      
  */
@@ -52,10 +51,10 @@ public class MainWindow extends Application
 	static public List<Event> eventList = new ArrayList<Event>();
 	static public List<Task> taskList = new ArrayList<Task>();
 	static public List<Day> days = new ArrayList<Day>();
-	
+
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
-	
+
 	public static LocalTime classesEnd;
 
 	private static TimeThread timeThread = new TimeThread();
@@ -70,7 +69,7 @@ public class MainWindow extends Application
 	{
 		timeThread.start();
 	}
-	
+
 	public void setStage(Stage stage)
 	{
 		thisStage = stage;
@@ -84,7 +83,21 @@ public class MainWindow extends Application
 
 	static public void update()
 	{
-//		deleteOldEvents();
+//		 deleteOldEvents();
+		
+		LocalDate d = LocalDate.now();
+		for(Event e: eventList)
+		{
+			if(e.dateOfEvent.isBefore(d))
+			{
+				if(e.getAlarm()!=null)
+				{
+					e.getAlarm().disableAlarm();
+					System.out.println(e.name + " kaa alarm disabled");
+				}
+			}
+		}
+		
 		Event.sortEventsByDate();
 		MainWindow.simpleCal.setDayCells();
 	}
@@ -109,12 +122,12 @@ public class MainWindow extends Application
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
-		Scene scene = new Scene(root, 600, 450);
+		Scene scene = new Scene(root, 600, 550);
 		stage.setScene(scene);
 
 		scene.getStylesheets().addAll(
-				MainWindow.class.getResource(
-						"style/simple_calendar.css").toExternalForm());
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
@@ -128,9 +141,9 @@ public class MainWindow extends Application
 
 		HBox dateBox = new HBox(15);
 		dateBox.setAlignment(Pos.BASELINE_CENTER);
-//		final TextField dateField = new TextField("Selected date");
-//		dateField.setEditable(false);
-//		dateField.setDisable(true);
+		// final TextField dateField = new TextField("Selected date");
+		// dateField.setEditable(false);
+		// dateField.setDisable(true);
 
 		simpleCal = new DatePickerNew();
 		simpleCal.setAlignment(Pos.CENTER_LEFT);
@@ -140,8 +153,8 @@ public class MainWindow extends Application
 			public void changed(ObservableValue<? extends Date> ov,
 					Date oldDate, Date newDate)
 			{
-//				dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
-//						.format(newDate));
+				// dateField.setText((new SimpleDateFormat("dd/MM/yyyy"))
+				// .format(newDate));
 			}
 		});
 
@@ -187,7 +200,7 @@ public class MainWindow extends Application
 			}
 
 		});
-		
+
 		Button login = new Button();
 		login.setText("Login to Sync");
 		login.setOnAction(new EventHandler<ActionEvent>()
@@ -212,7 +225,7 @@ public class MainWindow extends Application
 		HBox buttonHolder = new HBox(10);
 		buttonHolder.setAlignment(Pos.BASELINE_CENTER);
 		buttonHolder.getChildren().addAll(addEvent, addTask);
-		
+
 		Button showAllEvents = new Button();
 		showAllEvents.setText("Show All Events");
 		showAllEvents.setOnAction(new EventHandler<ActionEvent>()
@@ -233,9 +246,21 @@ public class MainWindow extends Application
 			}
 
 		});
+		Button scheduleTasks = new Button();
+		scheduleTasks.setText("Get Schedule");
+		scheduleTasks.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				schedule();
+			}
+
+		});
 
 		dateBox.getChildren().addAll(simpleCal);
-		vbox.getChildren().addAll(label, enterDate, dateBox, login, buttonHolder, showAllEvents);
+		vbox.getChildren().addAll(label, enterDate, dateBox, login,
+				buttonHolder, showAllEvents, scheduleTasks);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
@@ -274,8 +299,8 @@ public class MainWindow extends Application
 		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 
 		scene.getStylesheets().addAll(
-				MainWindow.class.getResource(
-						"style/simple_calendar.css").toExternalForm());
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_LEFT);
@@ -301,7 +326,7 @@ public class MainWindow extends Application
 				details.setId("EventDetails");
 				Button edit = new Button("Edit");
 				edit.setOnAction(new EventHandler<ActionEvent>()
-					{
+				{
 					@Override
 					public void handle(ActionEvent e)
 					{
@@ -309,7 +334,7 @@ public class MainWindow extends Application
 						// Fill stage with content
 						try
 						{
-							editEventDetailsWindow(stage,event);
+							editEventDetailsWindow(stage, event);
 							stage.show();
 						} catch (Exception e1)
 						{
@@ -317,9 +342,9 @@ public class MainWindow extends Application
 							e1.printStackTrace();
 						}
 					}
-		
+
 				});
-				vbox.getChildren().addAll(name, time, details,edit);
+				vbox.getChildren().addAll(name, time, details, edit);
 			}
 		}
 		w = 0;
@@ -342,7 +367,7 @@ public class MainWindow extends Application
 				details.setId("EventDetails");
 				Button edit = new Button("Edit");
 				edit.setOnAction(new EventHandler<ActionEvent>()
-					{
+				{
 					@Override
 					public void handle(ActionEvent e)
 					{
@@ -350,7 +375,7 @@ public class MainWindow extends Application
 						// Fill stage with content
 						try
 						{
-							editEventDetailsWindow(stage,event);
+							editEventDetailsWindow(stage, event);
 							stage.show();
 						} catch (Exception e1)
 						{
@@ -358,27 +383,30 @@ public class MainWindow extends Application
 							e1.printStackTrace();
 						}
 					}
-		
+
 				});
-				vbox.getChildren().addAll(name, time, details,edit);
+				vbox.getChildren().addAll(name, time, details, edit);
 			}
 		}
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
 	}
-	
-	public void editEventDetailsWindow(Stage stage, Event event) {
+
+	public void editEventDetailsWindow(Stage stage, Event event)
+	{
 		Parent root;
 		stage.setTitle("Add New Event");
 
 		try
 		{
 			// EventWindow ctrl = new EventWindow();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("EventWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"EventWindow.fxml"));
 			root = loader.load();
-			for(int i=0;i<eventList.size();i++){
-				if(event.name.compareTo(eventList.get(i).name)==0)
+			for (int i = 0; i < eventList.size(); i++)
+			{
+				if (event.name.compareTo(eventList.get(i).name) == 0)
 					eventList.remove(i);
 			}
 		} catch (IOException e)
@@ -387,7 +415,7 @@ public class MainWindow extends Application
 			e.printStackTrace();
 			return;
 		}
-		
+
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.sizeToScene();
@@ -396,12 +424,20 @@ public class MainWindow extends Application
 	public static void addDefaultEvents()
 	{
 		classesEnd = LocalTime.of(12, 00);
-		
+
 		eventList.add(new Event("Stagecoach", "CLT", 11, 4, 2015, 18, 00));
 		eventList.add(new Event("Final", "BBall Court", 13, 4, 2015, 18, 00));
-		eventList.add(new Event("Maths Tut", "Read and complete", 14, 4, 2015, 14, 00));
-		eventList.add(new Event("LMC Tut", "Read and complete", 14, 4, 2015, 14, 00));
-		eventList.add(new Event("POC Tut", "Read and complete", 14, 4, 2015, 14, 00));
+		eventList.add(new Event("Maths Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+		eventList.add(new Event("LMC Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+		eventList.add(new Event("POC Tut", "Read and complete", 14, 4, 2015,
+				14, 00));
+
+		taskList.add(new Task("Project", 25, 4, 2015, 6, 0, 25, 10, 5));
+		taskList.add(new Task("POC assign", 25, 4, 2015, 6, 0, 5, 3, 3));
+		taskList.add(new Task("Maths", 29, 4, 2015, 6, 0, 50, 4, 5));
+		taskList.add(new Task("POC endsem", 30, 4, 2015, 6, 0, 50, 4, 4));
 	}
 
 	public void addEventDetailsWindow(Stage stage) throws Exception
@@ -423,7 +459,7 @@ public class MainWindow extends Application
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
-	
+
 	public void showLoginWindow(Stage stage) throws Exception
 	{
 		Parent root;
@@ -443,31 +479,61 @@ public class MainWindow extends Application
 		stage.setScene(scene);
 		stage.sizeToScene();
 	}
-	
-	public static void schedule(){
-		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>() {
-	        public int compare(Task t1, Task t2) {
-	            if(t1.weight > t2.weight)
-	            	return 1;
-	            else
-	            	return 0;
-	        }
-	    });
-		for(Task t : taskList){
-			t.weight = t.gain * t.priority * (1 - t.timeSpent / t.timeExpected)/ t.dateDifference();
+
+	public static void schedule()
+	{
+		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>()
+		{
+			public int compare(Task t1, Task t2)
+			{
+				if (t1.weight > t2.weight)
+					return 1;
+				else
+					return 0;
+			}
+		});
+		for (Task t : taskList)
+		{
+			t.calcWeight();
 			q.add(t);
 		}
-		
+
+		List<Day> week = new ArrayList<Day>();
+
+		Day d1 = new Day(LocalDate.now());
+
+		for (int j = 0; j < 7; j++)
+		{
+			d1.tasksOnTheDay = new ArrayList<Task>();
+			for (int i = 0; i < d1.noOfHours; i++)
+			{
+				if (q.size() > 0)
+				{
+					Task temp = q.poll();
+					if (temp.timeSpent < temp.timeExpected)
+					{
+						System.out.println(temp.name);
+						d1.tasksOnTheDay.add(temp);
+						temp.timeSpent += 1; // Each task is given 1 hr
+						temp.calcWeight();
+						q.add(temp);
+					}
+				} else
+					break;
+			}
+			week.add(d1);
+			d1 = new Day(LocalDate.now().plusDays(j + 1));
+			System.out.println();
+		}
+		days = week;
 	}
-	
-	
-	public static void main(String[] args) throws IOException
+
+	public static void main(String[] args) throws IOException, ClassNotFoundException
 	{
 		addDefaultEvents();
-		//Runtime.getRuntime().exec("python ../../get_ical.py");
-		//Event.integrateMoodleCalendar();
+		EventPersist.retrieve();		// retrieves all the serialized events from 'Events.txt'
 		
-		start();
+		start(); // starts the thread
 		launch(args);
 	}
 

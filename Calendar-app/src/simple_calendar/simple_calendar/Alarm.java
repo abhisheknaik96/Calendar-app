@@ -2,12 +2,16 @@ package simple_calendar.simple_calendar;
 
 // Import the standard Java classes
 import java.util.*;
+import java.io.Serializable;
 import java.text.*;
 
-public class Alarm
+public class Alarm implements Serializable
 {
+	private static final long serialVersionUID = -8465116787318420577L;
+	
 	private Calendar alarmTime = Calendar.getInstance();
 
+	private boolean isAlarmOn = true;
 	private boolean fired = false;
 	private String command;
 
@@ -44,11 +48,16 @@ public class Alarm
 	{
 		return this.fired;
 	}
+	
+	public void disableAlarm()
+	{
+		this.isAlarmOn = false;
+	}
 
 	public boolean checkAlarm(Calendar now)
 	{
 		System.out.println(now.getTime());
-		if (now.compareTo(alarmTime) >= 0)
+		if (isAlarmOn==true && (now.compareTo(alarmTime) >= 0))
 		{
 			this.fired = true;
 			return true;
