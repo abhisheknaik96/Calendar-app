@@ -127,7 +127,7 @@ public class MainWindow extends Application
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
-		Scene scene = new Scene(root, 600, 550);
+		Scene scene = new Scene(root, 600, 600);
 		stage.setScene(scene);
 
 		scene.getStylesheets().addAll(
@@ -251,6 +251,28 @@ public class MainWindow extends Application
 			}
 
 		});
+		
+		Button showAllTasks = new Button();
+		showAllTasks.setText("Show All Tasks");
+		showAllTasks.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent e)
+			{
+				Stage stage = new Stage();
+				try
+				{
+					showTaskDetailsWindow(stage);
+					stage.show();
+				} catch (Exception e1)
+				{
+					System.out.println("Couldn't load AllEventsPage");
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		
 		Button scheduleTasks = new Button();
 		scheduleTasks.setText("Get Schedule");
 		scheduleTasks.setOnAction(new EventHandler<ActionEvent>() {
@@ -272,8 +294,6 @@ public class MainWindow extends Application
 				"Shortest First","Gain");
 	    
 		ComboBox<String> schedulingTech = new ComboBox<String>(list);
-		//schedulingTech.setEditable(true);
-	   
 		schedulingTech.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -294,7 +314,7 @@ public class MainWindow extends Application
 	    
 	    dateBox.getChildren().addAll(simpleCal);
 		vbox.getChildren().addAll(label, enterDate, dateBox, login,
-				buttonHolder, showAllEvents,scheduleTasks, schedulingTech);
+				buttonHolder, showAllEvents,scheduleTasks, showAllTasks, schedulingTech);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
@@ -426,7 +446,55 @@ public class MainWindow extends Application
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
 	}
+	
+	
+	public void showTaskDetailsWindow(Stage stage) {
+		stage.setTitle("All Tasks");
 
+		ScrollPane root = new ScrollPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 500, 400);
+		stage.setScene(scene);
+		root.setHbarPolicy(ScrollBarPolicy.NEVER);
+		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_LEFT);
+
+		scene.getStylesheets().addAll(
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
+		Label today = new Label("    Tasks:");
+		today.setId("TodayLabel");
+		today.setAlignment(Pos.TOP_LEFT);
+		vbox.getChildren().add(today);
+		int i=0;
+		for(Task temp : taskList){
+			i++;
+			Label name = new Label("    " + i + ". "+ temp.name);
+			name.setId("EventName");
+			name.setAlignment(Pos.TOP_LEFT);
+			vbox.getChildren().add(name);
+	
+			Label deadline = new Label("    Deadline: Time: " + temp.timeOfDeadline.toString() 
+					+ "  Date: " + temp.dateOfDeadline.toString());
+			deadline.setId("EventTime");
+			deadline.setAlignment(Pos.TOP_LEFT);
+			vbox.getChildren().add(deadline);
+			
+			Label details = new Label("    Priority: " + temp.priority + " Gain: " + temp.gain 
+					+ " Time Expected: " + temp.timeExpected + " hours" + " Time spent: " + 
+					+ temp.timeSpent +" hours");
+			details.setId("EventDetails");
+			details.setAlignment(Pos.TOP_LEFT);
+			vbox.getChildren().add(details);
+		}
+		root.setVmax(440);
+		root.setPrefSize(115, 150);
+		root.setContent(vbox);
+	}
+	
+	
 	public void editEventDetailsWindow(Stage stage, Event event)
 	{
 		Parent root;
@@ -562,7 +630,15 @@ public class MainWindow extends Application
 			today.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(today);
 			
-			System.out.println("Hours" + d1.noOfHours);
+			if(j==0){
+				for(Day d : days){
+					if(d.date.isEqual(d1.date)){
+						d1.tasksDone = d.tasksDone;
+						d1.noOfHours-=d.tasksDone;
+					}
+				}
+			}
+			
 			for(int i=0;i<d1.noOfHours;i++)
 			{
 				if(q.size()>0)
@@ -587,6 +663,30 @@ public class MainWindow extends Application
 					details.setAlignment(Pos.TOP_LEFT);
 					vbox.getChildren().add(details);
 					
+					if(j==0){
+						Button done = new Button("Done");
+						done.setOnAction(new EventHandler<ActionEvent>()
+								{
+							@Override
+							public void handle(ActionEvent e)
+							{
+								for(Task w : taskList){
+									if(w.name.compareTo(temp.name)==0){
+										w.timeSpent++;
+										System.out.println("One hour spent for " + w.name);
+										for(Day d : days){
+											if(d.date.isEqual(LocalDate.now())){
+												d.tasksDone++;
+											}
+										}
+									}
+								}
+							}
+
+						});
+						vbox.getChildren().add(done);
+					}
+					
 					d1.tasksOnTheDay.add( temp );
 					temp.timeSpent+=1;				// Each task is given 1 hr
 					temp.calcWeight();
@@ -598,7 +698,6 @@ public class MainWindow extends Application
 			}
 			week.add(d1);
 			d1 = new Day(LocalDate.now().plusDays(j+1));
-			System.out.println();
 			root.setVmax(440);
 			root.setPrefSize(115, 150);
 			root.setContent(vbox);

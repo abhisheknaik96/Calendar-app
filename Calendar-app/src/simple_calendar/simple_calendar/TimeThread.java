@@ -50,7 +50,9 @@ public class TimeThread extends Thread
 				now.setTimeInMillis(System.currentTimeMillis());
 
 				// Output the current time, just for debugging purposes
-				System.out.println(df.format(now.getTime()));
+				
+				// Printing stopped to allow debugging : paka mat band ho ja
+				//System.out.println(df.format(now.getTime()));
 
 				// Check alarms
 				//for (Iterator i = alarms.iterator(); i.hasNext();)

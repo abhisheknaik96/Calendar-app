@@ -37,6 +37,7 @@ public class Task
 		priority = t.priority;
 		gain = t.gain;
 		timeExpected = t.timeExpected;
+		timeSpent = t.timeSpent;
 	}
 
 	public void printTask()

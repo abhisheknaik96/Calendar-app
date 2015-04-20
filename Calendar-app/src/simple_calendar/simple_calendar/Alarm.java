@@ -56,7 +56,8 @@ public class Alarm implements Serializable
 
 	public boolean checkAlarm(Calendar now)
 	{
-		System.out.println(now.getTime());
+		// print stopped to allow other dubugging
+		//System.out.println(now.getTime());
 		if (isAlarmOn==true && (now.compareTo(alarmTime) >= 0))
 		{
 			this.fired = true;
