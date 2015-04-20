@@ -30,6 +30,8 @@ import java.util.PriorityQueue;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +39,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -54,6 +57,8 @@ public class MainWindow extends Application {
 
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
+	
+	static public int schedulingTechnique = 1;
 
 	public static LocalTime classesEnd;
 
@@ -99,7 +104,7 @@ public class MainWindow extends Application {
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
-		Scene scene = new Scene(root, 600, 450);
+		Scene scene = new Scene(root, 600, 550);
 		stage.setScene(scene);
 
 		scene.getStylesheets().addAll(
@@ -210,14 +215,45 @@ public class MainWindow extends Application {
 		scheduleTasks.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				schedule();
+				Stage stage = new Stage();
+				try {
+					schedule(stage);
+					stage.show();
+				} catch (Exception e1) {
+					System.out.println("Couldn't load AllEventsPage");
+					e1.printStackTrace();
+				}
 			}
 
 		});
+		
+		ObservableList<String> list = FXCollections.observableArrayList("Round Robin","Priority",
+				"Shortest First","Gain");
+	    
+		ComboBox<String> schedulingTech = new ComboBox<String>(list);
+		//schedulingTech.setEditable(true);
+	   
+		schedulingTech.valueProperty().addListener(new ChangeListener<String>() {
 
-		dateBox.getChildren().addAll(simpleCal);
+			@Override
+			public void changed(ObservableValue<? extends String> observable, 
+					String oldValue, String newValue) {
+				if(newValue.compareTo("Round Robin")==0)
+					schedulingTechnique = 1;
+				if(newValue.compareTo("Priority")==0)
+					schedulingTechnique = 2;
+				if(newValue.compareTo("Shortest First")==0)
+					schedulingTechnique = 3;
+				if(newValue.compareTo("Gain")==0)
+					schedulingTechnique = 4;
+				System.out.println(schedulingTechnique);
+			}
+		});
+
+	    
+	    dateBox.getChildren().addAll(simpleCal);
 		vbox.getChildren().addAll(label, enterDate, dateBox, login,
-				buttonHolder, showAllEvents,scheduleTasks);
+				buttonHolder, showAllEvents,scheduleTasks, schedulingTech);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
@@ -374,7 +410,7 @@ public class MainWindow extends Application {
 		taskList.add(new Task("Project", 25, 4, 2015, 6, 0, 25, 10, 5));
 		taskList.add(new Task("POC assign", 25, 4, 2015, 6, 0, 5, 3, 3));
 		taskList.add(new Task("Maths", 29, 4, 2015, 6, 0, 50, 4, 5));
-		taskList.add(new Task("POC endsem", 30, 4, 2015, 6, 0, 50, 4, 4));
+		taskList.add(new Task("POC endsem", 30, 4, 2015, 6, 0, 60, 4, 4));
 	}
 
 	public void addEventDetailsWindow(Stage stage) throws Exception {
@@ -411,22 +447,41 @@ public class MainWindow extends Application {
 		stage.sizeToScene();
 	}
 
-	public static void schedule() 
+	public static void schedule(Stage stage) 
 	{
 		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>() 
 		{
 			public int compare(Task t1, Task t2) 
 			{
-				if (t1.weight > t2.weight)
+				if (t1.weight < t2.weight)
 					return 1;
 				else
-					return 0;
+					return -1;
 			}
 		});
+		
+		//Scroll pane
+		ScrollPane root = new ScrollPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 400, 400);
+		stage.setScene(scene);
+		root.setHbarPolicy(ScrollBarPolicy.NEVER);
+		root.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+
+		scene.getStylesheets().addAll(
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
+
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_LEFT);
+		
+		System.out.println("Scheduling tech = " + schedulingTechnique);
+		
 		for (Task t : taskList) 
 		{
-			t.calcWeight();
-			q.add(t);
+			Task p = new Task(t);
+			p.calcWeight();
+			q.add(p);
 		}
 
 		List<Day> week = new ArrayList<Day>();
@@ -435,18 +490,41 @@ public class MainWindow extends Application {
 		
 		for(int j=0;j<7;j++){
 			d1.tasksOnTheDay = new ArrayList<Task>();
+			Label today = new Label("    Day " + (j+1) + " " + d1.date.getDayOfWeek().toString() + ":");
+			today.setId("TodayLabel");
+			today.setAlignment(Pos.TOP_LEFT);
+			vbox.getChildren().add(today);
+			
+			System.out.println("Hours" + d1.noOfHours);
 			for(int i=0;i<d1.noOfHours;i++)
 			{
 				if(q.size()>0)
 				{
 					Task temp = q.poll();
-					if(temp.timeSpent < temp.timeExpected){
-						System.out.println(temp.name);
-						d1.tasksOnTheDay.add( temp );
-						temp.timeSpent+=1;				// Each task is given 1 hr
-						temp.calcWeight();
+					//System.out.println(temp.name);
+					
+					Label name = new Label("    " + (i+1) + ". "+ temp.name);
+					name.setId("EventName");
+					name.setAlignment(Pos.TOP_LEFT);
+					vbox.getChildren().add(name);
+
+					Label deadline = new Label("    Deadline: Time: " + temp.timeOfDeadline.toString() 
+							+ "  Date: " + temp.dateOfDeadline.toString());
+					deadline.setId("EventTime");
+					deadline.setAlignment(Pos.TOP_LEFT);
+					vbox.getChildren().add(deadline);
+					
+					Label details = new Label("    Priority: " + temp.priority + " Gain: " + temp.gain 
+							+ " Time Expected: " + temp.timeExpected + " hours");
+					details.setId("EventDetails");
+					details.setAlignment(Pos.TOP_LEFT);
+					vbox.getChildren().add(details);
+					
+					d1.tasksOnTheDay.add( temp );
+					temp.timeSpent+=1;				// Each task is given 1 hr
+					temp.calcWeight();
+					if(temp.timeSpent < temp.timeExpected)
 						q.add(temp);
-					}
 				}
 				else
 					break;
@@ -454,6 +532,9 @@ public class MainWindow extends Application {
 			week.add(d1);
 			d1 = new Day(LocalDate.now().plusDays(j+1));
 			System.out.println();
+			root.setVmax(440);
+			root.setPrefSize(115, 150);
+			root.setContent(vbox);
 		}
 		days = week;
 	}

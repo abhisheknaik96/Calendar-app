@@ -29,6 +29,15 @@ public class Task
 		gain = g;
 		timeExpected = t;
 	}
+	
+	public Task(Task t){
+		name = t.name;
+		timeOfDeadline = t.timeOfDeadline;
+		dateOfDeadline = t.dateOfDeadline;
+		priority = t.priority;
+		gain = t.gain;
+		timeExpected = t.timeExpected;
+	}
 
 	public void printTask()
 	{
@@ -55,9 +64,35 @@ public class Task
 		return dateOfDeadline;
 	}
 	
-	public void calcWeight()
+	public void calcWeight(){
+		if(MainWindow.schedulingTechnique==1)
+			calcWeightRoundRobin();
+		else if(MainWindow.schedulingTechnique==2)
+			calcWeightPriority();
+		else if(MainWindow.schedulingTechnique==3)
+			calcWeightShortestFirst();
+		else if(MainWindow.schedulingTechnique==4)
+			calcWeightGain();
+	}
+	
+	private void calcWeightRoundRobin()
 	{
-		 weight =  gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference();
+		 weight = gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference();
+	}
+	
+	private void calcWeightPriority()
+	{
+		 weight =  priority;
+	}
+	
+	private void calcWeightShortestFirst()
+	{
+		 weight = 1/timeExpected;
+	}
+	
+	private void calcWeightGain()
+	{
+		 weight =  gain;
 	}
 	
 	static void sortTasksByDate()
