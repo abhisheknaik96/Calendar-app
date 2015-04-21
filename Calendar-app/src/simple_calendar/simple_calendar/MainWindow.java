@@ -54,14 +54,14 @@ public class MainWindow extends Application
 	static public List<Event> eventList = new ArrayList<Event>();
 	static public List<Task> taskList = new ArrayList<Task>();
 	static public List<Day> days = new ArrayList<Day>();
-
+	static public List<Integer> hoursOfWork;
+	
+	
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
 	
 	static public int schedulingTechnique = 1;
-
 	public static LocalTime classesEnd;
-
 	private static TimeThread timeThread = new TimeThread();
 
 	public void addAlarm(Alarm alarm)
@@ -290,6 +290,22 @@ public class MainWindow extends Application
 
 		});
 		
+		Button getNumTasks = new Button("Add tasks possible per day entry");
+		getNumTasks.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Stage stage = new Stage();
+				try {
+					getNumTasksPerDay(stage);
+					stage.show();
+				} catch (Exception e1) {
+					System.out.println("Couldn't load AllEventsPage");
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		
 		ObservableList<String> list = FXCollections.observableArrayList("Round Robin","Priority",
 				"Shortest First","Gain");
 	    
@@ -310,15 +326,68 @@ public class MainWindow extends Application
 				System.out.println(schedulingTechnique);
 			}
 		});
+		
+		HBox buttonHolder2 = new HBox(10);
+		buttonHolder2.setAlignment(Pos.BASELINE_CENTER);
+		buttonHolder2.getChildren().addAll(showAllEvents, showAllTasks);
 
 	    
 	    dateBox.getChildren().addAll(simpleCal);
 		vbox.getChildren().addAll(label, enterDate, dateBox, login,
-				buttonHolder, showAllEvents,scheduleTasks, showAllTasks, schedulingTech);
+				buttonHolder, buttonHolder2,scheduleTasks, schedulingTech,getNumTasks);
 		root.getChildren().add(vbox);
 		thisStage = stage;
 		thisStage.show();
 
+	}
+
+	public void getNumTasksPerDay(Stage stage) {
+		stage.setTitle("Make new Event");
+		StackPane root = new StackPane();
+		root.setId("root");
+		Scene scene = new Scene(root, 600, 400);
+		stage.setScene(scene);
+
+		scene.getStylesheets().addAll(
+				MainWindow.class.getResource("style/simple_calendar.css")
+						.toExternalForm());
+
+		VBox vbox = new VBox(20);
+		vbox.setAlignment(Pos.TOP_CENTER);
+		
+		ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4","5",
+				"6","7","8","9","10");
+	    
+		ComboBox<String> mon = new ComboBox<String>(list);
+		ComboBox<String> tue = new ComboBox<String>(list);
+		ComboBox<String> wed = new ComboBox<String>(list);
+		ComboBox<String> thurs = new ComboBox<String>(list);
+		ComboBox<String> fri = new ComboBox<String>(list);
+		ComboBox<String> sat = new ComboBox<String>(list);
+		ComboBox<String> sun = new ComboBox<String>(list);
+		
+		Button setNewValues = new Button("Set number of houres of work");
+		setNewValues.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				hoursOfWork = new ArrayList<Integer>();
+				
+				hoursOfWork.add(Integer.parseInt(mon.getValue()));
+				hoursOfWork.add(Integer.parseInt(tue.getValue()));
+				hoursOfWork.add(Integer.parseInt(wed.getValue()));
+				hoursOfWork.add(Integer.parseInt(thurs.getValue()));
+				hoursOfWork.add(Integer.parseInt(fri.getValue()));
+				hoursOfWork.add(Integer.parseInt(sat.getValue()));
+				hoursOfWork.add(Integer.parseInt(sun.getValue()));
+				System.out.println("Number of hours set");
+			}
+
+		});
+		
+		
+		vbox.getChildren().addAll(mon,tue,wed,thurs,fri,sat,sun,setNewValues);
+		root.getChildren().add(vbox);
+		
 	}
 
 	public void addTaskDetailsWindow(Stage stage)
@@ -635,6 +704,8 @@ public class MainWindow extends Application
 					if(d.date.isEqual(d1.date)){
 						d1.tasksDone = d.tasksDone;
 						d1.noOfHours-=d.tasksDone;
+						if(d1.noOfHours<0)
+							d1.noOfHours = 0;
 					}
 				}
 			}
@@ -695,6 +766,27 @@ public class MainWindow extends Application
 				}
 				else
 					break;
+			}
+			int w=0;
+			int p =0;
+			for(Event event : eventList){
+				if(event.dateOfEvent.isEqual(LocalDate.now().plusDays(j))){
+					if(p==0){
+						Label events = new Label("Events : ");
+						events.setId("Events");
+						vbox.getChildren().add(events);
+						p=1;
+					}
+					w++;
+					Label n = new Label("  " + w + ". " + event.name);
+					n.setId("EventName");
+					Label time = new Label("       " + event.timeOfEvent.toString()
+							+ "  " + event.dateOfEvent.toString());
+					time.setId("EventTime");
+					Label d = new Label("        " + event.details);
+					d.setId("EventDetails");
+					vbox.getChildren().addAll(n,time,d);
+				}
 			}
 			week.add(d1);
 			d1 = new Day(LocalDate.now().plusDays(j+1));
