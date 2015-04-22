@@ -3,24 +3,33 @@ METHOD:PUBLISH
 PRODID:-//John Papaioannou/NONSGML Bennu 0.1//EN
 VERSION:2.0
 BEGIN:VEVENT
-UID:1808@www.cse.iitm.ac.in/moodle
-SUMMARY:Programming Assignment 3 Deadline
-DESCRIPTION:
-CLASS:PUBLIC
-LAST-MODIFIED:20150112T125023Z
-DTSTAMP:20150419T122752Z
-DTSTART:20150415T182500Z
-CATEGORIES:EVEN 15 CS2400
-END:VEVENT
-BEGIN:VEVENT
 UID:1802@www.cse.iitm.ac.in/moodle
 SUMMARY:Short Exam 4
 DESCRIPTION:
 CLASS:PUBLIC
 LAST-MODIFIED:20150112T124612Z
-DTSTAMP:20150419T122752Z
+DTSTAMP:20150421T101105Z
 DTSTART:20150424T073000Z
 DTEND:20150424T082000Z
+CATEGORIES:EVEN 15 CS2400
+END:VEVENT
+BEGIN:VEVENT
+UID:1990@www.cse.iitm.ac.in/moodle
+SUMMARY: Assignment 2 source code Upload link
+DESCRIPTION: Upload Single tar.gz file for each group. (A sample folder str
+	 ucture for the submission of code can be found <a href="https://drive.googl
+	 e.com/file/d/0B5KF3Jf8IjVLbndYQXFBODg1Mzg/view?usp=sharing">here</a>.) <br 
+	 /><br />File Structure<br /> <br /> CS13BYYY_CS13BXXX<br /> |--bin/ - All B
+	 inary Files: encoder and decoder<br /> |--doc/ - README<br /> |--obj/ - all
+	  .o files<br /> |--scripts/ - any other scripts<br /> |--src/ - all source 
+	 files<br /> |--include/ <br /> |--Makefile<br /> <br /> N.B: Do not use any
+	  external libraries. Write your own ADT(Tree/HashMap).<br /><br />Upload Re
+	 port in https://www.turnitin.com/<br />
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150420T112334Z
+DTSTAMP:20150421T101105Z
+DTSTART:20150424T182500Z
 CATEGORIES:EVEN 15 CS2400
 END:VEVENT
 BEGIN:VEVENT
@@ -29,7 +38,7 @@ SUMMARY:Project upload link
 DESCRIPTION: Please use this link to upload your project. 
 CLASS:PUBLIC
 LAST-MODIFIED:20150413T211233Z
-DTSTAMP:20150419T122752Z
+DTSTAMP:20150421T101105Z
 DTSTART:20150426T182500Z
 CATEGORIES:EVEN-15-CS2810
 END:VEVENT
@@ -42,7 +51,7 @@ DESCRIPTION: Please upload your solutions for Bonus PS-1 here. Read instruc
 	 
 CLASS:PUBLIC
 LAST-MODIFIED:20150328T161122Z
-DTSTAMP:20150419T122752Z
+DTSTAMP:20150421T101105Z
 DTSTART:20150510T160500Z
 CATEGORIES:EVEN15 CS2200 
 END:VEVENT
@@ -58,7 +67,7 @@ DESCRIPTION: Please upload your solutions for Bonus PS-2 here. Solutions mu
 	 
 CLASS:PUBLIC
 LAST-MODIFIED:20150328T160745Z
-DTSTAMP:20150419T122752Z
+DTSTAMP:20150421T101105Z
 DTSTART:20150510T182500Z
 CATEGORIES:EVEN15 CS2200 
 END:VEVENT

@@ -65,9 +65,9 @@ public class Task
 		return dateOfDeadline;
 	}
 	
-	public void calcWeight(int d){
+	public void calcWeight(){
 		if(MainWindow.schedulingTechnique==1)
-			calcWeightRoundRobin(d);
+			calcWeightRoundRobin();
 		else if(MainWindow.schedulingTechnique==2)
 			calcWeightPriority();
 		else if(MainWindow.schedulingTechnique==3)
@@ -76,9 +76,9 @@ public class Task
 			calcWeightGain();
 	}
 	
-	private void calcWeightRoundRobin(int d)
+	private void calcWeightRoundRobin()
 	{
-		 weight = gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference(d);
+		 weight = gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference();
 	}
 	
 	private void calcWeightPriority()
@@ -143,13 +143,9 @@ public class Task
 		// Now times have to alloted after the 'classesEnd' time.
 	}
 
-	public int dateDifference(int d) 
+	public int dateDifference() 
 	{
-		Period p = Period.between(LocalDate.now().plusDays(d), dateOfDeadline);
-		int k = p.getDays() + p.getMonths()*30 + p.getYears()*365 - 1;
-		if(k>=0)
-			return k;
-		else
-			return 0;
+		Period p = Period.between(LocalDate.now(), dateOfDeadline);
+		return p.getDays() + p.getMonths()*30 + p.getYears()*365;
 	}
 }

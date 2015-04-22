@@ -55,6 +55,7 @@ public class MainWindow extends Application
 	static public List<Task> taskList = new ArrayList<Task>();
 	static public List<Day> days = new ArrayList<Day>();
 	static public List<Integer> hoursOfWork;
+	public List<Boolean> doneFlagList;
 	
 	
 	static private Stage thisStage;
@@ -685,7 +686,7 @@ public class MainWindow extends Application
 		{
 			Task p = new Task(t);
 			if(p.timeSpent<p.timeExpected){
-				p.calcWeight(0);
+				p.calcWeight();
 				q.add(p);
 			}
 		}
@@ -711,24 +712,13 @@ public class MainWindow extends Application
 					}
 				}
 			}
-			else{				// update weights
-				ArrayList<Task> list = new ArrayList<Task>();
-				while(!q.isEmpty()){
-					Task t = q.poll();
-					list.add(t);
-				}
-				for(Task t : list){
-					t.calcWeight(j);
-					q.add(t);
-				}
-			}
 			
 			for(int i=0;i<d1.noOfHours;i++)
 			{
 				if(q.size()>0)
 				{
 					Task temp = q.poll();
-					System.out.println(temp.name + " = " + temp.weight);
+					//System.out.println(temp.name);
 					
 					Label name = new Label("    " + (i+1) + ". "+ temp.name);
 					name.setId("EventName");
@@ -761,14 +751,6 @@ public class MainWindow extends Application
 										for(Day d : days){
 											if(d.date.isEqual(LocalDate.now())){
 												d.tasksDone++;
-												done.setOnAction(new EventHandler<ActionEvent>()
-														{
-													@Override
-													public void handle(ActionEvent e)
-													{
-														// disable action after one use
-													}
-												});
 											}
 										}
 									}
@@ -781,7 +763,7 @@ public class MainWindow extends Application
 					
 					d1.tasksOnTheDay.add( temp );
 					temp.timeSpent+=1;				// Each task is given 1 hr
-					temp.calcWeight(j);
+					temp.calcWeight();
 					if(temp.timeSpent < temp.timeExpected)
 						q.add(temp);
 				}
@@ -810,7 +792,6 @@ public class MainWindow extends Application
 				}
 			}
 			week.add(d1);
-			System.out.println();
 			d1 = new Day(LocalDate.now().plusDays(j+1));
 			root.setVmax(440);
 			root.setPrefSize(115, 150);

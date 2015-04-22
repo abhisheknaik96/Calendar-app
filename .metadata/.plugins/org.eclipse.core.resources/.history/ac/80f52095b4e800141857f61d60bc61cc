@@ -167,7 +167,7 @@ public class TaskWindow implements javafx.fxml.Initializable
 					int j = 0;
 					if(priorityS.compareTo("Highest")==0) j=5;
 					if(priorityS.compareTo("High")==0) j=4;
-					if(priorityS.compareTo("Moderate")==0) j=3;
+					if(priorityS.compareTo("Modeate")==0) j=3;
 					if(priorityS.compareTo("Less")==0) j=2;
 					if(priorityS.compareTo("Least")==0) j=1;
 					Task newTask = new Task(taskName, d, m, y, 

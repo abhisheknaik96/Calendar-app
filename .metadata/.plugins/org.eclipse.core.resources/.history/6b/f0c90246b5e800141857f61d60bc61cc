@@ -685,7 +685,7 @@ public class MainWindow extends Application
 		{
 			Task p = new Task(t);
 			if(p.timeSpent<p.timeExpected){
-				p.calcWeight(0);
+				p.calcWeight();
 				q.add(p);
 			}
 		}
@@ -709,17 +709,6 @@ public class MainWindow extends Application
 						if(d1.noOfHours<0)
 							d1.noOfHours = 0;
 					}
-				}
-			}
-			else{				// update weights
-				ArrayList<Task> list = new ArrayList<Task>();
-				while(!q.isEmpty()){
-					Task t = q.poll();
-					list.add(t);
-				}
-				for(Task t : list){
-					t.calcWeight(j);
-					q.add(t);
 				}
 			}
 			
@@ -781,9 +770,10 @@ public class MainWindow extends Application
 					
 					d1.tasksOnTheDay.add( temp );
 					temp.timeSpent+=1;				// Each task is given 1 hr
-					temp.calcWeight(j);
+					temp.calcWeight();
 					if(temp.timeSpent < temp.timeExpected)
 						q.add(temp);
+					System.out.println();
 				}
 				else
 					break;
@@ -810,7 +800,6 @@ public class MainWindow extends Application
 				}
 			}
 			week.add(d1);
-			System.out.println();
 			d1 = new Day(LocalDate.now().plusDays(j+1));
 			root.setVmax(440);
 			root.setPrefSize(115, 150);

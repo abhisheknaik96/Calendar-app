@@ -146,10 +146,6 @@ public class Task
 	public int dateDifference(int d) 
 	{
 		Period p = Period.between(LocalDate.now().plusDays(d), dateOfDeadline);
-		int k = p.getDays() + p.getMonths()*30 + p.getYears()*365 - 1;
-		if(k>=0)
-			return k;
-		else
-			return 0;
+		return p.getDays() + p.getMonths()*30 + p.getYears()*365 - 1;
 	}
 }
