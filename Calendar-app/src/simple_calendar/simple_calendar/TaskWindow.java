@@ -1,16 +1,21 @@
 package simple_calendar.simple_calendar;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.time.*;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -43,10 +48,6 @@ public class TaskWindow implements javafx.fxml.Initializable
 	private Button taskAdd;
 	@FXML
 	private Label addedLabel;
-	
-	
-	// The main list of events   						--> Make this a Priority Queue
-														// And make a weighted priority 
 	
 	
 	@Override
@@ -180,6 +181,33 @@ public class TaskWindow implements javafx.fxml.Initializable
 				    MainWindow.taskList.add(newTask);
 				    MainWindow.update();
 				    System.out.println("No. of tasks added: " + MainWindow.taskList.size());
+				
+				    try			// as soon as task is added, serialized.
+					{
+						Persist.persist(MainWindow.taskList, MainWindow.taskPersistFile);
+					} 
+				    catch (IOException e)
+					{
+				    	System.out.println("Couldn't serialize to file");
+				    	e.printStackTrace();
+					}
+				    
+					// Closes Task window after 1 sec of clicking 'Add Task'
+					   new Timer().schedule(new TimerTask() 	
+						{
+						    public void run () 
+						    { 
+						    	 Platform.runLater(new Runnable() 
+						    	 {
+						    	       public void run() 
+						    	       {
+						    	    	   (((Node) event.getSource())).getScene().getWindow().hide();
+						    //		    	System.exit(0);
+						    	       }
+						    	 });
+						    }
+						}, 1*1000);			// After 1*1000 ms
+					
 				}
 			}
 		});

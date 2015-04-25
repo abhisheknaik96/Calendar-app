@@ -27,6 +27,13 @@ public class Event implements Serializable
 		dateOfEvent = LocalDate.of(y, m, d);
 	}
 
+	public void printEvent()
+	{
+		System.out.println("Event Name : " + name);
+		System.out.println("Event Time : " + dateOfEvent);
+		System.out.println("Event Date : " + timeOfEvent);
+	}
+	
 	public void setAlarm(Alarm a)
 	{
 		alarm = a;
@@ -108,6 +115,16 @@ public class Event implements Serializable
 					d=m=y=hr=min=0;
 				}
 			}
+			
+			try
+			{
+				Persist.persist(MainWindow.eventList, MainWindow.eventPersistFile);
+			} 
+		    catch (IOException e)
+			{
+		    	System.out.println("Couldn't serialize to file");
+		    	e.printStackTrace();
+			}
 		} 
 		finally
 		{
@@ -115,6 +132,7 @@ public class Event implements Serializable
 				in.close();
 		}
 		MainWindow.update();
+		
 	}
 
 }

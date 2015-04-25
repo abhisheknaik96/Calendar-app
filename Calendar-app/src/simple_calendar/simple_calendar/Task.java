@@ -1,12 +1,13 @@
 package simple_calendar.simple_calendar;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Task
+public class Task implements Serializable
 {
 	String name;
 	String details;
@@ -19,8 +20,8 @@ public class Task
 	float weight;
 	float timeSpent;
 
-	public Task(String taskName, int d, int m, int y, int hr, int min,
-			float g, float t, int p)
+	public Task(String taskName, int d, int m, int y, int hr, int min, float g,
+			float t, int p)
 	{
 		name = taskName;
 		timeOfDeadline = LocalTime.of(hr, min, 0);
@@ -29,8 +30,9 @@ public class Task
 		gain = g;
 		timeExpected = t;
 	}
-	
-	public Task(Task t){
+
+	public Task(Task t)
+	{
 		name = t.name;
 		timeOfDeadline = t.timeOfDeadline;
 		dateOfDeadline = t.dateOfDeadline;
@@ -64,38 +66,45 @@ public class Task
 	{
 		return dateOfDeadline;
 	}
-	
-	public void calcWeight(int d){
-		if(MainWindow.schedulingTechnique==1)
+
+	public void calcWeight(int d)
+	{
+		if (MainWindow.schedulingTechnique == 1)
 			calcWeightRoundRobin(d);
-		else if(MainWindow.schedulingTechnique==2)
+		else if (MainWindow.schedulingTechnique == 2)
 			calcWeightPriority();
-		else if(MainWindow.schedulingTechnique==3)
+		else if (MainWindow.schedulingTechnique == 3)
 			calcWeightShortestFirst();
-		else if(MainWindow.schedulingTechnique==4)
+		else if (MainWindow.schedulingTechnique == 4)
 			calcWeightGain();
 	}
-	
+
 	private void calcWeightRoundRobin(int d)
 	{
-		 weight = gain *  priority * (1 -  timeSpent /  timeExpected) /  dateDifference(d);
+		// weight = gain * priority * (1 - timeSpent / timeExpected) /
+		// dateDifference(d);
+		if (dateDifference(d) != 0)
+			weight = gain * priority * (1 - timeSpent / timeExpected)
+					/ dateDifference(d);
+		else
+			weight = gain * priority * (1 - timeSpent / timeExpected) * 1000;
 	}
-	
+
 	private void calcWeightPriority()
 	{
-		 weight =  priority;
+		weight = priority;
 	}
-	
+
 	private void calcWeightShortestFirst()
 	{
-		 weight = 1/timeExpected;
+		weight = 1 / timeExpected;
 	}
-	
+
 	private void calcWeightGain()
 	{
-		 weight =  gain;
+		weight = gain;
 	}
-	
+
 	static void sortTasksByDate()
 	{
 		Collections.sort(MainWindow.taskList, new Comparator<Task>()
@@ -112,13 +121,13 @@ public class Task
 						return -1;
 					else if (c1.timeOfDeadline.isAfter(c2.timeOfDeadline))
 						return 1;
-					else 
+					else
 						return 0;
 				}
 			}
 		});
 	}
-	
+
 	static void sortTasksByExpectedTime()
 	{
 		Collections.sort(MainWindow.taskList, new Comparator<Task>()
@@ -134,20 +143,19 @@ public class Task
 			}
 		});
 	}
-	
-	
+
 	static void ShortestTaskFirstScheduler()
 	{
 		sortTasksByExpectedTime();
-		
+
 		// Now times have to alloted after the 'classesEnd' time.
 	}
 
-	public int dateDifference(int d) 
+	public int dateDifference(int d)
 	{
 		Period p = Period.between(LocalDate.now().plusDays(d), dateOfDeadline);
-		int k = p.getDays() + p.getMonths()*30 + p.getYears()*365 - 1;
-		if(k>=0)
+		int k = p.getDays() + p.getMonths() * 30 + p.getYears() * 365 - 1;
+		if (k >= 0)
 			return k;
 		else
 			return 0;

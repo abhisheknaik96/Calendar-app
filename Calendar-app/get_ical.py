@@ -27,10 +27,13 @@ with requests.Session() as s:
 					j+=1
 				authtoken =  a[i+10:j]
 			
-		page = s.get("http://www.cse.iitm.ac.in/moodle/calendar/export_execute.php?reset_what=all&preset_time=recentupcoming&username="+user_name + "&authtoken=" + authtoken)
+		pageCurr = s.get("http://www.cse.iitm.ac.in/moodle/calendar/export_execute.php?reset_what=all&preset_time=monthnow&username="+user_name + "&authtoken=" + authtoken)
+	
+		pageNext = s.get("http://www.cse.iitm.ac.in/moodle/calendar/export_execute.php?reset_what=all&preset_time=monthnext&username="+user_name + "&authtoken=" + authtoken)
 	
 		fo = open(outFileName, "w")
-		fo.write(page.content)
+		fo.write(pageCurr.content)
+		fo.write(pageNext.content)	
 		fo.close()
 	
 		print 1

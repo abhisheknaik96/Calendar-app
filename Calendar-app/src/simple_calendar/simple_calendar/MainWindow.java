@@ -16,11 +16,9 @@
 package simple_calendar.simple_calendar;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +40,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -55,11 +52,13 @@ public class MainWindow extends Application
 	static public List<Task> taskList = new ArrayList<Task>();
 	static public List<Day> days = new ArrayList<Day>();
 	static public List<Integer> hoursOfWork;
-	
+
+	static String eventPersistFile = "Events.txt";
+	static String taskPersistFile = "Tasks.txt";
 	
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
-	
+
 	static public int schedulingTechnique = 1;
 	public static LocalTime classesEnd;
 	private static TimeThread timeThread = new TimeThread();
@@ -88,21 +87,33 @@ public class MainWindow extends Application
 
 	static public void update()
 	{
-//		 deleteOldEvents();
-		
+		// deleteOldEvents();
+		System.out.println("Started updating...");
 		LocalDate d = LocalDate.now();
-		for(Event e: eventList)
+		
+		System.out.println(eventList.size());
+		for (Event e : eventList)
 		{
-			if(e.dateOfEvent.isBefore(d))
+			System.out.println(e.name);
+			System.out.println(e.getAlarm());
+			System.out.println(e.dateOfEvent);
+			if (e.getAlarm() != null)
 			{
-				if(e.getAlarm()!=null)
+				System.out.println("getting in");
+				if (e.dateOfEvent.isBefore(d))
 				{
+					System.out.println("in");
 					e.getAlarm().disableAlarm();
 					System.out.println(e.name + " kaa alarm disabled");
 				}
+				else if(e.dateOfEvent.isEqual(d) && e.timeOfEvent.isBefore(LocalTime.now()))
+				{
+					e.getAlarm().disableAlarm();
+					System.out.println("Today's " + e.name + " kaa alarm disabled");
+				}
 			}
 		}
-		
+
 		Event.sortEventsByDate();
 		MainWindow.simpleCal.setDayCells();
 	}
@@ -124,7 +135,7 @@ public class MainWindow extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		stage.setTitle("Make new Event");
+		stage.setTitle("Scheduler-cum-Reminder App");
 		StackPane root = new StackPane();
 		root.setId("root");
 		Scene scene = new Scene(root, 600, 600);
@@ -136,11 +147,11 @@ public class MainWindow extends Application
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
-		Label label = new Label("Calendar App");
+		Label label = new Label("Calendar");
 		label.setId("NameLabel");
 		label.setTextAlignment(TextAlignment.CENTER);
 
-		Label enterDate = new Label("Enter the date");
+		Label enterDate = new Label("");
 		enterDate.setId("EnterDateLabel");
 		enterDate.setAlignment(Pos.TOP_LEFT);
 
@@ -251,7 +262,7 @@ public class MainWindow extends Application
 			}
 
 		});
-		
+
 		Button showAllTasks = new Button();
 		showAllTasks.setText("Show All Tasks");
 		showAllTasks.setOnAction(new EventHandler<ActionEvent>()
@@ -272,76 +283,91 @@ public class MainWindow extends Application
 			}
 
 		});
-		
+
 		Button scheduleTasks = new Button();
 		scheduleTasks.setText("Get Schedule");
-		scheduleTasks.setOnAction(new EventHandler<ActionEvent>() {
+		scheduleTasks.setOnAction(new EventHandler<ActionEvent>()
+		{
 			@Override
-			public void handle(ActionEvent e) {
+			public void handle(ActionEvent e)
+			{
 				Stage stage = new Stage();
-				try {
+				try
+				{
 					schedule(stage);
 					stage.show();
-				} catch (Exception e1) {
+				} catch (Exception e1)
+				{
 					System.out.println("Couldn't load AllEventsPage");
 					e1.printStackTrace();
 				}
 			}
 
 		});
-		
+
 		Button getNumTasks = new Button("Add tasks possible per day entry");
-		getNumTasks.setOnAction(new EventHandler<ActionEvent>() {
+		getNumTasks.setOnAction(new EventHandler<ActionEvent>()
+		{
 			@Override
-			public void handle(ActionEvent e) {
+			public void handle(ActionEvent e)
+			{
 				Stage stage = new Stage();
-				try {
+				try
+				{
 					getNumTasksPerDay(stage);
 					stage.show();
-				} catch (Exception e1) {
+				} catch (Exception e1)
+				{
 					System.out.println("Couldn't load AllEventsPage");
 					e1.printStackTrace();
 				}
 			}
 
 		});
-		
-		ObservableList<String> list = FXCollections.observableArrayList("Round Robin","Priority",
-				"Shortest First","Gain");
-	    
+
+		ObservableList<String> list = FXCollections.observableArrayList(
+				"Round Robin", "Priority", "Shortest First", "Gain");
+
 		ComboBox<String> schedulingTech = new ComboBox<String>(list);
-		schedulingTech.valueProperty().addListener(new ChangeListener<String>() {
+		schedulingTech.valueProperty().addListener(new ChangeListener<String>()
+		{
 
 			@Override
-			public void changed(ObservableValue<? extends String> observable, 
-					String oldValue, String newValue) {
-				if(newValue.compareTo("Round Robin")==0)
+			public void changed(ObservableValue<? extends String> observable,
+					String oldValue, String newValue)
+			{
+				if (newValue.compareTo("Round Robin") == 0)
 					schedulingTechnique = 1;
-				if(newValue.compareTo("Priority")==0)
+				if (newValue.compareTo("Priority") == 0)
 					schedulingTechnique = 2;
-				if(newValue.compareTo("Shortest First")==0)
+				if (newValue.compareTo("Shortest First") == 0)
 					schedulingTechnique = 3;
-				if(newValue.compareTo("Gain")==0)
+				if (newValue.compareTo("Gain") == 0)
 					schedulingTechnique = 4;
 				System.out.println(schedulingTechnique);
 			}
 		});
-		
+
 		HBox buttonHolder2 = new HBox(10);
 		buttonHolder2.setAlignment(Pos.BASELINE_CENTER);
 		buttonHolder2.getChildren().addAll(showAllEvents, showAllTasks);
 
-	    
-	    dateBox.getChildren().addAll(simpleCal);
+		dateBox.getChildren().addAll(simpleCal);
 		vbox.getChildren().addAll(label, enterDate, dateBox, login,
-				buttonHolder, buttonHolder2,scheduleTasks, schedulingTech,getNumTasks);
+				buttonHolder, buttonHolder2, scheduleTasks, schedulingTech,
+				getNumTasks);
 		root.getChildren().add(vbox);
 		thisStage = stage;
+		
+		update();
+		start(); // starts the thread
+
 		thisStage.show();
 
 	}
 
-	public void getNumTasksPerDay(Stage stage) {
+	public void getNumTasksPerDay(Stage stage)
+	{
 		stage.setTitle("Make new Event");
 		StackPane root = new StackPane();
 		root.setId("root");
@@ -354,10 +380,10 @@ public class MainWindow extends Application
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
-		
-		ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4","5",
-				"6","7","8","9","10");
-	    
+
+		ObservableList<String> list = FXCollections.observableArrayList("1",
+				"2", "3", "4", "5", "6", "7", "8", "9", "10");
+
 		ComboBox<String> mon = new ComboBox<String>(list);
 		ComboBox<String> tue = new ComboBox<String>(list);
 		ComboBox<String> wed = new ComboBox<String>(list);
@@ -365,13 +391,15 @@ public class MainWindow extends Application
 		ComboBox<String> fri = new ComboBox<String>(list);
 		ComboBox<String> sat = new ComboBox<String>(list);
 		ComboBox<String> sun = new ComboBox<String>(list);
-		
-		Button setNewValues = new Button("Set number of houres of work");
-		setNewValues.setOnAction(new EventHandler<ActionEvent>() {
+
+		Button setNewValues = new Button("Set number of hours of work");
+		setNewValues.setOnAction(new EventHandler<ActionEvent>()
+		{
 			@Override
-			public void handle(ActionEvent e) {
+			public void handle(ActionEvent e)
+			{
 				hoursOfWork = new ArrayList<Integer>();
-				
+
 				hoursOfWork.add(Integer.parseInt(mon.getValue()));
 				hoursOfWork.add(Integer.parseInt(tue.getValue()));
 				hoursOfWork.add(Integer.parseInt(wed.getValue()));
@@ -383,17 +411,17 @@ public class MainWindow extends Application
 			}
 
 		});
-		
-		
-		vbox.getChildren().addAll(mon,tue,wed,thurs,fri,sat,sun,setNewValues);
+
+		vbox.getChildren().addAll(mon, tue, wed, thurs, fri, sat, sun,
+				setNewValues);
 		root.getChildren().add(vbox);
-		
+
 	}
 
 	public void addTaskDetailsWindow(Stage stage)
 	{
 		Parent root;
-		stage.setTitle("Add New Event");
+		stage.setTitle("Add New Task");
 
 		try
 		{
@@ -432,7 +460,7 @@ public class MainWindow extends Application
 		today.setId("TodayLabel");
 		today.setAlignment(Pos.TOP_LEFT);
 
-		vbox.getChildren().add(today);
+//		vbox.getChildren().add(today);			// Unnecessary
 		int w = 0;
 		LocalDate d = LocalDate.now();
 		for (Event event : eventList)
@@ -511,13 +539,15 @@ public class MainWindow extends Application
 				vbox.getChildren().addAll(name, time, details, edit);
 			}
 		}
+		
+		
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
 	}
-	
-	
-	public void showTaskDetailsWindow(Stage stage) {
+
+	public void showTaskDetailsWindow(Stage stage)
+	{
 		stage.setTitle("All Tasks");
 
 		ScrollPane root = new ScrollPane();
@@ -537,23 +567,26 @@ public class MainWindow extends Application
 		today.setId("TodayLabel");
 		today.setAlignment(Pos.TOP_LEFT);
 		vbox.getChildren().add(today);
-		int i=0;
-		for(Task temp : taskList){
+		int i = 0;
+		for (Task temp : taskList)
+		{
 			i++;
-			Label name = new Label("    " + i + ". "+ temp.name);
+			Label name = new Label("    " + i + ". " + temp.name);
 			name.setId("EventName");
 			name.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(name);
-	
-			Label deadline = new Label("    Deadline: Time: " + temp.timeOfDeadline.toString() 
-					+ "  Date: " + temp.dateOfDeadline.toString());
+
+			Label deadline = new Label("    Deadline: Time: "
+					+ temp.timeOfDeadline.toString() + "  Date: "
+					+ temp.dateOfDeadline.toString());
 			deadline.setId("EventTime");
 			deadline.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(deadline);
-			
-			Label details = new Label("    Priority: " + temp.priority + " Gain: " + temp.gain 
-					+ " Time Expected: " + temp.timeExpected + " hours" + " Time spent: " + 
-					+ temp.timeSpent +" hours");
+
+			Label details = new Label("    Priority: " + temp.priority
+					+ " Gain: " + temp.gain + " Time Expected: "
+					+ temp.timeExpected + " hours" + " Time spent: "
+					+ +temp.timeSpent + " hours");
 			details.setId("EventDetails");
 			details.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(details);
@@ -562,8 +595,7 @@ public class MainWindow extends Application
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
 	}
-	
-	
+
 	public void editEventDetailsWindow(Stage stage, Event event)
 	{
 		Parent root;
@@ -651,11 +683,11 @@ public class MainWindow extends Application
 		stage.sizeToScene();
 	}
 
-	public static void schedule(Stage stage) 
+	public static void schedule(Stage stage)
 	{
-		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>() 
+		PriorityQueue<Task> q = new PriorityQueue<>(new Comparator<Task>()
 		{
-			public int compare(Task t1, Task t2) 
+			public int compare(Task t1, Task t2)
 			{
 				if (t1.weight < t2.weight)
 					return 1;
@@ -663,8 +695,8 @@ public class MainWindow extends Application
 					return -1;
 			}
 		});
-		
-		//Scroll pane
+
+		// Scroll pane
 		ScrollPane root = new ScrollPane();
 		root.setId("root");
 		Scene scene = new Scene(root, 400, 400);
@@ -678,95 +710,115 @@ public class MainWindow extends Application
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_LEFT);
-		
+
 		System.out.println("Scheduling tech = " + schedulingTechnique);
-		
-		for (Task t : taskList) 
+
+		for (Task t : taskList)
 		{
 			Task p = new Task(t);
-			if(p.timeSpent<p.timeExpected){
+			if (p.timeSpent < p.timeExpected)
+			{
 				p.calcWeight(0);
 				q.add(p);
 			}
 		}
 
 		List<Day> week = new ArrayList<Day>();
-		
+
 		Day d1 = new Day(LocalDate.now());
-		
-		for(int j=0;j<7;j++){
+
+		for (int j = 0; j < 7; j++)
+		{
 			d1.tasksOnTheDay = new ArrayList<Task>();
-			Label today = new Label("    Day " + (j+1) + " " + d1.date.getDayOfWeek().toString() + ":");
+			Label today = new Label("    Day " + (j + 1) + " "
+					+ d1.date.getDayOfWeek().toString() + ":");
 			today.setId("TodayLabel");
 			today.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(today);
-			
-			if(j==0){
-				for(Day d : days){
-					if(d.date.isEqual(d1.date)){
+
+			if (j == 0)
+			{
+				for (Day d : days)
+				{
+					if (d.date.isEqual(d1.date))
+					{
 						d1.tasksDone = d.tasksDone;
-						d1.noOfHours-=d.tasksDone;
-						if(d1.noOfHours<0)
+						d1.noOfHours -= d.tasksDone;
+						if (d1.noOfHours < 0)
 							d1.noOfHours = 0;
 					}
 				}
-			}
-			else{				// update weights
+			} 
+			else
+			{ 	// update weights
 				ArrayList<Task> list = new ArrayList<Task>();
-				while(!q.isEmpty()){
+				while (!q.isEmpty())
+				{
 					Task t = q.poll();
 					list.add(t);
 				}
-				for(Task t : list){
+				for (Task t : list)
+				{
 					t.calcWeight(j);
 					q.add(t);
 				}
 			}
-			
-			for(int i=0;i<d1.noOfHours;i++)
+
+			for (int i = 0; i < d1.noOfHours; i++)
 			{
-				if(q.size()>0)
+				if (q.size() > 0)
 				{
 					Task temp = q.poll();
 					System.out.println(temp.name + " = " + temp.weight);
-					
-					Label name = new Label("    " + (i+1) + ". "+ temp.name);
+
+					Label name = new Label("    " + (i + 1) + ". " + temp.name);
 					name.setId("EventName");
 					name.setAlignment(Pos.TOP_LEFT);
 					vbox.getChildren().add(name);
 
-					Label deadline = new Label("    Deadline: Time: " + temp.timeOfDeadline.toString() 
-							+ "  Date: " + temp.dateOfDeadline.toString());
+					Label deadline = new Label("    Deadline: Time: "
+							+ temp.timeOfDeadline.toString() + "  Date: "
+							+ temp.dateOfDeadline.toString());
 					deadline.setId("EventTime");
 					deadline.setAlignment(Pos.TOP_LEFT);
 					vbox.getChildren().add(deadline);
-					
-					Label details = new Label("    Priority: " + temp.priority + " Gain: " + temp.gain 
-							+ " Time Expected: " + temp.timeExpected + " hours");
+
+					Label details = new Label("    Priority: " + temp.priority
+							+ " Gain: " + temp.gain + " Time Expected: "
+							+ temp.timeExpected + " hours");
 					details.setId("EventDetails");
 					details.setAlignment(Pos.TOP_LEFT);
 					vbox.getChildren().add(details);
-					
-					if(j==0){
+
+					if (j == 0)
+					{
 						Button done = new Button("Done");
 						done.setOnAction(new EventHandler<ActionEvent>()
-								{
+						{
 							@Override
 							public void handle(ActionEvent e)
 							{
-								for(Task w : taskList){
-									if(w.name.compareTo(temp.name)==0){
+								for (Task w : taskList)
+								{
+									if (w.name.compareTo(temp.name) == 0)
+									{
 										w.timeSpent++;
-										System.out.println("One hour spent for " + w.name);
-										for(Day d : days){
-											if(d.date.isEqual(LocalDate.now())){
+										System.out
+												.println("One hour spent for "
+														+ w.name);
+										for (Day d : days)
+										{
+											if (d.date.isEqual(LocalDate.now()))
+											{
 												d.tasksDone++;
 												done.setOnAction(new EventHandler<ActionEvent>()
-														{
+												{
 													@Override
-													public void handle(ActionEvent e)
+													public void handle(
+															ActionEvent e)
 													{
-														// disable action after one use
+														// disable action after
+														// one use
 													}
 												});
 											}
@@ -778,40 +830,43 @@ public class MainWindow extends Application
 						});
 						vbox.getChildren().add(done);
 					}
-					
-					d1.tasksOnTheDay.add( temp );
-					temp.timeSpent+=1;				// Each task is given 1 hr
+
+					d1.tasksOnTheDay.add(temp);
+					temp.timeSpent += 1; // Each task is given 1 hr
 					temp.calcWeight(j);
-					if(temp.timeSpent < temp.timeExpected)
+					if (temp.timeSpent < temp.timeExpected)
 						q.add(temp);
-				}
-				else
+				} else
 					break;
 			}
-			int w=0;
-			int p =0;
-			for(Event event : eventList){
-				if(event.dateOfEvent.isEqual(LocalDate.now().plusDays(j))){
-					if(p==0){
+			int w = 0;
+			int p = 0;
+			for (Event event : eventList)
+			{
+				if (event.dateOfEvent.isEqual(LocalDate.now().plusDays(j)))
+				{
+					if (p == 0)
+					{
 						Label events = new Label("Events : ");
 						events.setId("Events");
 						vbox.getChildren().add(events);
-						p=1;
+						p = 1;
 					}
 					w++;
 					Label n = new Label("  " + w + ". " + event.name);
 					n.setId("EventName");
-					Label time = new Label("       " + event.timeOfEvent.toString()
-							+ "  " + event.dateOfEvent.toString());
+					Label time = new Label("       "
+							+ event.timeOfEvent.toString() + "  "
+							+ event.dateOfEvent.toString());
 					time.setId("EventTime");
 					Label d = new Label("        " + event.details);
 					d.setId("EventDetails");
-					vbox.getChildren().addAll(n,time,d);
+					vbox.getChildren().addAll(n, time, d);
 				}
 			}
 			week.add(d1);
 			System.out.println();
-			d1 = new Day(LocalDate.now().plusDays(j+1));
+			d1 = new Day(LocalDate.now().plusDays(j + 1));
 			root.setVmax(440);
 			root.setPrefSize(115, 150);
 			root.setContent(vbox);
@@ -819,13 +874,27 @@ public class MainWindow extends Application
 		days = week;
 	}
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException
+	public static void main(String[] args) throws IOException,
+			ClassNotFoundException
 	{
-		addDefaultEvents();
-		EventPersist.retrieve();		// retrieves all the serialized events from 'Events.txt'
-		
-		start(); // starts the thread
-		launch(args);
-	}
+//		addDefaultEvents();
 
+		// retrieves all the serialized events from 'Events.txt'
+		try { 	eventList = Persist.retrieve(eventPersistFile); }
+		catch(Exception e1)
+		{	System.out.println("The Persisted Events File does not exist");	}
+		finally
+		{
+		// retrieves all the serialized events from 'Tasks.txt'
+			try	{	taskList = Persist.retrieve(taskPersistFile);	}
+			catch(Exception e1)
+			{ 	System.out.println("The Persisted Tasks File does not exist");	}
+			finally
+			{
+			//	start(); // starts the thread
+			launch(args);
+			}
+	
+		}
+	}
 }

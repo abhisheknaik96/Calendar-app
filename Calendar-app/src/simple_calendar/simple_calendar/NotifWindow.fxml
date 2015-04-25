@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="445.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="simple_calendar.simple_calendar.NotifWindow">
+   <children>
+      <ImageView fx:id="alarmPic" fitHeight="223.0" fitWidth="319.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../alarmAn.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="nameLabel" layoutX="62.0" layoutY="280.0" prefHeight="23.0" prefWidth="52.0" text="Event:">
+         <font>
+            <Font name="Ubuntu" size="15.0" />
+         </font></Label>
+      <Label fx:id="dateLabel" layoutX="62.0" layoutY="311.0" text="Date:">
+         <font>
+            <Font name="Ubuntu" size="15.0" />
+         </font></Label>
+      <Label layoutX="62.0" layoutY="337.0" text="Time:">
+         <font>
+            <Font name="Ubuntu" size="15.0" />
+         </font></Label>
+      <Label fx:id="nameField" layoutX="114.0" layoutY="284.0" prefHeight="15.0" prefWidth="177.0" text="Event Name" />
+      <Label fx:id="dateField" layoutX="114.0" layoutY="311.0" prefHeight="15.0" prefWidth="177.0" text="Event Date" />
+      <Label fx:id="timeField" layoutX="114.0" layoutY="337.0" prefHeight="15.0" prefWidth="177.0" text="Event Time" />
+      <Button fx:id="stopButton" layoutX="74.0" layoutY="365.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="90.0" text="Stop" textFill="#fc0606">
+         <font>
+            <Font name="Ubuntu" size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="snoozeButton" layoutX="187.0" layoutY="365.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="90.0" text="Snooze" textFill="#10b235">
+         <font>
+            <Font name="Ubuntu" size="19.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

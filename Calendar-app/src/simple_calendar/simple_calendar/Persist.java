@@ -6,15 +6,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class EventPersist
+public class Persist
 {
 
-	public static void persist(List<Event> list) throws IOException
+	public static void persist(List<?> list, String fileName) throws IOException
 	{
 
-		FileOutputStream fos = new FileOutputStream("Events.txt");
+		FileOutputStream fos = new FileOutputStream(fileName);
 		ObjectOutputStream os = new ObjectOutputStream(fos);
 
 //		for (int i = 0; i < list.size(); i++)
@@ -23,19 +24,21 @@ public class EventPersist
 		
 		os.flush();
 		os.close();
-
 	}
 
-	public static void retrieve() throws IOException, ClassNotFoundException
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> retrieve(String fileName) throws IOException, ClassNotFoundException
 	{
 		
-		FileInputStream fis = new FileInputStream("Events.txt");
+		FileInputStream fis = new FileInputStream(fileName);
 		ObjectInputStream is = new ObjectInputStream(fis);
 		
+		List<T> tempList = new ArrayList<T>();
 		try 
 		{
+			 tempList = (List<T>) is.readObject();
 			
-			MainWindow.eventList = (List<Event>) is.readObject();
+			//MainWindow.eventList = (List<Event>) is.readObject();
 //	        while (true) 
 //	        {
 //	            MainWindow.eventList.add((Event)is.readObject());
@@ -49,6 +52,6 @@ public class EventPersist
 		{
 	        is.close();
 	    }
-		
+		return tempList;
 	}
 }

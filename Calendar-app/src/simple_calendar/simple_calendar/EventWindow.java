@@ -47,10 +47,7 @@ public class EventWindow implements javafx.fxml.Initializable
 	@FXML
 	private Label addedLabel;
 	
-	// The main list of events   						--> Make this a Priority Queue
-														// And make a weighted priority 
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -86,7 +83,7 @@ public class EventWindow implements javafx.fxml.Initializable
 			public void handle(ActionEvent event)
 			{
 		
-			   addedLabel.setText("Event Added! :)");
+			    addedLabel.setText("Event Added! :)");
 			    addedLabel.setVisible(true);
 				//Event e;
 				String eventNameString = eventName.getText();
@@ -128,11 +125,14 @@ public class EventWindow implements javafx.fxml.Initializable
 					
 				    MainWindow.eventList.add(newEvent);
 				    MainWindow.update();
-				    System.out.println("No. of events added: " + MainWindow.eventList.size());
+				    
+				    newEvent.printEvent();
+				    
+				    System.out.println("Total no. of events added: " + MainWindow.eventList.size());
 					
-				    try
+				    try			// as soon as event is added, serialized.
 					{
-						EventPersist.persist(MainWindow.eventList);
+						Persist.persist(MainWindow.eventList, MainWindow.eventPersistFile);
 					} 
 				    catch (IOException e)
 					{
