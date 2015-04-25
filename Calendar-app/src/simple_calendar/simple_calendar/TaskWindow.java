@@ -27,25 +27,25 @@ public class TaskWindow implements javafx.fxml.Initializable
 	@FXML
 	private Label taskLabel;
 	@FXML
-	private TextArea taskDetails;
+	public TextArea taskDetails;
 	@FXML
-	private DatePicker taskDate;
+	public DatePicker taskDate;
 	@FXML
 	private Label timeLabel;
 //	@FXML
-//	private TextField timeField;
+//	public TextField timeField;
 	@FXML
-	private ComboBox<String> timeHourField;
+	public ComboBox<String> timeHourField;
 	@FXML
-	private ComboBox<String> timeMinField;
+	public ComboBox<String> timeMinField;
 	@FXML
-	private ComboBox<String> priorityField;
+	public ComboBox<String> priorityField;
 	@FXML
-	private ComboBox<String> gainField;
+	public ComboBox<String> gainField;
 	@FXML
-	private ComboBox<String> timeExpectedField;
+	public ComboBox<String> timeExpectedField;
 	@FXML
-	private Button taskAdd;
+	public Button taskAdd;
 	@FXML
 	private Label addedLabel;
 	

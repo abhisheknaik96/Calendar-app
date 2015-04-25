@@ -29,19 +29,19 @@ public class EventWindow implements javafx.fxml.Initializable
 	@FXML
 	private Label eventNameLabel;
 	@FXML
-	private TextField eventName;
+	public TextField eventName;
 	@FXML
 	private Label eventDetailsLabel;
 	@FXML
-	private TextArea eventDetails;
+	public TextArea eventDetails;
 	@FXML
-	private DatePicker eventDate;
+	public DatePicker eventDate;
 	@FXML
 	private Label timeLabel;
 	@FXML
-	private ComboBox<String> timeHourField;
+	public ComboBox<String> timeHourField;
 	@FXML
-	private ComboBox<String> timeMinField;
+	public ComboBox<String> timeMinField;
 	@FXML
 	private Button eventAdd;
 	@FXML

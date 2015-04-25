@@ -195,7 +195,7 @@ public class DatePickerNew extends StackPane
 		HBox todayButtonBox = new HBox();
 		todayButtonBox.setId(DATEPICKER_TODAYBUTTONBOX);
 		todayButtonBox.setAlignment(Pos.CENTER);
-		todayButtonBox.getChildren().add(todayButton);
+	//	todayButtonBox.getChildren().add(todayButton);
 
 		pickerBox.getChildren().add(todayButtonBox);
 

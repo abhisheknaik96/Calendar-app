@@ -22,7 +22,7 @@ public class TimeThread extends Thread
 {
 	static MediaPlayer mediaPlayer;
 
-	String musicFile = "StayTheNight.mp3"; // For example
+	String musicFile = "PiratesOfCaribbean.mp3"; // For example
 	Media sound = new Media(new File(musicFile).toURI().toString());
 
 	public boolean running = false;

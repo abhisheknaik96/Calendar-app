@@ -31,6 +31,12 @@ public class Task implements Serializable
 		timeExpected = t;
 	}
 
+	
+	public static void deleteTask(Task t)
+	{
+		MainWindow.taskList.remove(t);
+	}
+	
 	public Task(Task t)
 	{
 		name = t.name;

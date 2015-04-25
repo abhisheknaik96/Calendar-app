@@ -37,6 +37,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -55,7 +56,7 @@ public class MainWindow extends Application
 
 	static String eventPersistFile = "Events.txt";
 	static String taskPersistFile = "Tasks.txt";
-	
+
 	static private Stage thisStage;
 	static private DatePickerNew simpleCal;
 
@@ -90,7 +91,7 @@ public class MainWindow extends Application
 		// deleteOldEvents();
 		System.out.println("Started updating...");
 		LocalDate d = LocalDate.now();
-		
+
 		System.out.println(eventList.size());
 		for (Event e : eventList)
 		{
@@ -105,11 +106,12 @@ public class MainWindow extends Application
 					System.out.println("in");
 					e.getAlarm().disableAlarm();
 					System.out.println(e.name + " kaa alarm disabled");
-				}
-				else if(e.dateOfEvent.isEqual(d) && e.timeOfEvent.isBefore(LocalTime.now()))
+				} else if (e.dateOfEvent.isEqual(d)
+						&& e.timeOfEvent.isBefore(LocalTime.now()))
 				{
 					e.getAlarm().disableAlarm();
-					System.out.println("Today's " + e.name + " kaa alarm disabled");
+					System.out.println("Today's " + e.name
+							+ " kaa alarm disabled");
 				}
 			}
 		}
@@ -135,7 +137,7 @@ public class MainWindow extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		stage.setTitle("Scheduler-cum-Reminder App");
+		stage.setTitle("Calender-cum-Scheduler-cum-Reminder App");
 		StackPane root = new StackPane();
 		root.setId("root");
 		Scene scene = new Scene(root, 600, 600);
@@ -147,7 +149,8 @@ public class MainWindow extends Application
 
 		VBox vbox = new VBox(20);
 		vbox.setAlignment(Pos.TOP_CENTER);
-		Label label = new Label("Calendar");
+
+		Label label = new Label("\nCalendar");
 		label.setId("NameLabel");
 		label.setTextAlignment(TextAlignment.CENTER);
 
@@ -353,12 +356,11 @@ public class MainWindow extends Application
 		buttonHolder2.getChildren().addAll(showAllEvents, showAllTasks);
 
 		dateBox.getChildren().addAll(simpleCal);
-		vbox.getChildren().addAll(label, enterDate, dateBox, login,
-				buttonHolder, buttonHolder2, scheduleTasks, schedulingTech,
-				getNumTasks);
+		vbox.getChildren().addAll(label, dateBox, login, buttonHolder,
+				buttonHolder2, scheduleTasks, schedulingTech, getNumTasks);
 		root.getChildren().add(vbox);
 		thisStage = stage;
-		
+
 		update();
 		start(); // starts the thread
 
@@ -454,13 +456,13 @@ public class MainWindow extends Application
 						.toExternalForm());
 
 		VBox vbox = new VBox(20);
-		vbox.setAlignment(Pos.TOP_LEFT);
+		vbox.setAlignment(Pos.CENTER_LEFT);
 
 		Label today = new Label("    Today:");
 		today.setId("TodayLabel");
 		today.setAlignment(Pos.TOP_LEFT);
 
-//		vbox.getChildren().add(today);			// Unnecessary
+		vbox.getChildren().add(today);
 		int w = 0;
 		LocalDate d = LocalDate.now();
 		for (Event event : eventList)
@@ -475,7 +477,11 @@ public class MainWindow extends Application
 				time.setId("EventTime");
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
+
+				HBox hbox = new HBox(20);
+
 				Button edit = new Button("Edit");
+				edit.setId("editButton");
 				edit.setOnAction(new EventHandler<ActionEvent>()
 				{
 					@Override
@@ -489,13 +495,35 @@ public class MainWindow extends Application
 							stage.show();
 						} catch (Exception e1)
 						{
-							System.out.println("Couldn't load TaskPage");
+							System.out.println("Couldn't load EditEventsPage");
 							e1.printStackTrace();
 						}
 					}
 
 				});
-				vbox.getChildren().addAll(name, time, details, edit);
+
+				Button delete = new Button("Delete");
+				delete.setId("editButton");
+				delete.setOnAction(new EventHandler<ActionEvent>()
+				{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						try
+						{
+							Event.deleteEvent(event);
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't delete event");
+							e1.printStackTrace();
+						}
+					}
+
+				});
+
+				hbox.getChildren().addAll(edit, delete);
+
+				vbox.getChildren().addAll(name, time, details, hbox);
 			}
 		}
 		w = 0;
@@ -516,6 +544,9 @@ public class MainWindow extends Application
 				time.setId("EventTime");
 				Label details = new Label("        " + event.details);
 				details.setId("EventDetails");
+
+				HBox hbox = new HBox(20);
+
 				Button edit = new Button("Edit");
 				edit.setOnAction(new EventHandler<ActionEvent>()
 				{
@@ -536,11 +567,31 @@ public class MainWindow extends Application
 					}
 
 				});
-				vbox.getChildren().addAll(name, time, details, edit);
+				Button delete = new Button("Delete");
+				delete.setId("editButton");
+				delete.setOnAction(new EventHandler<ActionEvent>()
+				{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						try
+						{
+							Event.deleteEvent(event);
+						} catch (Exception e1)
+						{
+							System.out.println("Couldn't delete event");
+							e1.printStackTrace();
+						}
+					}
+
+				});
+
+				hbox.getChildren().addAll(edit, delete);
+				// vbox.setAlignment(Pos.CENTER);
+				vbox.getChildren().addAll(name, time, details, hbox);
 			}
 		}
-		
-		
+
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
 		root.setContent(vbox);
@@ -590,6 +641,49 @@ public class MainWindow extends Application
 			details.setId("EventDetails");
 			details.setAlignment(Pos.TOP_LEFT);
 			vbox.getChildren().add(details);
+
+			HBox hb = new HBox(20);
+			Button edit = new Button("Edit");
+			edit.setId("editButton");
+			edit.setOnAction(new EventHandler<ActionEvent>()
+			{
+				@Override
+				public void handle(ActionEvent e)
+				{
+					Stage stage = new Stage();
+					// Fill stage with content
+					try
+					{
+						editTaskDetailsWindow(stage, temp);
+						stage.show();
+					} catch (Exception e1)
+					{
+						System.out.println("Couldn't load TaskPage");
+						e1.printStackTrace();
+					}
+				}
+
+			});
+			Button delete = new Button("Delete");
+			delete.setId("editButton");
+			delete.setOnAction(new EventHandler<ActionEvent>()
+			{
+				@Override
+				public void handle(ActionEvent e)
+				{
+					try
+					{
+						Task.deleteTask(temp);
+					} catch (Exception e1)
+					{
+						System.out.println("Couldn't delete event");
+						e1.printStackTrace();
+					}
+				}
+
+			});
+			hb.getChildren().addAll(edit, delete);
+			vbox.getChildren().add(hb);
 		}
 		root.setVmax(440);
 		root.setPrefSize(115, 150);
@@ -603,15 +697,58 @@ public class MainWindow extends Application
 
 		try
 		{
-			// EventWindow ctrl = new EventWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
 					"EventWindow.fxml"));
-			root = loader.load();
-			for (int i = 0; i < eventList.size(); i++)
-			{
-				if (event.name.compareTo(eventList.get(i).name) == 0)
-					eventList.remove(i);
-			}
+			root = (Parent) loader.load();
+			EventWindow controller = (EventWindow) loader.getController();
+			controller.eventName.setText(event.name);
+			controller.eventDetails.setText(event.details);
+			controller.timeHourField.getEditor().setText(
+					Integer.toString(event.timeOfEvent.getHour()));
+			controller.timeMinField.getEditor().setText(
+					Integer.toString(event.timeOfEvent.getMinute()));
+
+			controller.eventDate = new DatePicker(event.dateOfEvent);
+			controller.eventDate.getEditor().setText(
+					event.dateOfEvent.toString());
+			eventList.remove(event);
+		} catch (IOException e)
+		{
+			System.out.println("naa ho paaya");
+			e.printStackTrace();
+			return;
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.sizeToScene();
+	}
+
+	public void editTaskDetailsWindow(Stage stage, Task task)
+	{
+		Parent root;
+		stage.setTitle("Edit Task");
+
+		try
+		{
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"TaskWindow.fxml"));
+			root = (Parent) loader.load();
+			TaskWindow controller = (TaskWindow) loader.getController();
+			controller.taskDetails.setText(task.name);
+			controller.timeHourField.getEditor().setText(
+					Integer.toString(task.timeOfDeadline.getHour()));
+			controller.timeMinField.getEditor().setText(
+					Integer.toString(task.timeOfDeadline.getMinute()));
+			controller.gainField.getEditor().setText(Float.toString(task.gain));
+			controller.timeExpectedField.getEditor().setText(
+					Float.toString(task.timeExpected));
+			controller.priorityField.getEditor().setText(
+					Integer.toString(task.priority));
+			controller.taskDate = new DatePicker(task.dateOfDeadline);
+			controller.taskDate.getEditor().setText(
+					task.dateOfDeadline.toString());
+			taskList.remove(task);
 		} catch (IOException e)
 		{
 			System.out.println("naa ho paaya");
@@ -748,9 +885,8 @@ public class MainWindow extends Application
 							d1.noOfHours = 0;
 					}
 				}
-			} 
-			else
-			{ 	// update weights
+			} else
+			{ // update weights
 				ArrayList<Task> list = new ArrayList<Task>();
 				while (!q.isEmpty())
 				{
@@ -877,24 +1013,30 @@ public class MainWindow extends Application
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException
 	{
-//		addDefaultEvents();
+		// addDefaultEvents();
 
 		// retrieves all the serialized events from 'Events.txt'
-		try { 	eventList = Persist.retrieve(eventPersistFile); }
-		catch(Exception e1)
-		{	System.out.println("The Persisted Events File does not exist");	}
-		finally
+		try
 		{
-		// retrieves all the serialized events from 'Tasks.txt'
-			try	{	taskList = Persist.retrieve(taskPersistFile);	}
-			catch(Exception e1)
-			{ 	System.out.println("The Persisted Tasks File does not exist");	}
-			finally
+			eventList = Persist.retrieve(eventPersistFile);
+		} catch (Exception e1)
+		{
+			System.out.println("The Persisted Events File does not exist");
+		} finally
+		{
+			// retrieves all the serialized events from 'Tasks.txt'
+			try
 			{
-			//	start(); // starts the thread
-			launch(args);
+				taskList = Persist.retrieve(taskPersistFile);
+			} catch (Exception e1)
+			{
+				System.out.println("The Persisted Tasks File does not exist");
+			} finally
+			{
+				// start(); // starts the thread
+				launch(args);
 			}
-	
+
 		}
 	}
 }

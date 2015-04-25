@@ -26,6 +26,11 @@ public class Event implements Serializable
 		timeOfEvent = LocalTime.of(hr, min, 0);
 		dateOfEvent = LocalDate.of(y, m, d);
 	}
+	
+	public static void deleteEvent(Event e)
+	{
+		MainWindow.eventList.remove(e);
+	}
 
 	public void printEvent()
 	{

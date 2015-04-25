@@ -14,6 +14,17 @@
 *  <http://www.gnu.org/licenses/>.
      
 */  
+
+BODY {
+    -fx-font-family: Ubuntu;
+    -fx-font-size: 16.0px;
+  }
+  
+#NameLabel
+{
+	-fx-font-size : 24.0px !important;
+	-fx-text-fill: "green";
+}
 #TodayLabel {
 	-fx-font-size: 26.0px;
 	-fx-text-fill: blue;
@@ -37,10 +48,26 @@
 	-fx-text-fill: red;
 }
 #EventTime{
+	-fx-font-weight:bold;
 	-fx-font-size: 13.0px;
 }
 #EventDetails{
 	-fx-font-size: 12.0px;
+}
+#editButton{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0.0%, #f8c202 50.0%, #eea10b 100.0%),
+        linear-gradient(from 0.0% 0.0% to 15.0% 50.0%, rgba(255.0,255.0,255.0,0.9), rgba(255.0,255.0,255.0,0.0));
+    -fx-background-radius: 30.0;
+    -fx-background-insets: 0.0,1.0,2.0,3.0,0.0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 14.0px;
+    -fx-padding: 10.0 20.0 10.0 20.0;
+    -fx-margin-left: 50.0px;
 }
 #DemoLabel {
 	-fx-font-size: 36.0px;
