@@ -1,0 +1,77 @@
+BEGIN:VCALENDAR
+METHOD:PUBLISH
+PRODID:-//John Papaioannou/NONSGML Bennu 0.1//EN
+VERSION:2.0
+BEGIN:VEVENT
+UID:1969@www.cse.iitm.ac.in/moodle
+SUMMARY:Lab 9: Late Submission Link
+DESCRIPTION:Use this link for submitting the assignment after the given dea
+	 dline. 
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150404T121019Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150412T182500Z
+CATEGORIES:EVEN-15-CS2810
+END:VEVENT
+BEGIN:VEVENT
+UID:1808@www.cse.iitm.ac.in/moodle
+SUMMARY:Programming Assignment 3 Deadline
+DESCRIPTION:
+CLASS:PUBLIC
+LAST-MODIFIED:20150112T125023Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150415T182500Z
+CATEGORIES:EVEN 15 CS2400
+END:VEVENT
+BEGIN:VEVENT
+UID:1802@www.cse.iitm.ac.in/moodle
+SUMMARY:Short Exam 4
+DESCRIPTION:
+CLASS:PUBLIC
+LAST-MODIFIED:20150112T124612Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150424T073000Z
+DTEND:20150424T082000Z
+CATEGORIES:EVEN 15 CS2400
+END:VEVENT
+BEGIN:VEVENT
+UID:1984@www.cse.iitm.ac.in/moodle
+SUMMARY:Project upload link
+DESCRIPTION: Please use this link to upload your project. 
+CLASS:PUBLIC
+LAST-MODIFIED:20150413T211233Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150426T182500Z
+CATEGORIES:EVEN-15-CS2810
+END:VEVENT
+BEGIN:VEVENT
+UID:1954@www.cse.iitm.ac.in/moodle
+SUMMARY:Bonus Problem Set 1
+DESCRIPTION: Please upload your solutions for Bonus PS-1 here. Read instruc
+	 tions regarding uploading in PS-1. Any kind of plagiarism will have serious
+	  consequences.<br />
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150328T161122Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150510T160500Z
+CATEGORIES:EVEN15 CS2200 
+END:VEVENT
+BEGIN:VEVENT
+UID:1911@www.cse.iitm.ac.in/moodle
+SUMMARY:Bonus Problem Set 2
+DESCRIPTION: Please upload your solutions for Bonus PS-2 here. Solutions mu
+	 st be typset in Latex and a compiled .pdf file should be uploaded along wit
+	 h the .tex source file. <br />Plagiarism of any kind is not acceptable. If 
+	 found\, all roll numbers involved in plagiarism will not be eligible for gr
+	 ades obtained from bonus problem sets and as a penalty 2 marks will be dedu
+	 cted from your final grades. <br /> 
+	 
+CLASS:PUBLIC
+LAST-MODIFIED:20150328T160745Z
+DTSTAMP:20150414T062140Z
+DTSTART:20150510T182500Z
+CATEGORIES:EVEN15 CS2200 
+END:VEVENT
+END:VCALENDAR

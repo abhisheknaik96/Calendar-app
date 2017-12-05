@@ -1,0 +1,19 @@
+package simple_calendar.simple_calendar;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+
+public class Event {
+	String name;
+	LocalDate dateOfEvent;
+	LocalTime timeOfEvent;
+	String thingsToCarry;
+	
+	public Event(String n, int d,int month, int year, int h, int m, int s, String carry){
+		name = n;
+		thingsToCarry = carry;
+		timeOfEvent = LocalTime.of(h,m,s);
+		dateOfEvent = LocalDate.of(year, month, d);
+	}
+}
